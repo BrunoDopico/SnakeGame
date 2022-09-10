@@ -55,14 +55,14 @@ namespace Snake_Game
                         break;
                     case 3:
                         //SHOW THE HOW TO PLAY
-                        HowToPlay();
+                        //HowToPlay();
                         break;
                 }
             } while (!exit);
             
         }
 
-        private static void HowToPlay()
+        /*private static void HowToPlay()
         {
             Console.Clear();
             Console.WriteLine("This is the snake game. \n" +
@@ -85,7 +85,7 @@ namespace Snake_Game
                 "Game made by Bruno (BrunusOP) Dopico\n");
             Console.Write("Press Enter to go back");
             Console.ReadLine();
-        }
+        }*/
 
         static void OptionsMenu()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Snake_Game
 {
@@ -23,6 +24,7 @@ namespace Snake_Game
 
         internal Snake Snake { get => snake; set => snake = value; }
         internal Cell[,] Map { get => map; set => map = value; }
+        public bool Lose { get => lose; set => lose = value; }
 
         public SnakeGame(Form1 view)
         {
@@ -34,39 +36,33 @@ namespace Snake_Game
         /// <summary>
         /// Method that initiates and handles the steps of the game.
         /// </summary>
-        public void PlayGame()
+        public void StartGame()
         {
             GenerateEmptyMap();
             GenerateMap();
-            Console.Clear();
-            Display();
-            Console.WriteLine("Press any button to start.");
-            Console.ReadKey();
-            GameLoop();
-            Console.WriteLine("You lose");
-            Console.ReadLine();
+            view.PaintMap();
+            lose = false;
+            time = 0;
+            score = 0;
+            direction = 0;
         }
 
         /// <summary>
         /// Method that handles the game loop, finishes when the game is lost.
         /// </summary>
-        private void GameLoop()
+        public void GameLoop()
         {
-            do
+            //getInput();
+            time++;
+            Update();
+            view.ChangeInfo("Time: "+time);
+            Thread.Sleep(Config.TIMER);
+            if (pause)
             {
-                getInput();
-                time++;
-                Update();
-                Console.Clear();
-                Display();
-                Thread.Sleep(Config.TIMER);
-                if (pause)
-                {
-                    Console.WriteLine("Game is paused, press Enter to resume.");
-                    Console.ReadKey();
-                    pause = false;
-                }
-            } while (!lose);
+                Console.WriteLine("Game is paused, press Enter to resume.");
+                Console.ReadKey();
+                pause = false;
+            }
         }
 
         /// <summary>
@@ -74,60 +70,63 @@ namespace Snake_Game
         /// </summary>
         private void Update()
         {
+            int oldHeadX = snake.Head_x;
+            int oldHeadY = snake.Head_y;
+            int oldHeadDir = map[snake.Head_x, snake.Head_y].Value;
             map[snake.Head_x, snake.Head_y].Value = direction;
             snake.MoveHead(direction);
             CheckHeadBorder();
-            int[] headPos = { snake.Head_x, snake.Head_y };
-            Cell aux = map[headPos[0], headPos[1]];
+            Cell aux = map[snake.Head_x, snake.Head_y];
             if (aux.Type == 'O') lose = true;
-            else if(aux.Type == 'S' && (snake.Tail_x != headPos[0] || snake.Tail_y != headPos[1] || snake.Growing > 0)) lose = true;
+            else if(aux.Type == 'S') lose = true;
             else if (aux.Type == 'F') 
             {
                 snake.Size += aux.Value;
                 snake.Growing += aux.Value;
                 score += aux.Value;
-                map[headPos[0], headPos[1]].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Value = direction;
                 fruits_eaten++;
                 PutFruit();
             }
             else
             {
-                map[headPos[0], headPos[1]].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Value = direction;
             }
             removeTail();
+            UpdateHead( snake.Head_x, snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
+            UpdateTail(snake.Tail_x, snake.Tail_y);
         }
 
         /// <summary>
         /// Method that handles user's input
         /// </summary>
-        private void getInput()
+        public void getInput(char key)
         {
-            if (Console.KeyAvailable && !pause)
+            switch (key)
             {
-                switch (Console.ReadKey(true).Key)
-                {
-                    // LEFT
-                    case ConsoleKey value when value == Config.IN_LEFT:
-                        direction = 0;
-                        break;
-                    // RIGHT
-                    case ConsoleKey value when value == Config.IN_RIGHT:
-                        direction = 1;
-                        break;
-                    // UP
-                    case ConsoleKey value when value == Config.IN_UP:
-                        direction = 2;
-                        break;
-                    // DOWN
-                    case ConsoleKey value when value == Config.IN_DOWN:
-                        direction = 3;
-                        break;
-                    case ConsoleKey value when value == Config.IN_PAUSE:
-                        pause = true;
-                        break;
-                    default:
-                        break;
-                }
+                // LEFT
+                case 'a':
+                    direction = 0;
+                    break;
+                // RIGHT
+                case 'd':
+                    direction = 1;
+                    break;
+                // UP
+                case 'w':
+                    direction = 2;
+                    break;
+                // DOWN
+                case 's':
+                    direction = 3;
+                    break;
+                case 'p':
+                    pause = true;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -144,6 +143,7 @@ namespace Snake_Game
                 snake.MoveTail(map[x, y].Value);
                 CheckTailBorder(map[x, y].Value);
                 map[x, y] = new Cell('V', 0);
+                view.UpdateCell(x,y,"");
             }
         }
 
@@ -210,8 +210,16 @@ namespace Snake_Game
                 if (map[x, y].Type == 'V')
                 {
                     map[x, y].Type = 'F';
-                    if(value <Config.SPECIAL_FRUIT_PCT) map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
-                    else map[x, y].Value = 1;
+                    if (value < Config.SPECIAL_FRUIT_PCT)
+                    {
+                        map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
+                        view.UpdateCell(x, y, "f_s");
+                    }
+                    else
+                    {
+                        map[x, y].Value = 1;
+                        view.UpdateCell(x, y, "f_n");
+                    }
                     exit = true;
                 }
             }
@@ -369,6 +377,70 @@ namespace Snake_Game
             }
         }
 
+        private void UpdateHead(int newX, int newY, int oldX, int oldY, int oldDirection)
+        {
+            switch (direction)
+            {
+                case 0:
+                    view.UpdateCell(oldX, oldY, "s_b_l");
+                    view.UpdateCell(newX, newY, "s_h_l");
+                    break;
+                case 1:
+                    view.UpdateCell(oldX, oldY, "s_b_r");
+                    view.UpdateCell(newX, newY, "s_h_r");
+                    break;
+                case 2:
+                    view.UpdateCell(oldX, oldY, "s_b_u");
+                    view.UpdateCell(newX, newY, "s_h_u");
+                    break;
+                case 3:
+                    view.UpdateCell(oldX, oldY, "s_b_d");
+                    view.UpdateCell(newX, newY, "s_h_d");
+                    break;
+            }
+            if(direction != oldDirection)
+            {
+                switch (oldDirection)
+                {
+                    case 0:
+                        if(direction == 2) view.UpdateCell(oldX, oldY, "s_b_l_u");
+                        else view.UpdateCell(oldX, oldY, "s_b_l_d");
+                        break;
+                    case 1:
+                        if (direction == 2) view.UpdateCell(oldX, oldY, "s_b_r_u");
+                        else view.UpdateCell(oldX, oldY, "s_b_r_d");
+                        break;
+                    case 2:
+                        if (direction == 0) view.UpdateCell(oldX, oldY, "s_b_u_l");
+                        else view.UpdateCell(oldX, oldY, "s_b_u_r");
+                        break;
+                    case 3:
+                        if (direction == 0) view.UpdateCell(oldX, oldY, "s_b_d_l");
+                        else view.UpdateCell(oldX, oldY, "s_b_d_r");
+                        break;
+                }
+            }
+        }
+
+        private void UpdateTail(int x, int y)
+        {
+            switch (map[x, y].Value)
+            {
+                case 0:
+                    view.UpdateCell(x, y, "s_t_l");
+                    break;
+                case 1:
+                    view.UpdateCell(x, y, "s_t_r");
+                    break;
+                case 2:
+                    view.UpdateCell(x, y, "s_t_u");
+                    break;
+                case 3:
+                    view.UpdateCell(x, y, "s_t_d");
+                    break;
+            }
+        }
+
         public void GenerateEmptyMap()
         {
             map = new Cell[Config.MAP_X, Config.MAP_Y];
@@ -380,84 +452,6 @@ namespace Snake_Game
                 }
             }
         }
-
-        
-        /// <summary>
-        /// Method that displays the current game state
-        /// </summary>
-        /// <param name="map"></param>
-        private void Display()
-        {
-            Cell current;
-            char displayed = '-';
-            for (int i = 0; i < Config.MAP_Y; i++)
-            {
-                for (int j = 0; j < Config.MAP_X; j++)
-                {
-                    if (snake.Head_x == j && snake.Head_y == i) 
-                    {
-                        switch (direction)
-                        {
-                            case 0:
-                                displayed = Config.DIS_SNAKE_HEAD_LEFT;
-                                break;
-                            case 1:
-                                displayed = Config.DIS_SNAKE_HEAD_RIGHT;
-                                break;
-                            case 2:
-                                displayed = Config.DIS_SNAKE_HEAD_UP;
-                                break;
-                            case 3:
-                                displayed = Config.DIS_SNAKE_HEAD_DOWN;
-                                break;
-                        }
-                    }
-                    else if (snake.Tail_x == j && snake.Tail_y == i)
-                    {
-                        switch (map[j, i].Value)
-                        {
-                            case 0:
-                                displayed = Config.DIS_SNAKE_TAIL_RIGHT;
-                                break;
-                            case 1:
-                                displayed = Config.DIS_SNAKE_TAIL_LEFT;
-                                break;
-                            case 2:
-                                displayed = Config.DIS_SNAKE_TAIL_DOWN;
-                                break;
-                            case 3:
-                                displayed = Config.DIS_SNAKE_TAIL_UP;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        current = map[j, i];
-                        switch (current.Type)
-                        {
-                            case 'V':
-                                displayed = Config.DIS_EMPTY;
-                                break;
-                            case 'S':
-                                displayed = Config.DIS_SNAKE_BODY;
-                                break;
-                            case 'F':
-                                if (current.Value == Config.SPECIAL_FRUIT_VALUE) displayed = Config.DIS_SUPER_FRUIT;
-                                else displayed = Config.DIS_N_FRUIT;
-                                break;
-                            case 'O':
-                                displayed = Config.DIS_WALL;
-                                break;
-                        }
-                    }
-                    Console.Write(displayed+" ");
-                }
-                Console.WriteLine();
-            }
-            string details = String.Format("Snake size: {0}| Fruits eaten: {1} | Time survived: {2} | Score: {3}", snake.Size,fruits_eaten, time, score);
-            Console.WriteLine(details);
-        }
-
 
     }
 
