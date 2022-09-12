@@ -38,22 +38,24 @@ namespace Snake_Game
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lbInfo = new System.Windows.Forms.Label();
-            this.btUp = new System.Windows.Forms.Button();
-            this.btRight = new System.Windows.Forms.Button();
-            this.btLeft = new System.Windows.Forms.Button();
-            this.btDown = new System.Windows.Forms.Button();
+            this.lbTimer = new System.Windows.Forms.Label();
+            this.groupInfo = new System.Windows.Forms.GroupBox();
+            this.lbLength = new System.Windows.Forms.Label();
+            this.lbFruits = new System.Windows.Forms.Label();
+            this.lbScore = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            this.groupInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archiveToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(854, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(509, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -65,33 +67,34 @@ namespace Snake_Game
             this.controlsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
-            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
             this.archiveToolStripMenuItem.Text = "Archive";
             // 
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // controlsToolStripMenuItem
             // 
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(165, 26);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -99,86 +102,90 @@ namespace Snake_Game
             this.howToPlayToolStripMenuItem,
             this.creditsToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // howToPlayToolStripMenuItem
             // 
             this.howToPlayToolStripMenuItem.Name = "howToPlayToolStripMenuItem";
-            this.howToPlayToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.howToPlayToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
             this.howToPlayToolStripMenuItem.Text = "How to play";
             // 
             // creditsToolStripMenuItem
             // 
             this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
-            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
             this.creditsToolStripMenuItem.Text = "Credits";
             // 
-            // lbInfo
+            // lbTimer
             // 
-            this.lbInfo.AutoSize = true;
-            this.lbInfo.Location = new System.Drawing.Point(12, 24);
-            this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(32, 13);
-            this.lbInfo.TabIndex = 1;
-            this.lbInfo.Text = "INFO";
+            this.lbTimer.AutoSize = true;
+            this.lbTimer.Location = new System.Drawing.Point(7, 18);
+            this.lbTimer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbTimer.Name = "lbTimer";
+            this.lbTimer.Size = new System.Drawing.Size(47, 17);
+            this.lbTimer.TabIndex = 1;
+            this.lbTimer.Text = "Time: ";
             // 
-            // btUp
+            // groupInfo
             // 
-            this.btUp.Location = new System.Drawing.Point(722, 151);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(75, 23);
-            this.btUp.TabIndex = 2;
-            this.btUp.Text = "W";
-            this.btUp.UseVisualStyleBackColor = true;
-            this.btUp.Click += new System.EventHandler(this.button1_Click);
+            this.groupInfo.Controls.Add(this.lbLength);
+            this.groupInfo.Controls.Add(this.lbFruits);
+            this.groupInfo.Controls.Add(this.lbScore);
+            this.groupInfo.Controls.Add(this.lbTimer);
+            this.groupInfo.Location = new System.Drawing.Point(12, 31);
+            this.groupInfo.Name = "groupInfo";
+            this.groupInfo.Size = new System.Drawing.Size(384, 49);
+            this.groupInfo.TabIndex = 2;
+            this.groupInfo.TabStop = false;
+            this.groupInfo.Text = "INFORMATION";
             // 
-            // btRight
+            // lbLength
             // 
-            this.btRight.Location = new System.Drawing.Point(767, 180);
-            this.btRight.Name = "btRight";
-            this.btRight.Size = new System.Drawing.Size(75, 23);
-            this.btRight.TabIndex = 3;
-            this.btRight.Text = "D";
-            this.btRight.UseVisualStyleBackColor = true;
-            this.btRight.Click += new System.EventHandler(this.btRight_Click);
+            this.lbLength.AutoSize = true;
+            this.lbLength.Location = new System.Drawing.Point(281, 18);
+            this.lbLength.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbLength.Name = "lbLength";
+            this.lbLength.Size = new System.Drawing.Size(60, 17);
+            this.lbLength.TabIndex = 4;
+            this.lbLength.Text = "Length: ";
             // 
-            // btLeft
+            // lbFruits
             // 
-            this.btLeft.Location = new System.Drawing.Point(686, 180);
-            this.btLeft.Name = "btLeft";
-            this.btLeft.Size = new System.Drawing.Size(75, 23);
-            this.btLeft.TabIndex = 4;
-            this.btLeft.Text = "A";
-            this.btLeft.UseVisualStyleBackColor = true;
-            this.btLeft.Click += new System.EventHandler(this.button3_Click);
+            this.lbFruits.AutoSize = true;
+            this.lbFruits.Location = new System.Drawing.Point(183, 18);
+            this.lbFruits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbFruits.Name = "lbFruits";
+            this.lbFruits.Size = new System.Drawing.Size(51, 17);
+            this.lbFruits.TabIndex = 3;
+            this.lbFruits.Text = "Fruits: ";
             // 
-            // btDown
+            // lbScore
             // 
-            this.btDown.Location = new System.Drawing.Point(722, 209);
-            this.btDown.Name = "btDown";
-            this.btDown.Size = new System.Drawing.Size(75, 23);
-            this.btDown.TabIndex = 5;
-            this.btDown.Text = "S";
-            this.btDown.UseVisualStyleBackColor = true;
-            this.btDown.Click += new System.EventHandler(this.btDown_Click);
+            this.lbScore.AutoSize = true;
+            this.lbScore.Location = new System.Drawing.Point(95, 18);
+            this.lbScore.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbScore.Name = "lbScore";
+            this.lbScore.Size = new System.Drawing.Size(53, 17);
+            this.lbScore.TabIndex = 2;
+            this.lbScore.Text = "Score: ";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 585);
-            this.Controls.Add(this.btDown);
-            this.Controls.Add(this.btLeft);
-            this.Controls.Add(this.btRight);
-            this.Controls.Add(this.btUp);
-            this.Controls.Add(this.lbInfo);
+            this.BackgroundImage = global::Snake_Game.Properties.Resources.back;
+            this.ClientSize = new System.Drawing.Size(509, 333);
+            this.Controls.Add(this.groupInfo);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Snake Game";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupInfo.ResumeLayout(false);
+            this.groupInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,11 +202,11 @@ namespace Snake_Game
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem howToPlayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem;
-        private System.Windows.Forms.Label lbInfo;
-        private System.Windows.Forms.Button btUp;
-        private System.Windows.Forms.Button btRight;
-        private System.Windows.Forms.Button btLeft;
-        private System.Windows.Forms.Button btDown;
+        private System.Windows.Forms.Label lbTimer;
+        private System.Windows.Forms.GroupBox groupInfo;
+        private System.Windows.Forms.Label lbLength;
+        private System.Windows.Forms.Label lbFruits;
+        private System.Windows.Forms.Label lbScore;
     }
 }
 

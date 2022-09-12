@@ -18,17 +18,18 @@ namespace Snake_Game
         
         public Form1()
         {
+            
             gameLoop.Tick += GameLoop;
             controller = new SnakeGame(this);
             InitializeComponent();
-            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             FillGrid();
         }
 
         private void FillGrid()
         {
+            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             int x_margin = 32;
-            int y_margin = 32;
+            int y_margin = 32 + groupInfo.Height;
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
@@ -41,6 +42,8 @@ namespace Snake_Game
                     this.Controls.Add(grid[i, j]);
                 }
             }
+            this.Width =  x_margin +32+ 32 * Config.MAP_X;
+            this.Height = y_margin + 64 + 32 * Config.MAP_Y;
         }
 
         private void ClearGrid()
@@ -164,10 +167,12 @@ namespace Snake_Game
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Focus();
             ClearGrid();
+            controller.StartGame();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
-            controller.StartGame();
+            
         }
 
         private void GameLoop(object sender, EventArgs e)  //run this logic each timer tick
@@ -179,27 +184,39 @@ namespace Snake_Game
 
         public void ChangeInfo(string msg)
         {
-            lbInfo.Text = msg;
+            lbTimer.Text = msg;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            controller.getInput('w');
+            switch (keyData)
+            {
+                case Keys.Up:
+                case Keys.W:
+                    controller.getInput('u');
+                    return true;
+                case Keys.Down:
+                case Keys.S:
+                    controller.getInput('d');
+                    return true;
+                case Keys.Left:
+                case Keys.A:
+                    controller.getInput('l');
+                    return true;
+                case Keys.Right:
+                case Keys.D:
+                    controller.getInput('r');
+                    return true;
+                case Keys.P:
+
+                    return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.getInput('a');
-        }
-
-        private void btRight_Click(object sender, EventArgs e)
-        {
-            controller.getInput('d');
-        }
-
-        private void btDown_Click(object sender, EventArgs e)
-        {
-            controller.getInput('s');
+            this.Close();
         }
     }
 }

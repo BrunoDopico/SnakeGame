@@ -107,19 +107,19 @@ namespace Snake_Game
             switch (key)
             {
                 // LEFT
-                case 'a':
+                case 'l':
                     direction = 0;
                     break;
                 // RIGHT
-                case 'd':
+                case 'r':
                     direction = 1;
                     break;
                 // UP
-                case 'w':
+                case 'u':
                     direction = 2;
                     break;
                 // DOWN
-                case 's':
+                case 'd':
                     direction = 3;
                     break;
                 case 'p':
