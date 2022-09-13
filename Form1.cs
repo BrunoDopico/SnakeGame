@@ -22,7 +22,6 @@ namespace Snake_Game
             gameLoop.Tick += GameLoop;
             controller = new SnakeGame(this);
             InitializeComponent();
-            FillGrid();
         }
 
         private void FillGrid()
@@ -48,7 +47,10 @@ namespace Snake_Game
 
         private void ClearGrid()
         {
-            foreach (PictureBox pb in grid) pb.Image = null;
+            foreach (PictureBox pb in grid)
+            {
+                this.Controls.Remove(pb);
+            }
         }
 
         public void PaintMap()
@@ -167,8 +169,9 @@ namespace Snake_Game
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Focus();
-            ClearGrid();
+            groupInfo.Visible = true;
+            pbTitle.Visible = false;
+            FillGrid();
             controller.StartGame();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
@@ -180,10 +183,12 @@ namespace Snake_Game
             controller.GameLoop();
             if (controller.Lose)
             {
+                
                 gameLoop.Stop();
                 MessageBox.Show("You Died!\n" +
                     "Your score: " + controller.Score + "\n" +
                     "Time played: " + controller.Time, "GAME OVER");
+                ClearGrid();
             }
         }
 
