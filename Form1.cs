@@ -178,33 +178,50 @@ namespace Snake_Game
         private void GameLoop(object sender, EventArgs e)  //run this logic each timer tick
         {
             controller.GameLoop();
-            if (controller.Lose) gameLoop.Stop();
+            if (controller.Lose)
+            {
+                gameLoop.Stop();
+                MessageBox.Show("You Died!\n" +
+                    "Your score: " + controller.Score + "\n" +
+                    "Time played: " + controller.Time, "GAME OVER");
+            }
         }
 
 
-        public void ChangeInfo(string msg)
+        public void ChangeTimer(string msg)
         {
             lbTimer.Text = msg;
+        }
+
+        public void ChangeScore(string msg)
+        {
+            lbScore.Text = msg;
+        }
+
+        public void ChangeFruits(string msg)
+        {
+            lbFruits.Text = msg;
+        }
+
+        public void ChangeLength(string msg)
+        {
+            lbLength.Text = msg;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
-                case Keys.Up:
-                case Keys.W:
+                case Keys key when key == Config.IN_UP || key == Config.IN_UP_ALTER:
                     controller.getInput('u');
                     return true;
-                case Keys.Down:
-                case Keys.S:
+                case Keys key when key == Config.IN_DOWN || key == Config.IN_DOWN_ALTER:
                     controller.getInput('d');
                     return true;
-                case Keys.Left:
-                case Keys.A:
+                case Keys key when key == Config.IN_LEFT || key == Config.IN_LEFT_ALTER:
                     controller.getInput('l');
                     return true;
-                case Keys.Right:
-                case Keys.D:
+                case Keys key when key == Config.IN_RIGHT || key == Config.IN_RIGHT_ALTER:
                     controller.getInput('r');
                     return true;
                 case Keys.P:

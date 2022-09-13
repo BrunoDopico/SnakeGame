@@ -55,7 +55,7 @@ namespace Snake_Game
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(509, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(509, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -67,7 +67,7 @@ namespace Snake_Game
             this.controlsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
-            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(72, 26);
             this.archiveToolStripMenuItem.Text = "Archive";
             // 
             // newGameToolStripMenuItem
@@ -102,7 +102,7 @@ namespace Snake_Game
             this.howToPlayToolStripMenuItem,
             this.creditsToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // howToPlayToolStripMenuItem
@@ -120,6 +120,7 @@ namespace Snake_Game
             // lbTimer
             // 
             this.lbTimer.AutoSize = true;
+            this.lbTimer.BackColor = System.Drawing.Color.Transparent;
             this.lbTimer.Location = new System.Drawing.Point(7, 18);
             this.lbTimer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbTimer.Name = "lbTimer";
@@ -129,13 +130,14 @@ namespace Snake_Game
             // 
             // groupInfo
             // 
+            this.groupInfo.BackgroundImage = global::Snake_Game.Properties.Resources.stats_border;
             this.groupInfo.Controls.Add(this.lbLength);
             this.groupInfo.Controls.Add(this.lbFruits);
             this.groupInfo.Controls.Add(this.lbScore);
             this.groupInfo.Controls.Add(this.lbTimer);
             this.groupInfo.Location = new System.Drawing.Point(12, 31);
             this.groupInfo.Name = "groupInfo";
-            this.groupInfo.Size = new System.Drawing.Size(384, 49);
+            this.groupInfo.Size = new System.Drawing.Size(400, 50);
             this.groupInfo.TabIndex = 2;
             this.groupInfo.TabStop = false;
             this.groupInfo.Text = "INFORMATION";
@@ -143,6 +145,7 @@ namespace Snake_Game
             // lbLength
             // 
             this.lbLength.AutoSize = true;
+            this.lbLength.BackColor = System.Drawing.Color.Transparent;
             this.lbLength.Location = new System.Drawing.Point(281, 18);
             this.lbLength.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbLength.Name = "lbLength";
@@ -153,6 +156,7 @@ namespace Snake_Game
             // lbFruits
             // 
             this.lbFruits.AutoSize = true;
+            this.lbFruits.BackColor = System.Drawing.Color.Transparent;
             this.lbFruits.Location = new System.Drawing.Point(183, 18);
             this.lbFruits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFruits.Name = "lbFruits";
@@ -163,6 +167,7 @@ namespace Snake_Game
             // lbScore
             // 
             this.lbScore.AutoSize = true;
+            this.lbScore.BackColor = System.Drawing.Color.Transparent;
             this.lbScore.Location = new System.Drawing.Point(95, 18);
             this.lbScore.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbScore.Name = "lbScore";

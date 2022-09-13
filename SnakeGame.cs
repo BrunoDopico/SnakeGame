@@ -25,6 +25,9 @@ namespace Snake_Game
         internal Snake Snake { get => snake; set => snake = value; }
         internal Cell[,] Map { get => map; set => map = value; }
         public bool Lose { get => lose; set => lose = value; }
+        public int Fruits_eaten { get => fruits_eaten; set => fruits_eaten = value; }
+        public int Score { get => score; set => score = value; }
+        public int Time { get => time; set => time = value; }
 
         public SnakeGame(Form1 view)
         {
@@ -55,8 +58,6 @@ namespace Snake_Game
             //getInput();
             time++;
             Update();
-            view.ChangeInfo("Time: "+time);
-            Thread.Sleep(Config.TIMER);
             if (pause)
             {
                 Console.WriteLine("Game is paused, press Enter to resume.");
@@ -83,7 +84,7 @@ namespace Snake_Game
             {
                 snake.Size += aux.Value;
                 snake.Growing += aux.Value;
-                score += aux.Value;
+                score += aux.Value*10;
                 map[snake.Head_x, snake.Head_y].Type = 'S';
                 map[snake.Head_x, snake.Head_y].Value = direction;
                 fruits_eaten++;
@@ -94,9 +95,19 @@ namespace Snake_Game
                 map[snake.Head_x, snake.Head_y].Type = 'S';
                 map[snake.Head_x, snake.Head_y].Value = direction;
             }
+            if (time % 50 == 0) score -= 20;
             removeTail();
             UpdateHead( snake.Head_x, snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
             UpdateTail(snake.Tail_x, snake.Tail_y);
+            UpdateViewLabels();
+        }
+
+        private void UpdateViewLabels()
+        {
+            view.ChangeTimer("Time: " + time);
+            view.ChangeScore("Score: " + score);
+            view.ChangeFruits("Fruits: "+ fruits_eaten);
+            view.ChangeLength("Length: " + snake.Size);
         }
 
         /// <summary>

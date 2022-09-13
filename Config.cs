@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Snake_Game
 {
@@ -26,10 +27,14 @@ namespace Snake_Game
         public static int INITIAL_SNAKE_SIZE = 4;
 
         //INPUT CONFIGURATIONS
-        public static ConsoleKey IN_PAUSE = ConsoleKey.P;
-        public static ConsoleKey IN_LEFT = ConsoleKey.LeftArrow;
-        public static ConsoleKey IN_RIGHT = ConsoleKey.RightArrow;
-        public static ConsoleKey IN_UP = ConsoleKey.UpArrow;
-        public static ConsoleKey IN_DOWN = ConsoleKey.DownArrow;
+        public static Keys IN_PAUSE = Keys.P;
+        public static Keys IN_LEFT = Keys.Left;
+        public static Keys IN_RIGHT = Keys.Right;
+        public static Keys IN_UP = Keys.Up;
+        public static Keys IN_DOWN = Keys.Down;
+        public static Keys IN_LEFT_ALTER = Keys.A;
+        public static Keys IN_RIGHT_ALTER = Keys.D;
+        public static Keys IN_UP_ALTER = Keys.W;
+        public static Keys IN_DOWN_ALTER = Keys.S;
     }
 }
