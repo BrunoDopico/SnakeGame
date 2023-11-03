@@ -10,25 +10,27 @@ using System.Windows.Forms;
 
 namespace Snake_Game
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         PictureBox[,] grid;
         SnakeGame controller;
         Timer gameLoop = new Timer();
+        bool inGame = false;
+        private int defaultFormWidth;
         
-        public Form1()
+        public Main()
         {
-            
             gameLoop.Tick += GameLoop;
             controller = new SnakeGame(this);
             InitializeComponent();
+            defaultFormWidth = this.Width;
+
         }
 
         private void FillGrid()
         {
-            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             int x_margin = 32;
-            int y_margin = 32 + groupInfo.Height;
+            int y_margin = 32;
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
@@ -41,15 +43,14 @@ namespace Snake_Game
                     this.Controls.Add(grid[i, j]);
                 }
             }
-            this.Width =  x_margin +32+ 32 * Config.MAP_X;
-            this.Height = y_margin + 64 + 32 * Config.MAP_Y;
         }
 
         private void ClearGrid()
         {
-            foreach (PictureBox pb in grid)
+            if (grid != null)
             {
-                this.Controls.Remove(pb);
+                foreach (PictureBox pb in grid) this.Controls.Remove(pb);
+                Array.Clear(grid, 0, grid.Length - 1);
             }
         }
 
@@ -167,15 +168,19 @@ namespace Snake_Game
             grid[x, y].Image = sprite;
         }
 
-        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void startGame()
         {
-            groupInfo.Visible = true;
-            pbTitle.Visible = false;
+            ClearGrid();
+            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             FillGrid();
-            controller.StartGame();
+            int width = Math.Max(defaultFormWidth, 64 + grid.GetLength(0) * 32); //Expands the screen width or leaves it as the default in case the result would be smaller
+            int height = 64 + grid.GetLength(1) * 32;
+            Size = new Size(width, height);
+            this.CenterToScreen();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
-            
+            controller.StartGame();
+            inGame = true;
         }
 
         private void GameLoop(object sender, EventArgs e)  //run this logic each timer tick
@@ -183,62 +188,85 @@ namespace Snake_Game
             controller.GameLoop();
             if (controller.Lose)
             {
-                
                 gameLoop.Stop();
-                MessageBox.Show("You Died!\n" +
-                    "Your score: " + controller.Score + "\n" +
-                    "Time played: " + controller.Time, "GAME OVER");
-                ClearGrid();
+                inGame = false;
             }
         }
 
-
-        public void ChangeTimer(string msg)
+        private void Pause()
         {
-            lbTimer.Text = msg;
+            gameLoop.Stop();
+            MessageBox.Show("Game is paused", "PAUSE", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            gameLoop.Start();
         }
 
-        public void ChangeScore(string msg)
+
+        public void ChangeInfo(string msg)
         {
-            lbScore.Text = msg;
+            lbInfo.Text = msg;
         }
 
-        public void ChangeFruits(string msg)
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            lbFruits.Text = msg;
-        }
-
-        public void ChangeLength(string msg)
-        {
-            lbLength.Text = msg;
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            switch (keyData)
+            switch (Char.ToLower(e.KeyChar))
             {
-                case Keys key when key == Config.IN_UP || key == Config.IN_UP_ALTER:
-                    controller.getInput('u');
-                    return true;
-                case Keys key when key == Config.IN_DOWN || key == Config.IN_DOWN_ALTER:
+                case 'w':
+                    controller.getInput('w');
+                    break;
+                case 'a':
+                    controller.getInput('a');
+                    break;
+                case 's':
+                    controller.getInput('s');
+                    break;
+                case 'd':
                     controller.getInput('d');
-                    return true;
-                case Keys key when key == Config.IN_LEFT || key == Config.IN_LEFT_ALTER:
-                    controller.getInput('l');
-                    return true;
-                case Keys key when key == Config.IN_RIGHT || key == Config.IN_RIGHT_ALTER:
-                    controller.getInput('r');
-                    return true;
-                case Keys.P:
-
-                    return true;
+                    break;
+                case 'p':
+                    Pause();
+                    break;
+                case 'n':
+                    startGame();
+                    break;
+                default:
+                    break;
             }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void bt_newGame_Click(object sender, EventArgs e)
         {
-            this.Close();
+            startGame();
+        }
+
+        private void bt_Options_Click(object sender, EventArgs e)
+        {
+            gameLoop.Stop();
+            Form options = new Options();
+            options.ShowDialog(this);
+            if (inGame) gameLoop.Start();
+        }
+
+        private void bt_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void bt_Credits_Click(object sender, EventArgs e)
+        {
+            gameLoop.Stop();
+            MessageBox.Show("This is the snake game. \n" +
+                "The objective of this game is to survive for as long as possible while eating fruits to make your snake's body larger. \n" +
+                "Touching an obstacle or your own body will instantly kill you.\n" +
+                "\n- CONTROLS -\n" +
+                " ·Move Up: " + Config.IN_UP.ToString() +
+                "\n ·Move Down: " + Config.IN_DOWN.ToString() +
+                "\n ·Move Left: " + Config.IN_LEFT.ToString() +
+                "\n ·Move Right: " + Config.IN_RIGHT.ToString() +
+                "\n ·Pause: " + Config.IN_PAUSE.ToString() +
+                " (Can be changed in options)\n" +
+                "\n- CREDITS -\n" +
+                "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (inGame) gameLoop.Start();
         }
     }
 }

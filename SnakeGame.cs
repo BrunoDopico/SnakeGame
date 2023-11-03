@@ -20,16 +20,13 @@ namespace Snake_Game
         private int score = 0;
         private int time = 0;
         private bool pause = false;
-        private Form1 view;
+        private Main view;
 
         internal Snake Snake { get => snake; set => snake = value; }
         internal Cell[,] Map { get => map; set => map = value; }
         public bool Lose { get => lose; set => lose = value; }
-        public int Fruits_eaten { get => fruits_eaten; set => fruits_eaten = value; }
-        public int Score { get => score; set => score = value; }
-        public int Time { get => time; set => time = value; }
 
-        public SnakeGame(Form1 view)
+        public SnakeGame(Main view)
         {
             this.view = view;
             direction = 0;
@@ -55,15 +52,9 @@ namespace Snake_Game
         /// </summary>
         public void GameLoop()
         {
-            //getInput();
             time++;
             Update();
-            if (pause)
-            {
-                Console.WriteLine("Game is paused, press Enter to resume.");
-                Console.ReadKey();
-                pause = false;
-            }
+            view.ChangeInfo("Time: "+time);
         }
 
         /// <summary>
@@ -77,14 +68,23 @@ namespace Snake_Game
             map[snake.Head_x, snake.Head_y].Value = direction;
             snake.MoveHead(direction);
             CheckHeadBorder();
-            Cell aux = map[snake.Head_x, snake.Head_y];
-            if (aux.Type == 'O') lose = true;
-            else if(aux.Type == 'S') lose = true;
-            else if (aux.Type == 'F') 
+            Cell eaten_cell = map[snake.Head_x, snake.Head_y];
+            if (eaten_cell.Type == 'O') lose = true;
+            else if(eaten_cell.Type == 'S') lose = true;
+            else if (eaten_cell.Type == 'F') 
             {
-                snake.Size += aux.Value;
-                snake.Growing += aux.Value;
-                score += aux.Value*10;
+                
+                if (snake.Size + eaten_cell.Value < 3)
+                {
+                    snake.Growing = snake.Size + eaten_cell.Value;
+                    snake.Size = 3;
+                }
+                else
+                {
+                    snake.Growing += eaten_cell.Value;
+                    snake.Size += eaten_cell.Value;
+                }
+                score += eaten_cell.Value;
                 map[snake.Head_x, snake.Head_y].Type = 'S';
                 map[snake.Head_x, snake.Head_y].Value = direction;
                 fruits_eaten++;
@@ -95,19 +95,9 @@ namespace Snake_Game
                 map[snake.Head_x, snake.Head_y].Type = 'S';
                 map[snake.Head_x, snake.Head_y].Value = direction;
             }
-            if (time % 50 == 0) score -= 20;
             removeTail();
             UpdateHead( snake.Head_x, snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
             UpdateTail(snake.Tail_x, snake.Tail_y);
-            UpdateViewLabels();
-        }
-
-        private void UpdateViewLabels()
-        {
-            view.ChangeTimer("Time: " + time);
-            view.ChangeScore("Score: " + score);
-            view.ChangeFruits("Fruits: "+ fruits_eaten);
-            view.ChangeLength("Length: " + snake.Size);
         }
 
         /// <summary>
@@ -118,19 +108,19 @@ namespace Snake_Game
             switch (key)
             {
                 // LEFT
-                case 'l':
+                case 'a':
                     direction = 0;
                     break;
                 // RIGHT
-                case 'r':
+                case 'd':
                     direction = 1;
                     break;
                 // UP
-                case 'u':
+                case 'w':
                     direction = 2;
                     break;
                 // DOWN
-                case 'd':
+                case 's':
                     direction = 3;
                     break;
                 case 'p':
@@ -149,12 +139,23 @@ namespace Snake_Game
             if (snake.Growing > 0) snake.Growing--;
             else
             {
+                while (snake.Growing < 0)
+                {
+                    int x1 = snake.Tail_x;
+                    int y1 = snake.Tail_y;
+                    snake.MoveTail(map[x1, y1].Value);
+                    CheckTailBorder(map[x1, y1].Value);
+                    map[x1, y1] = new Cell('V', 0);
+                    view.UpdateCell(x1, y1, "");
+                    snake.Growing++;
+                }
+
                 int x = snake.Tail_x;
                 int y = snake.Tail_y;
                 snake.MoveTail(map[x, y].Value);
                 CheckTailBorder(map[x, y].Value);
                 map[x, y] = new Cell('V', 0);
-                view.UpdateCell(x,y,"");
+                view.UpdateCell(x, y, "");
             }
         }
 
@@ -204,7 +205,7 @@ namespace Snake_Game
         }
 
         /// <summary>
-        /// Method that puts fruits on the map with a possibilty to put special fruits with value of 3
+        /// Method that puts fruits on the map with a possibilty to put special fruits with an extra value
         /// </summary>
         private void PutFruit()
         {
@@ -276,7 +277,7 @@ namespace Snake_Game
                     break;
                 case 3:
                     Config.TIMER = 120;
-                    PopulateMap((Config.MAP_X + Config.MAP_Y/2), 1);
+                    PopulateMap((Config.MAP_X + Config.MAP_Y/3), 1);
                     break;
             }
         }
