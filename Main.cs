@@ -254,16 +254,17 @@ namespace Snake_Game
         private void bt_Credits_Click(object sender, EventArgs e)
         {
             gameLoop.Stop();
-            MessageBox.Show("This is the snake game. \n" +
-                "The objective of this game is to survive for as long as possible while eating fruits to make your snake's body larger. \n" +
-                "Touching an obstacle or your own body will instantly kill you.\n" +
+            MessageBox.Show("- THE GAME -\n" +
+                "\nThis is the snake game." +
+                "\nThe objective of this game is to survive for as long as possible while eating fruits to make your snake's body larger." +
+                "\nTouching an obstacle or your own body will instantly kill you.\n" +
                 "\n- CONTROLS -\n" +
                 " ·Move Up: " + Config.IN_UP.ToString() +
                 "\n ·Move Down: " + Config.IN_DOWN.ToString() +
                 "\n ·Move Left: " + Config.IN_LEFT.ToString() +
                 "\n ·Move Right: " + Config.IN_RIGHT.ToString() +
                 "\n ·Pause: " + Config.IN_PAUSE.ToString() +
-                " (Can be changed in options)\n" +
+                "\n (Can be changed in options)\n" +
                 "\n- CREDITS -\n" +
                 "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (inGame) gameLoop.Start();

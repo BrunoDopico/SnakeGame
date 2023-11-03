@@ -27,10 +27,10 @@ namespace Snake_Game
 
         //INPUT CONFIGURATIONS
         public static ConsoleKey IN_PAUSE = ConsoleKey.P;
-        public static ConsoleKey IN_LEFT = ConsoleKey.LeftArrow;
-        public static ConsoleKey IN_RIGHT = ConsoleKey.RightArrow;
-        public static ConsoleKey IN_UP = ConsoleKey.UpArrow;
-        public static ConsoleKey IN_DOWN = ConsoleKey.DownArrow;
+        public static ConsoleKey IN_LEFT = ConsoleKey.A;
+        public static ConsoleKey IN_RIGHT = ConsoleKey.D;
+        public static ConsoleKey IN_UP = ConsoleKey.W;
+        public static ConsoleKey IN_DOWN = ConsoleKey.S;
 
     }
 }

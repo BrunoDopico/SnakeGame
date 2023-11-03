@@ -40,10 +40,10 @@ namespace Snake_Game
             // lbInfo
             // 
             this.lbInfo.AutoSize = true;
-            this.lbInfo.Font = new System.Drawing.Font("Star Guard", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbInfo.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbInfo.Location = new System.Drawing.Point(180, 2);
             this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(49, 22);
+            this.lbInfo.Size = new System.Drawing.Size(50, 22);
             this.lbInfo.TabIndex = 1;
             this.lbInfo.Text = "INFO";
             // 
