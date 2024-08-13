@@ -170,6 +170,7 @@ namespace Snake_Game
             this.btDefault.TabIndex = 13;
             this.btDefault.Text = "DEFAULT";
             this.btDefault.UseVisualStyleBackColor = true;
+            this.btDefault.Click += new System.EventHandler(this.btDefault_Click);
             // 
             // btSave
             // 

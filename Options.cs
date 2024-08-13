@@ -42,12 +42,19 @@ namespace Snake_Game
             Config.SPECIAL_FRUIT_PCT = Convert.ToDouble(numSpecialFruitPct.Value);
             Config.SPECIAL_FRUIT_VALUE = Convert.ToInt32(numSpecialFruitValue.Value);
             Config.SaveConfig();
-            MessageBox.Show("Saved changes" + Path.Combine(Environment.CurrentDirectory, "Configuration.txt"), "SAVED", MessageBoxButtons.OK);
+            MessageBox.Show("Saved changes", "SAVED", MessageBoxButtons.OK);
         }
 
         private void btCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btDefault_Click(object sender, EventArgs e)
+        {
+            Config.SetToDefault();
+            MessageBox.Show("Values set back to default \nChanges will not be saved in memory if SAVE button is not pressed!", "DEFAULT", MessageBoxButtons.OK);
+            LoadFromConfig();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Snake_Game
         private int fruits_eaten = 0;
         private int score = 0;
         private int time = 0;
-        private bool pause = false;
         private Main view;
 
         internal Snake Snake { get => snake; set => snake = value; }
@@ -103,32 +102,12 @@ namespace Snake_Game
         /// <summary>
         /// Method that handles user's input
         /// </summary>
-        public void getInput(char key)
+        public void getInput(ConsoleKey key)
         {
-            switch (key)
-            {
-                // LEFT
-                case 'a':
-                    direction = 0;
-                    break;
-                // RIGHT
-                case 'd':
-                    direction = 1;
-                    break;
-                // UP
-                case 'w':
-                    direction = 2;
-                    break;
-                // DOWN
-                case 's':
-                    direction = 3;
-                    break;
-                case 'p':
-                    pause = true;
-                    break;
-                default:
-                    break;
-            }
+            if (key == Config.IN_LEFT) direction = 0;
+            else if (key == Config.IN_RIGHT) direction = 1;
+            else if (key == Config.IN_UP) direction = 2;
+            else if (key == Config.IN_DOWN) direction = 3;    
         }
 
         /// <summary>

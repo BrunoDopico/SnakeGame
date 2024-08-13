@@ -22,7 +22,7 @@ namespace Snake_Game
         {
             gameLoop.Tick += GameLoop;
             controller = new SnakeGame(this);
-            Config.SetToDefault();
+            Config.LoadConfig();
             InitializeComponent();
             defaultFormWidth = this.Width;
 
@@ -169,7 +169,7 @@ namespace Snake_Game
             grid[x, y].Image = sprite;
         }
 
-        private void startGame()
+        private void StartGame()
         {
             ClearGrid();
             grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
@@ -178,9 +178,9 @@ namespace Snake_Game
             int height = 64 + grid.GetLength(1) * 32;
             Size = new Size(width, height);
             this.CenterToScreen();
+            controller.StartGame();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
-            controller.StartGame();
             inGame = true;
         }
 
@@ -209,34 +209,15 @@ namespace Snake_Game
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            switch (Char.ToLower(e.KeyChar))
-            {
-                case 'w':
-                    controller.getInput('w');
-                    break;
-                case 'a':
-                    controller.getInput('a');
-                    break;
-                case 's':
-                    controller.getInput('s');
-                    break;
-                case 'd':
-                    controller.getInput('d');
-                    break;
-                case 'p':
-                    Pause();
-                    break;
-                case 'n':
-                    startGame();
-                    break;
-                default:
-                    break;
-            }
+            ConsoleKey key = (ConsoleKey) Char.ToUpper(e.KeyChar);
+            if (key.Equals(Config.IN_PAUSE)) Pause();
+            else if (key.Equals(Config.IN_NEW)) StartGame();
+            else controller.getInput(key);
         }
 
         private void bt_newGame_Click(object sender, EventArgs e)
         {
-            startGame();
+            StartGame();
         }
 
         private void bt_Options_Click(object sender, EventArgs e)
@@ -260,11 +241,12 @@ namespace Snake_Game
                 "\nThe objective of this game is to survive for as long as possible while eating fruits to make your snake's body larger." +
                 "\nTouching an obstacle or your own body will instantly kill you.\n" +
                 "\n- CONTROLS -\n" +
-                " ·Move Up: " + Config.IN_UP.ToString() +
-                "\n ·Move Down: " + Config.IN_DOWN.ToString() +
-                "\n ·Move Left: " + Config.IN_LEFT.ToString() +
-                "\n ·Move Right: " + Config.IN_RIGHT.ToString() +
-                "\n ·Pause: " + Config.IN_PAUSE.ToString() +
+                " · Move Up: " + Config.IN_UP.ToString() +
+                "\n · Move Down: " + Config.IN_DOWN.ToString() +
+                "\n · Move Left: " + Config.IN_LEFT.ToString() +
+                "\n · Move Right: " + Config.IN_RIGHT.ToString() +
+                "\n · Pause: " + Config.IN_PAUSE.ToString() +
+                "\n · New Game: " + Config.IN_NEW.ToString() +
                 "\n (Can be changed in options)\n" +
                 "\n- CREDITS -\n" +
                 "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);
