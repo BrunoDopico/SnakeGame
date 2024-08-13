@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace Snake_Game
     class Config
     {
         //GAME CONFIGURATIONS
-        public static int DIFFICULTY;
-        public static int TIMER;
+        public static int DIFFICULTY; // 0 - Easy, 3 - Hardcore
+        public static int TIMER; //this stat is public in the code, but should not be modified by the players and therefore not saved.
 
         //MAP CONFIGURATIONS
-        public static int MAP_X;
+        public static int MAP_X; //Min 
         public static int MAP_Y;
         public static int MAP_TYPE;
 
@@ -32,9 +33,24 @@ namespace Snake_Game
         public static ConsoleKey IN_UP;
         public static ConsoleKey IN_DOWN;
 
-        private void SaveConfig()
+        public static void SaveConfig()
         {
-
+            using (StreamWriter saveFile = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Configuration.txt")))
+            {
+                saveFile.WriteLine(DIFFICULTY + "; Difficulty -- 0 Easy - 1 Medium - 2 Hard - 3 Hardcore");
+                saveFile.WriteLine(MAP_X + "; Map Length -- Minimum size: 6 - Maximum size: 50");
+                saveFile.WriteLine(MAP_Y + "; Map Height -- Minimum size: 6 - Maximum size: 30");
+                saveFile.WriteLine(MAP_TYPE + "; Map Type -- 0 STANDARD - 1 BORDERLESS - 2 HOLES ON THE WALL - 3 EXTRA WALLS - 4HOLES AND WALLS");
+                saveFile.WriteLine(SPECIAL_FRUIT_AVAILABLE + "; Special Fruit Available -- True - False");
+                saveFile.WriteLine(SPECIAL_FRUIT_PCT + "; Special Fruit Percentage -- 0,00 0% - 1 100% - Recommended to make 0,05 increments");
+                saveFile.WriteLine(SPECIAL_FRUIT_VALUE + "; Special Fruit Value -- -3 - 10");
+                saveFile.WriteLine(INITIAL_SNAKE_SIZE + "; Initial Snake Size -- 3 - 15");
+                saveFile.WriteLine(IN_UP + "; Controls: Move Up");
+                saveFile.WriteLine(IN_DOWN + "; Controls: Move Down");
+                saveFile.WriteLine(IN_LEFT + "; Controls: Move Left");
+                saveFile.WriteLine(IN_RIGHT + "; Controls: Move Right");
+                saveFile.WriteLine(IN_PAUSE + "; Controls: Pause");
+            }
         }
 
         public static void SetToDefault()

@@ -22,6 +22,7 @@ namespace Snake_Game
         {
             gameLoop.Tick += GameLoop;
             controller = new SnakeGame(this);
+            Config.SetToDefault();
             InitializeComponent();
             defaultFormWidth = this.Width;
 

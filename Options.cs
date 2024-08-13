@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,8 @@ namespace Snake_Game
             Config.SPECIAL_FRUIT_AVAILABLE = cbSpecialFruit.Checked;
             Config.SPECIAL_FRUIT_PCT = Convert.ToDouble(numSpecialFruitPct.Value);
             Config.SPECIAL_FRUIT_VALUE = Convert.ToInt32(numSpecialFruitValue.Value);
-            MessageBox.Show("Saved changes", "SAVED", MessageBoxButtons.OK);
+            Config.SaveConfig();
+            MessageBox.Show("Saved changes" + Path.Combine(Environment.CurrentDirectory, "Configuration.txt"), "SAVED", MessageBoxButtons.OK);
         }
 
         private void btCancel_Click(object sender, EventArgs e)
