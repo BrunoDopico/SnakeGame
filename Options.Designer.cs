@@ -50,6 +50,19 @@ namespace Snake_Game
             this.lbSpecialFruitValue = new System.Windows.Forms.Label();
             this.numSpecialFruitPct = new System.Windows.Forms.NumericUpDown();
             this.numSpecialFruitValue = new System.Windows.Forms.NumericUpDown();
+            this.tbControlsUp = new System.Windows.Forms.TextBox();
+            this.lbControlsUp = new System.Windows.Forms.Label();
+            this.lbControlsDown = new System.Windows.Forms.Label();
+            this.tbControlsDown = new System.Windows.Forms.TextBox();
+            this.lbControlsPause = new System.Windows.Forms.Label();
+            this.tbControlsPause = new System.Windows.Forms.TextBox();
+            this.lbControlsNewGame = new System.Windows.Forms.Label();
+            this.tbControlsNew = new System.Windows.Forms.TextBox();
+            this.lbControlsRight = new System.Windows.Forms.Label();
+            this.tbControlsRight = new System.Windows.Forms.TextBox();
+            this.lbControlsLeft = new System.Windows.Forms.Label();
+            this.tbControlsLeft = new System.Windows.Forms.TextBox();
+            this.lbControls = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numMapX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMapY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numInitialSize)).BeginInit();
@@ -164,7 +177,7 @@ namespace Snake_Game
             // 
             // btDefault
             // 
-            this.btDefault.Location = new System.Drawing.Point(34, 208);
+            this.btDefault.Location = new System.Drawing.Point(18, 310);
             this.btDefault.Name = "btDefault";
             this.btDefault.Size = new System.Drawing.Size(75, 23);
             this.btDefault.TabIndex = 13;
@@ -174,7 +187,7 @@ namespace Snake_Game
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(134, 208);
+            this.btSave.Location = new System.Drawing.Point(135, 310);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
             this.btSave.TabIndex = 14;
@@ -251,7 +264,7 @@ namespace Snake_Game
             // btCancel
             // 
             this.btCancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btCancel.Location = new System.Drawing.Point(236, 208);
+            this.btCancel.Location = new System.Drawing.Point(246, 310);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 18;
@@ -322,12 +335,156 @@ namespace Snake_Game
             0,
             0});
             // 
+            // tbControlsUp
+            // 
+            this.tbControlsUp.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsUp.Location = new System.Drawing.Point(63, 227);
+            this.tbControlsUp.MaxLength = 1;
+            this.tbControlsUp.Name = "tbControlsUp";
+            this.tbControlsUp.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsUp.TabIndex = 23;
+            this.tbControlsUp.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsUp.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControlsUp
+            // 
+            this.lbControlsUp.AutoSize = true;
+            this.lbControlsUp.Location = new System.Drawing.Point(15, 230);
+            this.lbControlsUp.Name = "lbControlsUp";
+            this.lbControlsUp.Size = new System.Drawing.Size(22, 13);
+            this.lbControlsUp.TabIndex = 24;
+            this.lbControlsUp.Text = "UP";
+            // 
+            // lbControlsDown
+            // 
+            this.lbControlsDown.AutoSize = true;
+            this.lbControlsDown.Location = new System.Drawing.Point(15, 256);
+            this.lbControlsDown.Name = "lbControlsDown";
+            this.lbControlsDown.Size = new System.Drawing.Size(42, 13);
+            this.lbControlsDown.TabIndex = 26;
+            this.lbControlsDown.Text = "DOWN";
+            // 
+            // tbControlsDown
+            // 
+            this.tbControlsDown.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsDown.Location = new System.Drawing.Point(63, 253);
+            this.tbControlsDown.MaxLength = 1;
+            this.tbControlsDown.Name = "tbControlsDown";
+            this.tbControlsDown.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsDown.TabIndex = 25;
+            this.tbControlsDown.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsDown.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControlsPause
+            // 
+            this.lbControlsPause.AutoSize = true;
+            this.lbControlsPause.Location = new System.Drawing.Point(15, 282);
+            this.lbControlsPause.Name = "lbControlsPause";
+            this.lbControlsPause.Size = new System.Drawing.Size(43, 13);
+            this.lbControlsPause.TabIndex = 28;
+            this.lbControlsPause.Text = "PAUSE";
+            // 
+            // tbControlsPause
+            // 
+            this.tbControlsPause.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsPause.Location = new System.Drawing.Point(63, 279);
+            this.tbControlsPause.MaxLength = 1;
+            this.tbControlsPause.Name = "tbControlsPause";
+            this.tbControlsPause.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsPause.TabIndex = 27;
+            this.tbControlsPause.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsPause.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControlsNewGame
+            // 
+            this.lbControlsNewGame.AutoSize = true;
+            this.lbControlsNewGame.Location = new System.Drawing.Point(191, 282);
+            this.lbControlsNewGame.Name = "lbControlsNewGame";
+            this.lbControlsNewGame.Size = new System.Drawing.Size(67, 13);
+            this.lbControlsNewGame.TabIndex = 34;
+            this.lbControlsNewGame.Text = "NEW GAME";
+            // 
+            // tbControlsNew
+            // 
+            this.tbControlsNew.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsNew.Location = new System.Drawing.Point(258, 279);
+            this.tbControlsNew.MaxLength = 1;
+            this.tbControlsNew.Name = "tbControlsNew";
+            this.tbControlsNew.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsNew.TabIndex = 33;
+            this.tbControlsNew.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsNew.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControlsRight
+            // 
+            this.lbControlsRight.AutoSize = true;
+            this.lbControlsRight.Location = new System.Drawing.Point(191, 256);
+            this.lbControlsRight.Name = "lbControlsRight";
+            this.lbControlsRight.Size = new System.Drawing.Size(41, 13);
+            this.lbControlsRight.TabIndex = 32;
+            this.lbControlsRight.Text = "RIGHT";
+            // 
+            // tbControlsRight
+            // 
+            this.tbControlsRight.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsRight.Location = new System.Drawing.Point(258, 253);
+            this.tbControlsRight.MaxLength = 1;
+            this.tbControlsRight.Name = "tbControlsRight";
+            this.tbControlsRight.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsRight.TabIndex = 31;
+            this.tbControlsRight.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsRight.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControlsLeft
+            // 
+            this.lbControlsLeft.AutoSize = true;
+            this.lbControlsLeft.Location = new System.Drawing.Point(191, 230);
+            this.lbControlsLeft.Name = "lbControlsLeft";
+            this.lbControlsLeft.Size = new System.Drawing.Size(33, 13);
+            this.lbControlsLeft.TabIndex = 30;
+            this.lbControlsLeft.Text = "LEFT";
+            // 
+            // tbControlsLeft
+            // 
+            this.tbControlsLeft.AcceptsTab = true;
+            this.tbControlsLeft.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbControlsLeft.Location = new System.Drawing.Point(258, 227);
+            this.tbControlsLeft.MaxLength = 1;
+            this.tbControlsLeft.Name = "tbControlsLeft";
+            this.tbControlsLeft.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsLeft.TabIndex = 29;
+            this.tbControlsLeft.Click += new System.EventHandler(this.ControlsTextsClicked);
+            this.tbControlsLeft.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
+            // 
+            // lbControls
+            // 
+            this.lbControls.AutoSize = true;
+            this.lbControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbControls.Location = new System.Drawing.Point(14, 199);
+            this.lbControls.Name = "lbControls";
+            this.lbControls.Size = new System.Drawing.Size(104, 20);
+            this.lbControls.TabIndex = 35;
+            this.lbControls.Text = "CONTROLS";
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGreen;
-            this.ClientSize = new System.Drawing.Size(338, 243);
+            this.ClientSize = new System.Drawing.Size(338, 343);
+            this.Controls.Add(this.lbControls);
+            this.Controls.Add(this.lbControlsNewGame);
+            this.Controls.Add(this.tbControlsNew);
+            this.Controls.Add(this.lbControlsRight);
+            this.Controls.Add(this.tbControlsRight);
+            this.Controls.Add(this.lbControlsLeft);
+            this.Controls.Add(this.tbControlsLeft);
+            this.Controls.Add(this.lbControlsPause);
+            this.Controls.Add(this.tbControlsPause);
+            this.Controls.Add(this.lbControlsDown);
+            this.Controls.Add(this.tbControlsDown);
+            this.Controls.Add(this.lbControlsUp);
+            this.Controls.Add(this.tbControlsUp);
             this.Controls.Add(this.numSpecialFruitValue);
             this.Controls.Add(this.numSpecialFruitPct);
             this.Controls.Add(this.lbSpecialFruitValue);
@@ -387,5 +544,18 @@ namespace Snake_Game
         private System.Windows.Forms.Label lbSpecialFruitValue;
         private System.Windows.Forms.NumericUpDown numSpecialFruitPct;
         private System.Windows.Forms.NumericUpDown numSpecialFruitValue;
+        private System.Windows.Forms.TextBox tbControlsUp;
+        private System.Windows.Forms.Label lbControlsUp;
+        private System.Windows.Forms.Label lbControlsDown;
+        private System.Windows.Forms.TextBox tbControlsDown;
+        private System.Windows.Forms.Label lbControlsPause;
+        private System.Windows.Forms.TextBox tbControlsPause;
+        private System.Windows.Forms.Label lbControlsNewGame;
+        private System.Windows.Forms.TextBox tbControlsNew;
+        private System.Windows.Forms.Label lbControlsRight;
+        private System.Windows.Forms.TextBox tbControlsRight;
+        private System.Windows.Forms.Label lbControlsLeft;
+        private System.Windows.Forms.TextBox tbControlsLeft;
+        private System.Windows.Forms.Label lbControls;
     }
 }

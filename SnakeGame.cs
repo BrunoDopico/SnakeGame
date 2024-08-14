@@ -53,7 +53,7 @@ namespace Snake_Game
         {
             time++;
             Update();
-            view.ChangeInfo("Time: "+time);
+            view.ChangeInfo("Time: "+ (time/(1000/Config.TIMER)+1));
         }
 
         /// <summary>
