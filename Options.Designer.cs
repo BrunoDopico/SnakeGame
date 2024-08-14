@@ -74,6 +74,8 @@ namespace Snake_Game
             // 
             this.cbDifficulty.BackColor = System.Drawing.Color.LimeGreen;
             this.cbDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDifficulty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbDifficulty.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cbDifficulty.FormattingEnabled = true;
             this.cbDifficulty.Items.AddRange(new object[] {
             "EASY",
@@ -105,7 +107,9 @@ namespace Snake_Game
             // 
             // cbMapType
             // 
+            this.cbMapType.BackColor = System.Drawing.Color.LimeGreen;
             this.cbMapType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMapType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbMapType.FormattingEnabled = true;
             this.cbMapType.Items.AddRange(new object[] {
             "STANDARD",
@@ -197,6 +201,7 @@ namespace Snake_Game
             // 
             // numMapX
             // 
+            this.numMapX.BackColor = System.Drawing.Color.LimeGreen;
             this.numMapX.Location = new System.Drawing.Point(85, 120);
             this.numMapX.Maximum = new decimal(new int[] {
             50,
@@ -219,6 +224,7 @@ namespace Snake_Game
             // 
             // numMapY
             // 
+            this.numMapY.BackColor = System.Drawing.Color.LimeGreen;
             this.numMapY.Location = new System.Drawing.Point(85, 150);
             this.numMapY.Maximum = new decimal(new int[] {
             30,
@@ -241,6 +247,7 @@ namespace Snake_Game
             // 
             // numInitialSize
             // 
+            this.numInitialSize.BackColor = System.Drawing.Color.LimeGreen;
             this.numInitialSize.Location = new System.Drawing.Point(85, 176);
             this.numInitialSize.Maximum = new decimal(new int[] {
             15,
@@ -292,7 +299,9 @@ namespace Snake_Game
             // 
             // numSpecialFruitPct
             // 
+            this.numSpecialFruitPct.BackColor = System.Drawing.Color.LimeGreen;
             this.numSpecialFruitPct.DecimalPlaces = 2;
+            this.numSpecialFruitPct.ForeColor = System.Drawing.SystemColors.WindowText;
             this.numSpecialFruitPct.Increment = new decimal(new int[] {
             5,
             0,
@@ -315,6 +324,7 @@ namespace Snake_Game
             // 
             // numSpecialFruitValue
             // 
+            this.numSpecialFruitValue.BackColor = System.Drawing.Color.LimeGreen;
             this.numSpecialFruitValue.Location = new System.Drawing.Point(294, 176);
             this.numSpecialFruitValue.Maximum = new decimal(new int[] {
             10,
@@ -337,6 +347,7 @@ namespace Snake_Game
             // 
             // tbControlsUp
             // 
+            this.tbControlsUp.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsUp.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsUp.Location = new System.Drawing.Point(63, 227);
             this.tbControlsUp.MaxLength = 1;
@@ -366,6 +377,7 @@ namespace Snake_Game
             // 
             // tbControlsDown
             // 
+            this.tbControlsDown.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsDown.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsDown.Location = new System.Drawing.Point(63, 253);
             this.tbControlsDown.MaxLength = 1;
@@ -386,6 +398,7 @@ namespace Snake_Game
             // 
             // tbControlsPause
             // 
+            this.tbControlsPause.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsPause.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsPause.Location = new System.Drawing.Point(63, 279);
             this.tbControlsPause.MaxLength = 1;
@@ -406,6 +419,7 @@ namespace Snake_Game
             // 
             // tbControlsNew
             // 
+            this.tbControlsNew.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsNew.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsNew.Location = new System.Drawing.Point(258, 279);
             this.tbControlsNew.MaxLength = 1;
@@ -426,6 +440,7 @@ namespace Snake_Game
             // 
             // tbControlsRight
             // 
+            this.tbControlsRight.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsRight.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsRight.Location = new System.Drawing.Point(258, 253);
             this.tbControlsRight.MaxLength = 1;
@@ -447,6 +462,7 @@ namespace Snake_Game
             // tbControlsLeft
             // 
             this.tbControlsLeft.AcceptsTab = true;
+            this.tbControlsLeft.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsLeft.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbControlsLeft.Location = new System.Drawing.Point(258, 227);
             this.tbControlsLeft.MaxLength = 1;

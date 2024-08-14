@@ -47,7 +47,7 @@ namespace Snake_Game
             this.bt_newGame.Name = "bt_newGame";
             this.bt_newGame.Size = new System.Drawing.Size(78, 23);
             this.bt_newGame.TabIndex = 2;
-            this.bt_newGame.Text = "NEW GAME";
+            this.bt_newGame.Text = "START";
             this.bt_newGame.UseVisualStyleBackColor = true;
             this.bt_newGame.Click += new System.EventHandler(this.bt_newGame_Click);
             // 
