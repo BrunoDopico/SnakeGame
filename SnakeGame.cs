@@ -19,13 +19,13 @@ namespace Snake_Game
         private int fruits_eaten = 0;
         private int score = 0;
         private int time = 0;
-        private Main view;
+        private GameScreen view;
 
         internal Snake Snake { get => snake; set => snake = value; }
         internal Cell[,] Map { get => map; set => map = value; }
         public bool Lose { get => lose; set => lose = value; }
 
-        public SnakeGame(Main view)
+        public SnakeGame(GameScreen view)
         {
             this.view = view;
             direction = 0;
