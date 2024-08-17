@@ -5,14 +5,14 @@ using System;
 public class HamiltonianCycle
 {
     readonly int V = 5;
-    int []path;
+    int[] path;
 
     /* A utility function to check 
     if the vertex v can be added at 
     index 'pos'in the Hamiltonian Cycle
     constructed so far (stored in 'path[]') */
-    bool isSafe(int v, int [,]graph,
-                int []path, int pos)
+    bool isSafe(int v, int[,] graph,
+                int[] path, int pos)
     {
         /* Check if this vertex is 
         an adjacent vertex of the
@@ -33,7 +33,7 @@ public class HamiltonianCycle
 
     /* A recursive utility function
     to solve hamiltonian cycle problem */
-    bool hamCycleUtil(int [,]graph, int []path, int pos)
+    bool hamCycleUtil(int[,] graph, int[] path, int pos)
     {
         /* base case: If all vertices 
         are included in Hamiltonian Cycle */
@@ -41,7 +41,7 @@ public class HamiltonianCycle
         {
             // And if there is an edge from the last included
             // vertex to the first vertex
-            if (graph[path[pos - 1],path[0]] == 1)
+            if (graph[path[pos - 1], path[0]] == 1)
                 return true;
             else
                 return false;
@@ -82,7 +82,7 @@ public class HamiltonianCycle
     Please note that there may be more than 
     one solutions, this function prints one 
     of the feasible solutions. */
-    int hamCycle(int [,]graph)
+    int hamCycle(int[,] graph)
     {
         path = new int[V];
         for (int i = 0; i < V; i++)
@@ -96,10 +96,8 @@ public class HamiltonianCycle
         path[0] = 0;
         if (hamCycleUtil(graph, path, 1) == false)
         {
-            Console.WriteLine("\nSolution does not exist");
             return 0;
         }
-
-        printSolution(path);
         return 1;
     }
+}

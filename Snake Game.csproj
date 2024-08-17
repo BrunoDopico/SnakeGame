@@ -54,6 +54,8 @@
     <Compile Include="GameScreen.Designer.cs">
       <DependentUpon>GameScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graph.cs" />
+    <Compile Include="HamiltonianCycle.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
