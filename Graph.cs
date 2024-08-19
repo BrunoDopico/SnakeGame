@@ -109,27 +109,28 @@ namespace Snake_Game
                         if (Matrix[i, j, 0] == 1)
                         {
                             isVertex = true;
-                            graph[count, 1] = 100 * LoopMap(mapX - 1, true) + mapY;
+                            graph[count, 1] = 100 * LoopMap(i - 1, true) + j;
                         }
                         if (Matrix[i, j, 1] == 1)
                         {
                             isVertex = true;
-                            graph[count, 2] = 100 * LoopMap(mapX + 1, true) + mapY;
+                            graph[count, 2] = 100 * LoopMap(i + 1, true) + j;
                         }
                         if (Matrix[i, j, 2] == 1)
                         {
                             isVertex = true;
-                            graph[count, 3] = 100 * mapX + LoopMap(mapY - 1, false);
+                            graph[count, 3] = 100 * i + LoopMap(j - 1, false);
                         }
                         if (Matrix[i, j, 3] == 1)
                         {
                             isVertex = true;
-                            graph[count, 4] = 100 * mapX + LoopMap(mapY + 1, false);
+                            graph[count, 4] = 100 * i + LoopMap(j + 1, false);
                         }
                         if (isVertex)
                         {
-                            graph[count, 0] = 100 * mapX + mapY;
+                            graph[count, 0] = 100 * i + j;
                             count++;
+                            isVertex = false;
                         }
                     }
                 }
