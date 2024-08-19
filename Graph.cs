@@ -14,11 +14,11 @@ namespace Snake_Game
         Cell[,] WallMap;
         int totalVertices;
 
-        public Graph(int mapX, int mapY, Cell[,] WallMap)
+        public Graph(Cell[,] Walls)
         {
-            this.mapX = mapX;
-            this.mapY = mapY;
-            this.WallMap = WallMap;
+            this.mapX = Config.MAP_X;
+            this.mapY = Config.MAP_Y;
+            this.WallMap = Walls;
             totalVertices = 0;
             GenerateEmptyMatrix();
             populateMatrix();
@@ -37,13 +37,13 @@ namespace Snake_Game
             }
         }
 
-        public void AddEdges(int x, int y, int[] walls)
+        public void AddEdges(int x, int y, int[] edges)
         {
             if (x >= mapX || y >= mapY || x < 0 || y < 0)
                 throw new ArgumentOutOfRangeException("Vertices are out of bounds");
-            for (int wall = 0; wall < walls.Length; wall++)
+            for (int edge = 0; edge < edges.Length; edge++)
             {
-                Matrix[x,y,wall] = walls[wall];
+                Matrix[x,y,edge] = edges[edge];
             }
         }       
 
@@ -58,15 +58,15 @@ namespace Snake_Game
 
             return adjacentVertices;
         }
+
         public void populateMatrix()
         {
-            bool isWall = false;
-            for(int i = 0; i < this.mapX; i++)  
+            for(int i = 0; i < mapX; i++)  
             {
-                 for(int j = 0; i < this.mapY; j++)  
+                 for(int j = 0; j < mapY; j++)  
                  {
-                    isWall = WallMap[i,j].Type == 'O';
-                    if(!isWall){
+                    if(WallMap[i,j].Type != 'O')
+                    {
                         int[] edges = { 0, 0, 0, 0 };
                         int wallCount = 0;
                         if(WallMap[LoopMap(i-1,true),j].Type != 'O') edges[0] = 1; //LEFT
@@ -77,6 +77,7 @@ namespace Snake_Game
                         else wallCount++;
                         if(WallMap[i,LoopMap(j+1,false)].Type != 'O') edges[3] = 1; //DOWN
                         else wallCount++;
+                        
                         if (wallCount > 3)
                         {
                             WallMap[i, j].Type = 'O';
@@ -94,16 +95,47 @@ namespace Snake_Game
             }
         }
 
-        public void ConvertMatrixToGraph()
+        public int ConvertMatrixToGraph()
         {
-            int[,] graph = new int[totalVertices, totalVertices];
-            for (int i = 0; i < totalVertices; i++)
+            int[,] graph = new int[totalVertices,5];
+            int count = 0;
+            bool isVertex = false;
+            for (int i = 0; i < mapX; i++)
             {
-                for (int j = 0; j < totalVertices; j++)
+                for (int j = 0; j < mapY; j++)
                 {
-                    //TODO
+                    if(count < totalVertices)
+                    {
+                        if (Matrix[i, j, 0] == 1)
+                        {
+                            isVertex = true;
+                            graph[count, 1] = 100 * LoopMap(mapX - 1, true) + mapY;
+                        }
+                        if (Matrix[i, j, 1] == 1)
+                        {
+                            isVertex = true;
+                            graph[count, 2] = 100 * LoopMap(mapX + 1, true) + mapY;
+                        }
+                        if (Matrix[i, j, 2] == 1)
+                        {
+                            isVertex = true;
+                            graph[count, 3] = 100 * mapX + LoopMap(mapY - 1, false);
+                        }
+                        if (Matrix[i, j, 3] == 1)
+                        {
+                            isVertex = true;
+                            graph[count, 4] = 100 * mapX + LoopMap(mapY + 1, false);
+                        }
+                        if (isVertex)
+                        {
+                            graph[count, 0] = 100 * mapX + mapY;
+                            count++;
+                        }
+                    }
                 }
             }
+            HamiltonianCycle ham = new HamiltonianCycle();
+            return ham.hamCycle(graph, totalVertices);
         }
 
         public int LoopMap(int value, bool isX){

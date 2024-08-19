@@ -12,6 +12,7 @@ namespace Snake_Game
     {
         private Snake snake;
         private Cell[,] map;
+        private Graph graph;
         private bool lose;
         private Random random;
         private int direction;
@@ -53,7 +54,7 @@ namespace Snake_Game
         {
             time++;
             Update();
-            view.ChangeInfo("Time: "+ (time/(1000/Config.TIMER)+1));
+            //view.ChangeInfo("Time: "+ (time/(1000/Config.TIMER)+1));
         }
 
         /// <summary>
@@ -277,6 +278,11 @@ namespace Snake_Game
                     wall_counter--;
                 }
             }
+            graph = new Graph(map);
+            view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
+
+            snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
+            map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell('S', 0);
 
             while (fruit_counter > 0)
             {
@@ -284,8 +290,6 @@ namespace Snake_Game
                 fruit_counter--;
             }
 
-            snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
-            map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell('S', 0);
         }
         private void PutMapWalls()
         {
