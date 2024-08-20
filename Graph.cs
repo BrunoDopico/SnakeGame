@@ -136,7 +136,7 @@ namespace Snake_Game
                 }
             }
             HamiltonianCycle ham = new HamiltonianCycle();
-            return ham.hamCycle(graph, totalVertices);
+            return ham.HamCycle(graph, totalVertices);
         }
 
         public int LoopMap(int value, bool isX){
