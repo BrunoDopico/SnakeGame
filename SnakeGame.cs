@@ -54,7 +54,7 @@ namespace Snake_Game
         {
             time++;
             Update();
-            //view.ChangeInfo("Time: "+ (time/(1000/Config.TIMER)+1));
+            view.ChangeInfo("Time: "+ (time/(1000/Config.TIMER)+1));
         }
 
         /// <summary>
@@ -278,8 +278,9 @@ namespace Snake_Game
                     wall_counter--;
                 }
             }
-            graph = new Graph(map);
-            view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
+            //Graph creation and hamiltonian cycle check
+            //graph = new Graph(map);
+            //view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
 
             snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
             map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell('S', 0);
