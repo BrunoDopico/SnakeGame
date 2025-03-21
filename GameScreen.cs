@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

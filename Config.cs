@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace Snake_Game
     class Config
     {
         //GAME CONFIGURATIONS
-        public static int DIFFICULTY; // 0 - Easy -- 3 - Hardcore
+        public static Difficulty DIFFICULTY;
         public static int TIMER; //this stat is public in the code, but should not be modified by the players and therefore not saved.
 
         //MAP CONFIGURATIONS
         public static int MAP_X; //Min 6, Max 50
         public static int MAP_Y; //Min 6, Max 30
-        public static int MAP_TYPE; //0 STANDARD - 1 BORDERLESS - 2 HOLES ON THE WALL - 3 EXTRA WALLS - 4 HOLES AND WALLS
+        public static MapType MAP_TYPE;
 
         //FRUIT CONFIGURATIONS
         public static bool SPECIAL_FRUIT_AVAILABLE;
@@ -68,10 +69,10 @@ namespace Snake_Game
                 {
                     try
                     {
-                        DIFFICULTY = Int32.Parse(readFile.ReadLine().Split(';')[0]);
+                        DIFFICULTY = (Difficulty) Int32.Parse(readFile.ReadLine().Split(';')[0]);
                         MAP_X = Int32.Parse(readFile.ReadLine().Split(';')[0]);
                         MAP_Y = Int32.Parse(readFile.ReadLine().Split(';')[0]);
-                        MAP_TYPE = Int32.Parse(readFile.ReadLine().Split(';')[0]);
+                        MAP_TYPE = (MapType) Int32.Parse(readFile.ReadLine().Split(';')[0]);
                         SPECIAL_FRUIT_AVAILABLE = Boolean.Parse(readFile.ReadLine().Split(';')[0]);
                         SPECIAL_FRUIT_PCT = Double.Parse(readFile.ReadLine().Split(';')[0]);
                         SPECIAL_FRUIT_VALUE = Int32.Parse(readFile.ReadLine().Split(';')[0]);
@@ -93,12 +94,12 @@ namespace Snake_Game
 
         public static void SetToDefault()
         {
-            DIFFICULTY = 0;
+            DIFFICULTY = Difficulty.Easy;
             TIMER = 250;
 
             MAP_X = 20;
             MAP_Y = 15;
-            MAP_TYPE = 0;
+            MAP_TYPE = MapType.Standard;
             SPECIAL_FRUIT_AVAILABLE = true;
             SPECIAL_FRUIT_PCT = 0.05;
             SPECIAL_FRUIT_VALUE = 3;

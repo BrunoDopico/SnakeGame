@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Snake_Game.Entities;
+using Snake_Game.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,9 +71,9 @@ namespace Snake_Game
             snake.MoveHead(direction);
             CheckHeadBorder();
             Cell eaten_cell = map[snake.Head_x, snake.Head_y];
-            if (eaten_cell.Type == 'O') lose = true;
-            else if(eaten_cell.Type == 'S') lose = true;
-            else if (eaten_cell.Type == 'F') 
+            if (eaten_cell.Type == CellType.Obstacle) lose = true;
+            else if(eaten_cell.Type == CellType.Snake) lose = true;
+            else if (eaten_cell.Type == CellType.Fruit) 
             {
                 
                 if (snake.Size + eaten_cell.Value < 3)
@@ -85,14 +87,14 @@ namespace Snake_Game
                     snake.Size += eaten_cell.Value;
                 }
                 score += eaten_cell.Value;
-                map[snake.Head_x, snake.Head_y].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
                 map[snake.Head_x, snake.Head_y].Value = direction;
                 fruits_eaten++;
                 PutFruit();
             }
             else
             {
-                map[snake.Head_x, snake.Head_y].Type = 'S';
+                map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
                 map[snake.Head_x, snake.Head_y].Value = direction;
             }
             removeTail();
@@ -125,7 +127,7 @@ namespace Snake_Game
                     int y1 = snake.Tail_y;
                     snake.MoveTail(map[x1, y1].Value);
                     CheckTailBorder(map[x1, y1].Value);
-                    map[x1, y1] = new Cell('V', 0);
+                    map[x1, y1] = new Cell(CellType.Void, 0);
                     view.UpdateCell(x1, y1, "");
                     snake.Growing++;
                 }
@@ -134,7 +136,7 @@ namespace Snake_Game
                 int y = snake.Tail_y;
                 snake.MoveTail(map[x, y].Value);
                 CheckTailBorder(map[x, y].Value);
-                map[x, y] = new Cell('V', 0);
+                map[x, y] = new Cell(CellType.Void, 0);
                 view.UpdateCell(x, y, "");
             }
         }
@@ -199,9 +201,9 @@ namespace Snake_Game
                 {
                     value = random.NextDouble();
                 }
-                if (map[x, y].Type == 'V')
+                if (map[x, y].Type == CellType.Void)
                 {
-                    map[x, y].Type = 'F';
+                    map[x, y].Type = CellType.Fruit;
                     if (value < Config.SPECIAL_FRUIT_PCT)
                     {
                         map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
@@ -221,19 +223,20 @@ namespace Snake_Game
         {
             switch (Config.MAP_TYPE)
             {
-                case 0:
+                case MapType.Standard:
                     PutMapWalls();
                     break;
-                case 1:
+                case MapType.Borderless:
                     break;
-                case 2:
+                case MapType.HolesOnWalls:
                     PutMapWalls();
                     RemoveRandomWalls(6);
                     break;
-                case 3:
+                case MapType.ExtraWalls:
+                    PutMapWalls();
                     PutRandomWalls(3);
                     break;
-                case 4:
+                case MapType.HolesAndWalls:
                     PutMapWalls();
                     PutRandomWalls(3);
                     RemoveRandomWalls(6);
@@ -243,19 +246,19 @@ namespace Snake_Game
 
             switch (Config.DIFFICULTY)
             {
-                case 0:
+                case Difficulty.Easy:
                     Config.TIMER = 250;
                     PopulateMap(0, 4);
                     break;
-                case 1:
+                case Difficulty.Medium:
                     Config.TIMER = 250;
                     PopulateMap((Config.MAP_X+Config.MAP_Y)/10, 2);
                     break;
-                case 2:
+                case Difficulty.Hard:
                     Config.TIMER = 180;
                     PopulateMap((Config.MAP_X + Config.MAP_Y) / 5, 2);
                     break;
-                case 3:
+                case Difficulty.Hardcore:
                     Config.TIMER = 120;
                     PopulateMap((Config.MAP_X + Config.MAP_Y/3), 1);
                     break;
@@ -272,9 +275,9 @@ namespace Snake_Game
                 int x = random.Next(Config.MAP_X);
                 int y = random.Next(Config.MAP_Y);
 
-                if (map[x, y].Type == 'V')
+                if (map[x, y].Type == CellType.Void)
                 {
-                    map[x, y].Type = 'O';
+                    map[x, y].Type = CellType.Obstacle;
                     wall_counter--;
                 }
             }
@@ -283,7 +286,7 @@ namespace Snake_Game
             //view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
 
             snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
-            map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell('S', 0);
+            map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell(CellType.Snake, 0);
 
             while (fruit_counter > 0)
             {
@@ -294,7 +297,7 @@ namespace Snake_Game
         }
         private void PutMapWalls()
         {
-            Cell wall = new Cell('O',0);
+            Cell wall = new Cell(CellType.Obstacle,0);
             for (int i = 0; i < Config.MAP_X; i++)
             {
                 map[i, 0] = wall;
@@ -310,7 +313,7 @@ namespace Snake_Game
 
         private void PutRandomWalls(int n)
         {
-            Cell wall = new Cell('O', 0);
+            Cell wall = new Cell(CellType.Obstacle, 0);
             while (n > 0)
             {
                 int x = random.Next(Config.MAP_X);
@@ -352,21 +355,21 @@ namespace Snake_Game
                 int y = random.Next(Config.MAP_Y);
                 if (random.NextDouble() > 0.5)
                 {
-                    if (map[x, 0].Type == 'V') n++;
+                    if (map[x, 0].Type == CellType.Void) n++;
                     else
                     {
-                        map[x, 0] = new Cell('V', 0);
-                        map[x, Config.MAP_Y - 1] = new Cell('V', 0);
+                        map[x, 0] = new Cell(CellType.Void, 0);
+                        map[x, Config.MAP_Y - 1] = new Cell(CellType.Void, 0);
                     }
                     
                 }
                 else
                 {
-                    if (map[0, y].Type == 'V') n++;
+                    if (map[0, y].Type == CellType.Void) n++;
                     else
                     {
-                        map[0, y] = new Cell('V', 0);
-                        map[Config.MAP_X - 1, y] = new Cell('V', 0);
+                        map[0, y] = new Cell(CellType.Void, 0);
+                        map[Config.MAP_X - 1, y] = new Cell(CellType.Void, 0);
                     }
                 }
                 n--;
@@ -444,7 +447,7 @@ namespace Snake_Game
             {
                 for (int j = 0; j < Config.MAP_Y; j++)
                 {
-                    map[i, j] = new Cell('V', 0);
+                    map[i, j] = new Cell(CellType.Void, 0);
                 }
             }
         }

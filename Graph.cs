@@ -1,3 +1,5 @@
+using Snake_Game.Entities;
+using Snake_Game.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,22 +67,22 @@ namespace Snake_Game
             {
                  for(int j = 0; j < mapY; j++)  
                  {
-                    if(WallMap[i,j].Type != 'O')
+                    if(WallMap[i,j].Type != CellType.Obstacle)
                     {
                         int[] edges = { 0, 0, 0, 0 };
                         int wallCount = 0;
-                        if(WallMap[LoopMap(i-1,true),j].Type != 'O') edges[0] = 1; //LEFT
+                        if(WallMap[LoopMap(i-1,true),j].Type != CellType.Obstacle) edges[0] = 1; //LEFT
                         else wallCount++;
-                        if(WallMap[LoopMap(i+1,true),j].Type != 'O') edges[1] = 1; //RIGHT
+                        if(WallMap[LoopMap(i+1,true),j].Type != CellType.Obstacle) edges[1] = 1; //RIGHT
                         else wallCount++;
-                        if(WallMap[i,LoopMap(j-1,false)].Type != 'O') edges[2] = 1; //UP
+                        if(WallMap[i,LoopMap(j-1,false)].Type != CellType.Obstacle) edges[2] = 1; //UP
                         else wallCount++;
-                        if(WallMap[i,LoopMap(j+1,false)].Type != 'O') edges[3] = 1; //DOWN
+                        if(WallMap[i,LoopMap(j+1,false)].Type != CellType.Obstacle) edges[3] = 1; //DOWN
                         else wallCount++;
                         
                         if (wallCount > 3)
                         {
-                            WallMap[i, j].Type = 'O';
+                            WallMap[i, j].Type = CellType.Obstacle;
                             //AddEdges(i, j,new int[]{0,0,0,0});
                             //if (i > 0) Matrix[i - 1, j, 1] = 0;
                             //if (j > 0) Matrix[i, j - 1, 3] = 0;
