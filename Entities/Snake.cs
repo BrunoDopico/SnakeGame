@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,70 +9,63 @@ namespace Snake_Game.Entities
 {
     class Snake
     {
-        private int head_x;
-        private int head_y;
-        private int tail_x;
-        private int tail_y;
-        private int size;
-        private int growing;
-
         //CONSTRUCTOR
         public Snake(int initialPosition_x, int initialPosition_y, int initialSize)
         {
-            head_x = initialPosition_x;
-            head_y = initialPosition_y;
-            tail_x = initialPosition_x;
-            tail_y = initialPosition_y;
-            size = initialSize;
-            growing = initialSize -1;
+            Head_x = initialPosition_x;
+            Head_y = initialPosition_y;
+            Tail_x = initialPosition_x;
+            Tail_y = initialPosition_y;
+            Size = initialSize;
+            Growing = initialSize -1;
         }
 
         //SETTERS & GETTERS
 
-        public int Size { get => size; set => size = value; }
-        public int Growing { get => growing; set => growing = value; }
-        public int Head_x { get => head_x; set => head_x = value; }
-        public int Head_y { get => head_y; set => head_y = value; }
-        public int Tail_x { get => tail_x; set => tail_x = value; }
-        public int Tail_y { get => tail_y; set => tail_y = value; }
+        public int Size { get; set; }
+        public int Growing { get; set; }
+        public int Head_x { get; set; }
+        public int Head_y { get; set; }
+        public int Tail_x { get; set; }
+        public int Tail_y { get; set; }
 
         //METHODS
-        public void MoveHead(int direction)
+        public void MoveHead(Direction direction)
         {
             
             switch (direction)
             {
-                case 0:
-                    head_x --;
+                case Direction.Left:
+                    Head_x --;
                     break;
-                case 1:
-                    head_x ++;
+                case Direction.Right:
+                    Head_x ++;
                     break;
-                case 2:
-                    head_y --;
+                case Direction.Up:
+                    Head_y --;
                     break;
-                case 3:
-                    head_y ++;
+                case Direction.Down:
+                    Head_y ++;
                     break;
             }
         }
 
-        public void MoveTail(int direction)
+        public void MoveTail(Direction direction)
         {
 
             switch (direction)
             {
-                case 0:
-                    tail_x--;
+                case Direction.Left:
+                    Tail_x--;
                     break;
-                case 1:
-                    tail_x++;
+                case Direction.Right:
+                    Tail_x++;
                     break;
-                case 2:
-                    tail_y--;
+                case Direction.Up:
+                    Tail_y--;
                     break;
-                case 3:
-                    tail_y++;
+                case Direction.Down:
+                    Tail_y++;
                     break;
             }
         }

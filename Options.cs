@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Snake_Game.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,8 +28,8 @@ namespace Snake_Game
             cbSpecialFruit.Checked = Config.SPECIAL_FRUIT_AVAILABLE;
             numSpecialFruitPct.Value = Convert.ToDecimal(Config.SPECIAL_FRUIT_PCT);
             numSpecialFruitValue.Value = Config.SPECIAL_FRUIT_VALUE;
-            cbMapType.SelectedIndex = Config.MAP_TYPE;
-            cbDifficulty.SelectedIndex = Config.DIFFICULTY;
+            cbMapType.SelectedIndex = (int) Config.MAP_TYPE;
+            cbDifficulty.SelectedIndex = (int) Config.DIFFICULTY;
             tbControlsUp.Text = Config.IN_UP.ToString();
             tbControlsDown.Text = Config.IN_DOWN.ToString();
             tbControlsLeft.Text = Config.IN_LEFT.ToString();
@@ -40,8 +41,8 @@ namespace Snake_Game
         private void btSave_Click(object sender, EventArgs e)
         {
             if (!CheckCorrectControls()) return;
-            Config.MAP_TYPE = cbMapType.SelectedIndex;
-            Config.DIFFICULTY = cbDifficulty.SelectedIndex;
+            Config.MAP_TYPE = (MapType) cbMapType.SelectedIndex;
+            Config.DIFFICULTY = (Difficulty) cbDifficulty.SelectedIndex;
             Config.MAP_X = Convert.ToInt32(numMapX.Value);
             Config.MAP_Y = Convert.ToInt32(numMapY.Value);
             Config.INITIAL_SNAKE_SIZE = Convert.ToInt32(numInitialSize.Value);

@@ -17,7 +17,7 @@ namespace Snake_Game
         private Graph graph;
         private bool lose;
         private Random random;
-        private int direction;
+        private Direction direction;
         
         private int fruits_eaten = 0;
         private int score = 0;
@@ -66,8 +66,8 @@ namespace Snake_Game
         {
             int oldHeadX = snake.Head_x;
             int oldHeadY = snake.Head_y;
-            int oldHeadDir = map[snake.Head_x, snake.Head_y].Value;
-            map[snake.Head_x, snake.Head_y].Value = direction;
+            Direction oldHeadDir = (Direction) map[snake.Head_x, snake.Head_y].Value;
+            map[snake.Head_x, snake.Head_y].Value = (int) direction;
             snake.MoveHead(direction);
             CheckHeadBorder();
             Cell eaten_cell = map[snake.Head_x, snake.Head_y];
@@ -88,14 +88,14 @@ namespace Snake_Game
                 }
                 score += eaten_cell.Value;
                 map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
-                map[snake.Head_x, snake.Head_y].Value = direction;
+                map[snake.Head_x, snake.Head_y].Value = (int) direction;
                 fruits_eaten++;
                 PutFruit();
             }
             else
             {
                 map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
-                map[snake.Head_x, snake.Head_y].Value = direction;
+                map[snake.Head_x, snake.Head_y].Value = (int) direction;
             }
             removeTail();
             UpdateHead( snake.Head_x, snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
@@ -107,10 +107,10 @@ namespace Snake_Game
         /// </summary>
         public void getInput(ConsoleKey key)
         {
-            if (key == Config.IN_LEFT) direction = 0;
-            else if (key == Config.IN_RIGHT) direction = 1;
-            else if (key == Config.IN_UP) direction = 2;
-            else if (key == Config.IN_DOWN) direction = 3;    
+            if (key == Config.IN_LEFT) direction = Direction.Left;
+            else if (key == Config.IN_RIGHT) direction = Direction.Right;
+            else if (key == Config.IN_UP) direction = Direction.Up;
+            else if (key == Config.IN_DOWN) direction = Direction.Down;    
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Snake_Game
                 {
                     int x1 = snake.Tail_x;
                     int y1 = snake.Tail_y;
-                    snake.MoveTail(map[x1, y1].Value);
+                    snake.MoveTail((Direction) map[x1, y1].Value);
                     CheckTailBorder(map[x1, y1].Value);
                     map[x1, y1] = new Cell(CellType.Void, 0);
                     view.UpdateCell(x1, y1, "");
@@ -134,7 +134,7 @@ namespace Snake_Game
 
                 int x = snake.Tail_x;
                 int y = snake.Tail_y;
-                snake.MoveTail(map[x, y].Value);
+                snake.MoveTail((Direction) map[x, y].Value);
                 CheckTailBorder(map[x, y].Value);
                 map[x, y] = new Cell(CellType.Void, 0);
                 view.UpdateCell(x, y, "");
@@ -171,16 +171,16 @@ namespace Snake_Game
         {
             switch (direction)
             {
-                case 0:
+                case Direction.Left:
                     if (snake.Head_x < 0) snake.Head_x = map.GetLength(0) - 1;
                     break;
-                case 1:
+                case Direction.Right:
                     if (snake.Head_x >= map.GetLength(0)) snake.Head_x = 0;
                     break;
-                case 2:
+                case Direction.Up:
                     if (snake.Head_y < 0) snake.Head_y = map.GetLength(1) - 1;
                     break;
-                case 3:
+                case Direction.Down:
                     if (snake.Head_y >= map.GetLength(1)) snake.Head_y = 0;
                     break;
             }
@@ -376,23 +376,23 @@ namespace Snake_Game
             }
         }
 
-        private void UpdateHead(int newX, int newY, int oldX, int oldY, int oldDirection)
+        private void UpdateHead(int newX, int newY, int oldX, int oldY, Direction oldDirection)
         {
             switch (direction)
             {
-                case 0:
+                case Direction.Left:
                     view.UpdateCell(oldX, oldY, "s_b_l");
                     view.UpdateCell(newX, newY, "s_h_l");
                     break;
-                case 1:
+                case Direction.Right:
                     view.UpdateCell(oldX, oldY, "s_b_r");
                     view.UpdateCell(newX, newY, "s_h_r");
                     break;
-                case 2:
+                case Direction.Up:
                     view.UpdateCell(oldX, oldY, "s_b_u");
                     view.UpdateCell(newX, newY, "s_h_u");
                     break;
-                case 3:
+                case Direction.Down:
                     view.UpdateCell(oldX, oldY, "s_b_d");
                     view.UpdateCell(newX, newY, "s_h_d");
                     break;
@@ -401,20 +401,20 @@ namespace Snake_Game
             {
                 switch (oldDirection)
                 {
-                    case 0:
-                        if(direction == 2) view.UpdateCell(oldX, oldY, "s_b_l_u");
+                    case Direction.Left:
+                        if(direction == Direction.Up) view.UpdateCell(oldX, oldY, "s_b_l_u");
                         else view.UpdateCell(oldX, oldY, "s_b_l_d");
                         break;
-                    case 1:
-                        if (direction == 2) view.UpdateCell(oldX, oldY, "s_b_r_u");
+                    case Direction.Right:
+                        if (direction == Direction.Up) view.UpdateCell(oldX, oldY, "s_b_r_u");
                         else view.UpdateCell(oldX, oldY, "s_b_r_d");
                         break;
-                    case 2:
-                        if (direction == 0) view.UpdateCell(oldX, oldY, "s_b_u_l");
+                    case Direction.Up:
+                        if (direction == Direction.Left) view.UpdateCell(oldX, oldY, "s_b_u_l");
                         else view.UpdateCell(oldX, oldY, "s_b_u_r");
                         break;
-                    case 3:
-                        if (direction == 0) view.UpdateCell(oldX, oldY, "s_b_d_l");
+                    case Direction.Down:
+                        if (direction == Direction.Left) view.UpdateCell(oldX, oldY, "s_b_d_l");
                         else view.UpdateCell(oldX, oldY, "s_b_d_r");
                         break;
                 }
