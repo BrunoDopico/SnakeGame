@@ -76,7 +76,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Snake.cs" />
-    <Compile Include="SnakeGame.cs" />
+    <Compile Include="GameController.cs" />
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
     </EmbeddedResource>

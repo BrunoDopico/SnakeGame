@@ -10,12 +10,9 @@ using System.Windows.Forms;
 
 namespace Snake_Game
 {
-    class SnakeGame
+    class GameController
     {
-        private Snake snake;
-        private Cell[,] map;
         private Graph graph;
-        private bool lose;
         private Random random;
         private Direction direction;
         
@@ -24,14 +21,14 @@ namespace Snake_Game
         private int time = 0;
         private GameScreen view;
 
-        internal Snake Snake { get => snake; set => snake = value; }
-        internal Cell[,] Map { get => map; set => map = value; }
-        public bool Lose { get => lose; set => lose = value; }
+        internal Snake Snake { get; set; }
+        internal Cell[,] Map { get; set; }
+        public bool Lose { get; set; }
 
-        public SnakeGame(GameScreen view)
+        public GameController(GameScreen view)
         {
             this.view = view;
-            direction = 0;
+            direction = Direction.Left;
             random = new Random();
         }
 
@@ -40,13 +37,13 @@ namespace Snake_Game
         /// </summary>
         public void StartGame()
         {
-            map = MapGenerator.GenerateMap();
-            snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
+            Map = MapGenerator.GenerateMap();
+            Snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
             view.PaintMap();
-            lose = false;
+            Lose = false;
             time = 0;
             score = 0;
-            direction = 0;
+            direction = Direction.Left;
         }
 
         /// <summary>
@@ -64,42 +61,42 @@ namespace Snake_Game
         /// </summary>
         private void Update()
         {
-            int oldHeadX = snake.Head_x;
-            int oldHeadY = snake.Head_y;
-            Direction oldHeadDir = (Direction) map[snake.Head_x, snake.Head_y].Value;
-            map[snake.Head_x, snake.Head_y].Value = (int) direction;
-            snake.MoveHead(direction);
+            int oldHeadX = Snake.Head_x;
+            int oldHeadY = Snake.Head_y;
+            Direction oldHeadDir = (Direction) Map[Snake.Head_x, Snake.Head_y].Value;
+            Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
+            Snake.MoveHead(direction);
             CheckHeadBorder();
-            Cell eaten_cell = map[snake.Head_x, snake.Head_y];
-            if (eaten_cell.Type == CellType.Obstacle) lose = true;
-            else if(eaten_cell.Type == CellType.Snake) lose = true;
+            Cell eaten_cell = Map[Snake.Head_x, Snake.Head_y];
+            if (eaten_cell.Type == CellType.Obstacle) Lose = true;
+            else if(eaten_cell.Type == CellType.Snake) Lose = true;
             else if (eaten_cell.Type == CellType.Fruit) 
             {
                 
-                if (snake.Size + eaten_cell.Value < 3)
+                if (Snake.Size + eaten_cell.Value < 3)
                 {
-                    snake.Growing = snake.Size + eaten_cell.Value;
-                    snake.Size = 3;
+                    Snake.Growing = Snake.Size + eaten_cell.Value;
+                    Snake.Size = 3;
                 }
                 else
                 {
-                    snake.Growing += eaten_cell.Value;
-                    snake.Size += eaten_cell.Value;
+                    Snake.Growing += eaten_cell.Value;
+                    Snake.Size += eaten_cell.Value;
                 }
                 score += eaten_cell.Value;
-                map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
-                map[snake.Head_x, snake.Head_y].Value = (int) direction;
+                Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
+                Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
                 fruits_eaten++;
                 PutFruit();
             }
             else
             {
-                map[snake.Head_x, snake.Head_y].Type = CellType.Snake;
-                map[snake.Head_x, snake.Head_y].Value = (int) direction;
+                Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
+                Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
             }
             removeTail();
-            UpdateHead( snake.Head_x, snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
-            UpdateTail(snake.Tail_x, snake.Tail_y);
+            UpdateHead( Snake.Head_x, Snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
+            UpdateTail(Snake.Tail_x, Snake.Tail_y);
         }
 
         /// <summary>
@@ -118,25 +115,25 @@ namespace Snake_Game
         /// </summary>
         private void removeTail()
         {
-            if (snake.Growing > 0) snake.Growing--;
+            if (Snake.Growing > 0) Snake.Growing--;
             else
             {
-                while (snake.Growing < 0)
+                while (Snake.Growing < 0)
                 {
-                    int x1 = snake.Tail_x;
-                    int y1 = snake.Tail_y;
-                    snake.MoveTail((Direction) map[x1, y1].Value);
-                    CheckTailBorder(map[x1, y1].Value);
-                    map[x1, y1] = new Cell(CellType.Void, 0);
+                    int x1 = Snake.Tail_x;
+                    int y1 = Snake.Tail_y;
+                    Snake.MoveTail((Direction) Map[x1, y1].Value);
+                    CheckTailBorder(Map[x1, y1].Value);
+                    Map[x1, y1] = new Cell(CellType.Void, 0);
                     view.UpdateCell(x1, y1, "");
-                    snake.Growing++;
+                    Snake.Growing++;
                 }
 
-                int x = snake.Tail_x;
-                int y = snake.Tail_y;
-                snake.MoveTail((Direction) map[x, y].Value);
-                CheckTailBorder(map[x, y].Value);
-                map[x, y] = new Cell(CellType.Void, 0);
+                int x = Snake.Tail_x;
+                int y = Snake.Tail_y;
+                Snake.MoveTail((Direction) Map[x, y].Value);
+                CheckTailBorder(Map[x, y].Value);
+                Map[x, y] = new Cell(CellType.Void, 0);
                 view.UpdateCell(x, y, "");
             }
         }
@@ -150,16 +147,16 @@ namespace Snake_Game
             switch (value)
             {
                 case 0:
-                    if (snake.Tail_x < 0) snake.Tail_x = map.GetLength(0) - 1;
+                    if (Snake.Tail_x < 0) Snake.Tail_x = Map.GetLength(0) - 1;
                     break;
                 case 1:
-                    if (snake.Tail_x >= map.GetLength(0)) snake.Tail_x = 0;
+                    if (Snake.Tail_x >= Map.GetLength(0)) Snake.Tail_x = 0;
                     break;
                 case 2:
-                    if (snake.Tail_y < 0) snake.Tail_y = map.GetLength(1) - 1;
+                    if (Snake.Tail_y < 0) Snake.Tail_y = Map.GetLength(1) - 1;
                     break;
                 case 3:
-                    if (snake.Tail_y >= map.GetLength(1)) snake.Tail_y = 0;
+                    if (Snake.Tail_y >= Map.GetLength(1)) Snake.Tail_y = 0;
                     break;
             }
         }
@@ -172,16 +169,16 @@ namespace Snake_Game
             switch (direction)
             {
                 case Direction.Left:
-                    if (snake.Head_x < 0) snake.Head_x = map.GetLength(0) - 1;
+                    if (Snake.Head_x < 0) Snake.Head_x = Map.GetLength(0) - 1;
                     break;
                 case Direction.Right:
-                    if (snake.Head_x >= map.GetLength(0)) snake.Head_x = 0;
+                    if (Snake.Head_x >= Map.GetLength(0)) Snake.Head_x = 0;
                     break;
                 case Direction.Up:
-                    if (snake.Head_y < 0) snake.Head_y = map.GetLength(1) - 1;
+                    if (Snake.Head_y < 0) Snake.Head_y = Map.GetLength(1) - 1;
                     break;
                 case Direction.Down:
-                    if (snake.Head_y >= map.GetLength(1)) snake.Head_y = 0;
+                    if (Snake.Head_y >= Map.GetLength(1)) Snake.Head_y = 0;
                     break;
             }
         }
@@ -201,17 +198,17 @@ namespace Snake_Game
                 {
                     value = random.NextDouble();
                 }
-                if (map[x, y].Type == CellType.Void)
+                if (Map[x, y].Type == CellType.Void)
                 {
-                    map[x, y].Type = CellType.Fruit;
+                    Map[x, y].Type = CellType.Fruit;
                     if (value < Config.SPECIAL_FRUIT_PCT)
                     {
-                        map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
+                        Map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
                         view.UpdateCell(x, y, "f_s");
                     }
                     else
                     {
-                        map[x, y].Value = 1;
+                        Map[x, y].Value = 1;
                         view.UpdateCell(x, y, "f_n");
                     }
                     exit = true;
@@ -266,7 +263,7 @@ namespace Snake_Game
 
         private void UpdateTail(int x, int y)
         {
-            switch (map[x, y].Value)
+            switch (Map[x, y].Value)
             {
                 case 0:
                     view.UpdateCell(x, y, "s_t_l");

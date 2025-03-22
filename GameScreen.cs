@@ -15,7 +15,7 @@ namespace Snake_Game
     public partial class GameScreen : Form
     {
         PictureBox[,] grid;
-        SnakeGame controller;
+        GameController controller;
         Timer gameLoop = new Timer();
         bool inGame = false;
         private int defaultFormWidth;
@@ -24,7 +24,7 @@ namespace Snake_Game
         {
             InitializeComponent();
             gameLoop.Tick += GameLoop;
-            controller = new SnakeGame(this);
+            controller = new GameController(this);
             InitializeComponent();
             defaultFormWidth = this.Width;
         }

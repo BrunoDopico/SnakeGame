@@ -39,10 +39,10 @@ namespace Snake_Game
         {
             using (StreamWriter saveFile = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Configuration.txt")))
             {
-                saveFile.WriteLine(DIFFICULTY + "; Difficulty -- 0 Easy - 1 Medium - 2 Hard - 3 Hardcore");
+                saveFile.WriteLine(((int)DIFFICULTY) + "; Difficulty -- 0 Easy - 1 Medium - 2 Hard - 3 Hardcore");
                 saveFile.WriteLine(MAP_X + "; Map Length -- Minimum size: 6 - Maximum size: 50");
                 saveFile.WriteLine(MAP_Y + "; Map Height -- Minimum size: 6 - Maximum size: 30");
-                saveFile.WriteLine(MAP_TYPE + "; Map Type -- 0 STANDARD - 1 BORDERLESS - 2 HOLES ON THE WALL - 3 EXTRA WALLS - 4 HOLES AND WALLS");
+                saveFile.WriteLine(((int)MAP_TYPE) + "; Map Type -- 0 STANDARD - 1 BORDERLESS - 2 HOLES ON THE WALL - 3 EXTRA WALLS - 4 HOLES AND WALLS");
                 saveFile.WriteLine(SPECIAL_FRUIT_AVAILABLE + "; Special Fruit Available -- True - False");
                 saveFile.WriteLine(SPECIAL_FRUIT_PCT + "; Special Fruit Percentage -- 0,00 0% - 1 100% - Recommended to make 0,05 increments");
                 saveFile.WriteLine(SPECIAL_FRUIT_VALUE + "; Special Fruit Value -- -3 - 10");
@@ -77,12 +77,12 @@ namespace Snake_Game
                         SPECIAL_FRUIT_PCT = Double.Parse(readFile.ReadLine().Split(';')[0]);
                         SPECIAL_FRUIT_VALUE = Int32.Parse(readFile.ReadLine().Split(';')[0]);
                         INITIAL_SNAKE_SIZE = Int32.Parse(readFile.ReadLine().Split(';')[0]);
-                        IN_UP = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
-                        IN_DOWN = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
-                        IN_LEFT = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
-                        IN_RIGHT = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
-                        IN_PAUSE = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
-                        IN_NEW = (ConsoleKey)readFile.ReadLine().Split(';')[0][0];
+                        IN_UP = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
+                        IN_DOWN = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
+                        IN_LEFT = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
+                        IN_RIGHT = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
+                        IN_PAUSE = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
+                        IN_NEW = (ConsoleKey) readFile.ReadLine().Split(';')[0][0];
                     }
                     catch (IOException)
                     {
@@ -104,11 +104,11 @@ namespace Snake_Game
             SPECIAL_FRUIT_PCT = 0.05;
             SPECIAL_FRUIT_VALUE = 3;
             INITIAL_SNAKE_SIZE = 4;
-            IN_PAUSE = ConsoleKey.P;
             IN_LEFT = ConsoleKey.A;
             IN_RIGHT = ConsoleKey.D;
             IN_UP = ConsoleKey.W;
             IN_DOWN = ConsoleKey.S;
+            IN_PAUSE = ConsoleKey.P;
             IN_NEW = ConsoleKey.N;
         }
     }
