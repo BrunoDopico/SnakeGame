@@ -40,8 +40,8 @@ namespace Snake_Game
         /// </summary>
         public void StartGame()
         {
-            GenerateEmptyMap();
-            GenerateMap();
+            map = MapGenerator.GenerateMap();
+            snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
             view.PaintMap();
             lose = false;
             time = 0;
@@ -219,163 +219,6 @@ namespace Snake_Game
             }
         }
 
-        public void GenerateMap()
-        {
-            switch (Config.MAP_TYPE)
-            {
-                case MapType.Standard:
-                    PutMapWalls();
-                    break;
-                case MapType.Borderless:
-                    break;
-                case MapType.HolesOnWalls:
-                    PutMapWalls();
-                    RemoveRandomWalls(6);
-                    break;
-                case MapType.ExtraWalls:
-                    PutMapWalls();
-                    PutRandomWalls(3);
-                    break;
-                case MapType.HolesAndWalls:
-                    PutMapWalls();
-                    PutRandomWalls(3);
-                    RemoveRandomWalls(6);
-                    break;
-            }
-            
-
-            switch (Config.DIFFICULTY)
-            {
-                case Difficulty.Easy:
-                    Config.TIMER = 250;
-                    PopulateMap(0, 4);
-                    break;
-                case Difficulty.Medium:
-                    Config.TIMER = 250;
-                    PopulateMap((Config.MAP_X+Config.MAP_Y)/10, 2);
-                    break;
-                case Difficulty.Hard:
-                    Config.TIMER = 180;
-                    PopulateMap((Config.MAP_X + Config.MAP_Y) / 5, 2);
-                    break;
-                case Difficulty.Hardcore:
-                    Config.TIMER = 120;
-                    PopulateMap((Config.MAP_X + Config.MAP_Y/3), 1);
-                    break;
-            }
-        }
-
-        private void PopulateMap(int walls, int fruits)
-        {
-            int wall_counter = walls;
-            int fruit_counter = fruits;
-
-            while(wall_counter > 0)
-            {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
-
-                if (map[x, y].Type == CellType.Void)
-                {
-                    map[x, y].Type = CellType.Obstacle;
-                    wall_counter--;
-                }
-            }
-            //Graph creation and hamiltonian cycle check
-            //graph = new Graph(map);
-            //view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
-
-            snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
-            map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell(CellType.Snake, 0);
-
-            while (fruit_counter > 0)
-            {
-                PutFruit();
-                fruit_counter--;
-            }
-
-        }
-        private void PutMapWalls()
-        {
-            Cell wall = new Cell(CellType.Obstacle,0);
-            for (int i = 0; i < Config.MAP_X; i++)
-            {
-                map[i, 0] = wall;
-                map[i, Config.MAP_Y - 1] = wall;
-            }
-
-            for (int i = 0; i < Config.MAP_Y; i++)
-            {
-                map[0, i] = wall;
-                map[Config.MAP_X - 1, i] = wall;
-            }
-        }
-
-        private void PutRandomWalls(int n)
-        {
-            Cell wall = new Cell(CellType.Obstacle, 0);
-            while (n > 0)
-            {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
-                int sum;
-                if (random.NextDouble() > 0.5)
-                {
-                    for (int i = 0; i < Config.MAP_X/3; i++)
-                    {
-                        sum = x + i;
-                        if(sum >= Config.MAP_X)
-                        {
-                            sum -= Config.MAP_X;
-                        }
-                        map[sum, y] = wall;
-                    }
-                } 
-                else
-                {
-                    for (int i = 0; i < Config.MAP_Y/3; i++)
-                    {
-                        sum = y + i;
-                        if (sum >= Config.MAP_Y)
-                        {
-                            sum -= Config.MAP_Y;
-                        }
-                        map[x, sum] = wall;
-                    }
-                }
-                n--;
-            }
-        }
-
-        private void RemoveRandomWalls(int n)
-        {
-            while (n > 0)
-            {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
-                if (random.NextDouble() > 0.5)
-                {
-                    if (map[x, 0].Type == CellType.Void) n++;
-                    else
-                    {
-                        map[x, 0] = new Cell(CellType.Void, 0);
-                        map[x, Config.MAP_Y - 1] = new Cell(CellType.Void, 0);
-                    }
-                    
-                }
-                else
-                {
-                    if (map[0, y].Type == CellType.Void) n++;
-                    else
-                    {
-                        map[0, y] = new Cell(CellType.Void, 0);
-                        map[Config.MAP_X - 1, y] = new Cell(CellType.Void, 0);
-                    }
-                }
-                n--;
-            }
-        }
-
         private void UpdateHead(int newX, int newY, int oldX, int oldY, Direction oldDirection)
         {
             switch (direction)
@@ -437,18 +280,6 @@ namespace Snake_Game
                 case 3:
                     view.UpdateCell(x, y, "s_t_d");
                     break;
-            }
-        }
-
-        public void GenerateEmptyMap()
-        {
-            map = new Cell[Config.MAP_X, Config.MAP_Y];
-            for (int i = 0; i < Config.MAP_X; i++)
-            {
-                for (int j = 0; j < Config.MAP_Y; j++)
-                {
-                    map[i, j] = new Cell(CellType.Void, 0);
-                }
             }
         }
 

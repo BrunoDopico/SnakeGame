@@ -1,4 +1,5 @@
 ﻿using Snake_Game.Entities;
+using Snake_Game.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,18 +67,18 @@ namespace Snake_Game
                     Cell current = map[i, j];
                     switch (current.Type)
                     {
-                        case 'V':
+                        case CellType.Void:
                             break;
-                        case 'O':
+                        case CellType.Obstacle:
                             sprite = Properties.Resources.wall;
                             PaintCell(i, j, sprite);
                             break;
-                        case 'F':
+                        case CellType.Fruit:
                             if (current.Value == Config.SPECIAL_FRUIT_VALUE) sprite = Properties.Resources.fruit_special;
                             else sprite = Properties.Resources.fruit_normal;
                             PaintCell(i, j, sprite);
                             break;
-                        case 'S':
+                        case CellType.Snake:
                             sprite = Properties.Resources.snake_head_left;
                             PaintCell(i, j, sprite);
                             break;
