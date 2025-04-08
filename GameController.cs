@@ -15,6 +15,7 @@ namespace Snake_Game
         private Graph graph;
         private Random random;
         private Direction direction;
+        private List<(int, int)> availableCells = new List<(int, int)>();
         
         private int fruits_eaten = 0;
         private int score = 0;
@@ -39,6 +40,7 @@ namespace Snake_Game
         {
             Map = MapGenerator.GenerateMap();
             Snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
+            fillAvailableCells();
             view.PaintMap();
             Lose = false;
             time = 0;
@@ -68,6 +70,9 @@ namespace Snake_Game
             Snake.MoveHead(direction);
             CheckHeadBorder();
             Cell eaten_cell = Map[Snake.Head_x, Snake.Head_y];
+
+            availableCells.Remove((Snake.Head_x, Snake.Head_y));
+
             if (eaten_cell.Type == CellType.Obstacle) Lose = true;
             else if(eaten_cell.Type == CellType.Snake) Lose = true;
             else if (eaten_cell.Type == CellType.Fruit) 
@@ -124,6 +129,7 @@ namespace Snake_Game
                     int y1 = Snake.Tail_y;
                     Snake.MoveTail((Direction) Map[x1, y1].Value);
                     CheckTailBorder(Map[x1, y1].Value);
+                    availableCells.Add((x1, y1));
                     Map[x1, y1] = new Cell(CellType.Void, 0);
                     view.UpdateCell(x1, y1, "");
                     Snake.Growing++;
@@ -133,6 +139,7 @@ namespace Snake_Game
                 int y = Snake.Tail_y;
                 Snake.MoveTail((Direction) Map[x, y].Value);
                 CheckTailBorder(Map[x, y].Value);
+                availableCells.Add((x, y));
                 Map[x, y] = new Cell(CellType.Void, 0);
                 view.UpdateCell(x, y, "");
             }
@@ -188,31 +195,28 @@ namespace Snake_Game
         /// </summary>
         private void PutFruit()
         {
-            bool exit = false;
-            while (!exit)
+            if (availableCells.Count == 0) return; //No space left for new fruits
+
+            int index = random.Next(availableCells.Count);
+            (int x, int y) = availableCells[index];
+            availableCells.RemoveAt(index);
+
+            Map[x, y].Type = CellType.Fruit;
+            
+            double value = 1;
+            if (Config.SPECIAL_FRUIT_AVAILABLE)
             {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
-                double value = 1;
-                if (Config.SPECIAL_FRUIT_AVAILABLE)
-                {
-                    value = random.NextDouble();
-                }
-                if (Map[x, y].Type == CellType.Void)
-                {
-                    Map[x, y].Type = CellType.Fruit;
-                    if (value < Config.SPECIAL_FRUIT_PCT)
-                    {
-                        Map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
-                        view.UpdateCell(x, y, "f_s");
-                    }
-                    else
-                    {
-                        Map[x, y].Value = 1;
-                        view.UpdateCell(x, y, "f_n");
-                    }
-                    exit = true;
-                }
+                value = random.NextDouble();
+            }
+            if (value < Config.SPECIAL_FRUIT_PCT)
+            {
+                Map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
+                view.UpdateCell(x, y, "f_s");
+            }
+            else
+            {
+                Map[x, y].Value = 1;
+                view.UpdateCell(x, y, "f_n");
             }
         }
 
@@ -277,6 +281,21 @@ namespace Snake_Game
                 case 3:
                     view.UpdateCell(x, y, "s_t_d");
                     break;
+            }
+        }
+
+        private void fillAvailableCells()
+        {
+            availableCells.Clear();
+            for (int i = 0; i < Map.GetLength(0); i++)
+            {
+                for (int j = 0; j < Map.GetLength(1); j++)
+                {
+                    if (Map[i, j].Type == CellType.Void)
+                    {
+                        availableCells.Add((i, j));
+                    }
+                }
             }
         }
 
