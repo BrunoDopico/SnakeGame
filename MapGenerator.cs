@@ -163,41 +163,41 @@ namespace Snake_Game
             return map;
         }
 
-        private static Cell[,] PutRandomWalls(Cell[,] map, int n)
+        private static Cell[,] PutRandomWalls(Cell[,] map, int wallCount)
         {
             Random random = new Random();
 
             Cell wall = new Cell(CellType.Obstacle, 0);
-            while (n > 0)
+            while (wallCount > 0)
             {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
+                int x = random.Next(2,Config.MAP_X-2);
+                int y = random.Next(2,Config.MAP_Y-2);
                 int sum;
                 if (random.NextDouble() > 0.5)
                 {
-                    for (int i = 0; i < Config.MAP_X / 3; i++)
+                    for (int i = 0; i < Config.MAP_X / 4; i++)
                     {
                         sum = x + i;
-                        if (sum >= Config.MAP_X)
+                        if (sum >= Config.MAP_X-2)
                         {
-                            sum -= Config.MAP_X;
+                            sum -= Config.MAP_X-4;
                         }
                         map[sum, y] = wall;
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < Config.MAP_Y / 3; i++)
+                    for (int i = 0; i < Config.MAP_Y / 4; i++)
                     {
                         sum = y + i;
-                        if (sum >= Config.MAP_Y)
+                        if (sum >= Config.MAP_Y-2)
                         {
-                            sum -= Config.MAP_Y;
+                            sum -= Config.MAP_Y-4;
                         }
                         map[x, sum] = wall;
                     }
                 }
-                n--;
+                wallCount--;
             }
 
             return map;

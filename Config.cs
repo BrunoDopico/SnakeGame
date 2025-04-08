@@ -12,7 +12,7 @@ namespace Snake_Game
     {
         //GAME CONFIGURATIONS
         public static Difficulty DIFFICULTY;
-        public static int TIMER; //this stat is public in the code, but should not be modified by the players and therefore not saved.
+        public static int TIMER; //this stat is public in the code, but should not be modified by the players and therefore it is not saved.
 
         //MAP CONFIGURATIONS
         public static int MAP_X; //Min 6, Max 50
