@@ -124,8 +124,8 @@ namespace Snake_Game
 
             while (wall_counter > 0)
             {
-                int x = random.Next(Config.MAP_X);
-                int y = random.Next(Config.MAP_Y);
+                int x = random.Next(2, Config.MAP_X - 2);
+                int y = random.Next(2, Config.MAP_Y - 2);
 
                 if (map[x, y].Type == CellType.Void)
                 {
@@ -138,6 +138,12 @@ namespace Snake_Game
             //view.ChangeInfo("DATA: " + graph.ConvertMatrixToGraph()); 
 
             map[Config.MAP_X / 2, Config.MAP_Y / 2] = new Cell(CellType.Snake, 0);
+
+            // Clear the way in front of the snake at the beginning of the game
+            for (int i = 0; i < Math.Min(Config.INITIAL_SNAKE_SIZE, Config.MAP_X/2 -1); i++)
+            {
+                if(map[Config.MAP_X / 2 - i, Config.MAP_Y / 2].Type == CellType.Obstacle) map[Config.MAP_X / 2 -i, Config.MAP_Y / 2] = new Cell(CellType.Void, 0);
+            }
 
             while (fruit_counter > 0)
             {
@@ -219,7 +225,6 @@ namespace Snake_Game
                         map[x, 0] = new Cell(CellType.Void, 0);
                         map[x, Config.MAP_Y - 1] = new Cell(CellType.Void, 0);
                     }
-
                 }
                 else
                 {
