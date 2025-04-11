@@ -82,26 +82,29 @@ namespace Snake_Game
             "MEDIUM",
             "DIFFICULT",
             "HARDCORE"});
-            this.cbDifficulty.Location = new System.Drawing.Point(12, 26);
+            this.cbDifficulty.Location = new System.Drawing.Point(16, 32);
+            this.cbDifficulty.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbDifficulty.Name = "cbDifficulty";
-            this.cbDifficulty.Size = new System.Drawing.Size(158, 21);
+            this.cbDifficulty.Size = new System.Drawing.Size(209, 24);
             this.cbDifficulty.TabIndex = 0;
             // 
             // lbDifficulty
             // 
             this.lbDifficulty.AutoSize = true;
-            this.lbDifficulty.Location = new System.Drawing.Point(15, 10);
+            this.lbDifficulty.Location = new System.Drawing.Point(20, 12);
+            this.lbDifficulty.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDifficulty.Name = "lbDifficulty";
-            this.lbDifficulty.Size = new System.Drawing.Size(94, 13);
+            this.lbDifficulty.Size = new System.Drawing.Size(115, 16);
             this.lbDifficulty.TabIndex = 1;
             this.lbDifficulty.Text = "Difficulty Selection";
             // 
             // lbDificultyExplanation
             // 
             this.lbDificultyExplanation.AutoSize = true;
-            this.lbDificultyExplanation.Location = new System.Drawing.Point(192, 21);
+            this.lbDificultyExplanation.Location = new System.Drawing.Point(256, 26);
+            this.lbDificultyExplanation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDificultyExplanation.Name = "lbDificultyExplanation";
-            this.lbDificultyExplanation.Size = new System.Drawing.Size(131, 26);
+            this.lbDificultyExplanation.Size = new System.Drawing.Size(167, 32);
             this.lbDificultyExplanation.TabIndex = 2;
             this.lbDificultyExplanation.Text = "Changes game speed and\r\nnum of Fruits on the game";
             // 
@@ -117,44 +120,49 @@ namespace Snake_Game
             "HOLES ON THE WALL",
             "EXTRA WALLS",
             "HOLES AND WALLS"});
-            this.cbMapType.Location = new System.Drawing.Point(12, 78);
+            this.cbMapType.Location = new System.Drawing.Point(16, 96);
+            this.cbMapType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbMapType.Name = "cbMapType";
-            this.cbMapType.Size = new System.Drawing.Size(158, 21);
+            this.cbMapType.Size = new System.Drawing.Size(209, 24);
             this.cbMapType.TabIndex = 3;
             // 
             // lbMapType
             // 
             this.lbMapType.AutoSize = true;
-            this.lbMapType.Location = new System.Drawing.Point(15, 62);
+            this.lbMapType.Location = new System.Drawing.Point(20, 76);
+            this.lbMapType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMapType.Name = "lbMapType";
-            this.lbMapType.Size = new System.Drawing.Size(75, 13);
+            this.lbMapType.Size = new System.Drawing.Size(93, 16);
             this.lbMapType.TabIndex = 4;
             this.lbMapType.Text = "Map Selection";
             // 
             // lbMapTypeExplanation
             // 
             this.lbMapTypeExplanation.AutoSize = true;
-            this.lbMapTypeExplanation.Location = new System.Drawing.Point(192, 73);
+            this.lbMapTypeExplanation.Location = new System.Drawing.Point(256, 90);
+            this.lbMapTypeExplanation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMapTypeExplanation.Name = "lbMapTypeExplanation";
-            this.lbMapTypeExplanation.Size = new System.Drawing.Size(110, 26);
+            this.lbMapTypeExplanation.Size = new System.Drawing.Size(133, 32);
             this.lbMapTypeExplanation.TabIndex = 5;
             this.lbMapTypeExplanation.Text = "Changes the way that\r\nthe map is generated";
             // 
             // lbMapX
             // 
             this.lbMapX.AutoSize = true;
-            this.lbMapX.Location = new System.Drawing.Point(15, 122);
+            this.lbMapX.Location = new System.Drawing.Point(20, 150);
+            this.lbMapX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMapX.Name = "lbMapX";
-            this.lbMapX.Size = new System.Drawing.Size(64, 13);
+            this.lbMapX.Size = new System.Drawing.Size(77, 16);
             this.lbMapX.TabIndex = 7;
             this.lbMapX.Text = "Map Length";
             // 
             // lbMapY
             // 
             this.lbMapY.AutoSize = true;
-            this.lbMapY.Location = new System.Drawing.Point(15, 152);
+            this.lbMapY.Location = new System.Drawing.Point(20, 187);
+            this.lbMapY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMapY.Name = "lbMapY";
-            this.lbMapY.Size = new System.Drawing.Size(62, 13);
+            this.lbMapY.Size = new System.Drawing.Size(76, 16);
             this.lbMapY.TabIndex = 8;
             this.lbMapY.Text = "Map Height";
             // 
@@ -163,9 +171,10 @@ namespace Snake_Game
             this.cbSpecialFruit.AutoSize = true;
             this.cbSpecialFruit.Checked = true;
             this.cbSpecialFruit.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSpecialFruit.Location = new System.Drawing.Point(195, 121);
+            this.cbSpecialFruit.Location = new System.Drawing.Point(260, 149);
+            this.cbSpecialFruit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbSpecialFruit.Name = "cbSpecialFruit";
-            this.cbSpecialFruit.Size = new System.Drawing.Size(126, 17);
+            this.cbSpecialFruit.Size = new System.Drawing.Size(157, 20);
             this.cbSpecialFruit.TabIndex = 10;
             this.cbSpecialFruit.Text = "Special Fruit Enabled";
             this.cbSpecialFruit.UseVisualStyleBackColor = true;
@@ -173,17 +182,19 @@ namespace Snake_Game
             // lbSnakeSize
             // 
             this.lbSnakeSize.AutoSize = true;
-            this.lbSnakeSize.Location = new System.Drawing.Point(15, 183);
+            this.lbSnakeSize.Location = new System.Drawing.Point(20, 225);
+            this.lbSnakeSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSnakeSize.Name = "lbSnakeSize";
-            this.lbSnakeSize.Size = new System.Drawing.Size(54, 13);
+            this.lbSnakeSize.Size = new System.Drawing.Size(66, 16);
             this.lbSnakeSize.TabIndex = 11;
             this.lbSnakeSize.Text = "Initial Size";
             // 
             // btDefault
             // 
-            this.btDefault.Location = new System.Drawing.Point(18, 310);
+            this.btDefault.Location = new System.Drawing.Point(23, 411);
+            this.btDefault.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btDefault.Name = "btDefault";
-            this.btDefault.Size = new System.Drawing.Size(75, 23);
+            this.btDefault.Size = new System.Drawing.Size(100, 28);
             this.btDefault.TabIndex = 13;
             this.btDefault.Text = "DEFAULT";
             this.btDefault.UseVisualStyleBackColor = true;
@@ -191,9 +202,10 @@ namespace Snake_Game
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(135, 310);
+            this.btSave.Location = new System.Drawing.Point(179, 411);
+            this.btSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(75, 23);
+            this.btSave.Size = new System.Drawing.Size(100, 28);
             this.btSave.TabIndex = 14;
             this.btSave.Text = "SAVE";
             this.btSave.UseVisualStyleBackColor = true;
@@ -202,7 +214,8 @@ namespace Snake_Game
             // numMapX
             // 
             this.numMapX.BackColor = System.Drawing.Color.LimeGreen;
-            this.numMapX.Location = new System.Drawing.Point(85, 120);
+            this.numMapX.Location = new System.Drawing.Point(113, 148);
+            this.numMapX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numMapX.Maximum = new decimal(new int[] {
             50,
             0,
@@ -214,7 +227,7 @@ namespace Snake_Game
             0,
             0});
             this.numMapX.Name = "numMapX";
-            this.numMapX.Size = new System.Drawing.Size(85, 20);
+            this.numMapX.Size = new System.Drawing.Size(113, 22);
             this.numMapX.TabIndex = 15;
             this.numMapX.Value = new decimal(new int[] {
             20,
@@ -225,7 +238,8 @@ namespace Snake_Game
             // numMapY
             // 
             this.numMapY.BackColor = System.Drawing.Color.LimeGreen;
-            this.numMapY.Location = new System.Drawing.Point(85, 150);
+            this.numMapY.Location = new System.Drawing.Point(113, 185);
+            this.numMapY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numMapY.Maximum = new decimal(new int[] {
             30,
             0,
@@ -237,7 +251,7 @@ namespace Snake_Game
             0,
             0});
             this.numMapY.Name = "numMapY";
-            this.numMapY.Size = new System.Drawing.Size(85, 20);
+            this.numMapY.Size = new System.Drawing.Size(113, 22);
             this.numMapY.TabIndex = 16;
             this.numMapY.Value = new decimal(new int[] {
             15,
@@ -248,7 +262,8 @@ namespace Snake_Game
             // numInitialSize
             // 
             this.numInitialSize.BackColor = System.Drawing.Color.LimeGreen;
-            this.numInitialSize.Location = new System.Drawing.Point(85, 176);
+            this.numInitialSize.Location = new System.Drawing.Point(113, 217);
+            this.numInitialSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numInitialSize.Maximum = new decimal(new int[] {
             15,
             0,
@@ -260,7 +275,7 @@ namespace Snake_Game
             0,
             0});
             this.numInitialSize.Name = "numInitialSize";
-            this.numInitialSize.Size = new System.Drawing.Size(85, 20);
+            this.numInitialSize.Size = new System.Drawing.Size(113, 22);
             this.numInitialSize.TabIndex = 17;
             this.numInitialSize.Value = new decimal(new int[] {
             4,
@@ -271,9 +286,10 @@ namespace Snake_Game
             // btCancel
             // 
             this.btCancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btCancel.Location = new System.Drawing.Point(246, 310);
+            this.btCancel.Location = new System.Drawing.Point(327, 411);
+            this.btCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.Size = new System.Drawing.Size(100, 28);
             this.btCancel.TabIndex = 18;
             this.btCancel.Text = "EXIT";
             this.btCancel.UseVisualStyleBackColor = true;
@@ -282,18 +298,20 @@ namespace Snake_Game
             // lbSpecialFruitPct
             // 
             this.lbSpecialFruitPct.AutoSize = true;
-            this.lbSpecialFruitPct.Location = new System.Drawing.Point(192, 152);
+            this.lbSpecialFruitPct.Location = new System.Drawing.Point(256, 187);
+            this.lbSpecialFruitPct.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSpecialFruitPct.Name = "lbSpecialFruitPct";
-            this.lbSpecialFruitPct.Size = new System.Drawing.Size(76, 13);
+            this.lbSpecialFruitPct.Size = new System.Drawing.Size(96, 16);
             this.lbSpecialFruitPct.TabIndex = 19;
             this.lbSpecialFruitPct.Text = "Special Fruit %";
             // 
             // lbSpecialFruitValue
             // 
             this.lbSpecialFruitValue.AutoSize = true;
-            this.lbSpecialFruitValue.Location = new System.Drawing.Point(192, 178);
+            this.lbSpecialFruitValue.Location = new System.Drawing.Point(256, 219);
+            this.lbSpecialFruitValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSpecialFruitValue.Name = "lbSpecialFruitValue";
-            this.lbSpecialFruitValue.Size = new System.Drawing.Size(95, 13);
+            this.lbSpecialFruitValue.Size = new System.Drawing.Size(119, 16);
             this.lbSpecialFruitValue.TabIndex = 20;
             this.lbSpecialFruitValue.Text = "Special Fruit Value";
             // 
@@ -307,14 +325,15 @@ namespace Snake_Game
             0,
             0,
             131072});
-            this.numSpecialFruitPct.Location = new System.Drawing.Point(274, 150);
+            this.numSpecialFruitPct.Location = new System.Drawing.Point(365, 185);
+            this.numSpecialFruitPct.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numSpecialFruitPct.Maximum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numSpecialFruitPct.Name = "numSpecialFruitPct";
-            this.numSpecialFruitPct.Size = new System.Drawing.Size(52, 20);
+            this.numSpecialFruitPct.Size = new System.Drawing.Size(69, 22);
             this.numSpecialFruitPct.TabIndex = 21;
             this.numSpecialFruitPct.Value = new decimal(new int[] {
             5,
@@ -325,7 +344,8 @@ namespace Snake_Game
             // numSpecialFruitValue
             // 
             this.numSpecialFruitValue.BackColor = System.Drawing.Color.LimeGreen;
-            this.numSpecialFruitValue.Location = new System.Drawing.Point(294, 176);
+            this.numSpecialFruitValue.Location = new System.Drawing.Point(392, 217);
+            this.numSpecialFruitValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numSpecialFruitValue.Maximum = new decimal(new int[] {
             10,
             0,
@@ -337,7 +357,7 @@ namespace Snake_Game
             0,
             -2147483648});
             this.numSpecialFruitValue.Name = "numSpecialFruitValue";
-            this.numSpecialFruitValue.Size = new System.Drawing.Size(32, 20);
+            this.numSpecialFruitValue.Size = new System.Drawing.Size(43, 22);
             this.numSpecialFruitValue.TabIndex = 22;
             this.numSpecialFruitValue.Value = new decimal(new int[] {
             3,
@@ -349,10 +369,11 @@ namespace Snake_Game
             // 
             this.tbControlsUp.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsUp.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsUp.Location = new System.Drawing.Point(63, 227);
+            this.tbControlsUp.Location = new System.Drawing.Point(205, 284);
+            this.tbControlsUp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsUp.MaxLength = 1;
             this.tbControlsUp.Name = "tbControlsUp";
-            this.tbControlsUp.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsUp.Size = new System.Drawing.Size(83, 22);
             this.tbControlsUp.TabIndex = 23;
             this.tbControlsUp.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsUp.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -360,18 +381,20 @@ namespace Snake_Game
             // lbControlsUp
             // 
             this.lbControlsUp.AutoSize = true;
-            this.lbControlsUp.Location = new System.Drawing.Point(15, 230);
+            this.lbControlsUp.Location = new System.Drawing.Point(171, 287);
+            this.lbControlsUp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsUp.Name = "lbControlsUp";
-            this.lbControlsUp.Size = new System.Drawing.Size(22, 13);
+            this.lbControlsUp.Size = new System.Drawing.Size(26, 16);
             this.lbControlsUp.TabIndex = 24;
             this.lbControlsUp.Text = "UP";
             // 
             // lbControlsDown
             // 
             this.lbControlsDown.AutoSize = true;
-            this.lbControlsDown.Location = new System.Drawing.Point(15, 256);
+            this.lbControlsDown.Location = new System.Drawing.Point(147, 347);
+            this.lbControlsDown.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsDown.Name = "lbControlsDown";
-            this.lbControlsDown.Size = new System.Drawing.Size(42, 13);
+            this.lbControlsDown.Size = new System.Drawing.Size(50, 16);
             this.lbControlsDown.TabIndex = 26;
             this.lbControlsDown.Text = "DOWN";
             // 
@@ -379,10 +402,11 @@ namespace Snake_Game
             // 
             this.tbControlsDown.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsDown.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsDown.Location = new System.Drawing.Point(63, 253);
+            this.tbControlsDown.Location = new System.Drawing.Point(205, 344);
+            this.tbControlsDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsDown.MaxLength = 1;
             this.tbControlsDown.Name = "tbControlsDown";
-            this.tbControlsDown.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsDown.Size = new System.Drawing.Size(83, 22);
             this.tbControlsDown.TabIndex = 25;
             this.tbControlsDown.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsDown.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -390,9 +414,10 @@ namespace Snake_Game
             // lbControlsPause
             // 
             this.lbControlsPause.AutoSize = true;
-            this.lbControlsPause.Location = new System.Drawing.Point(15, 282);
+            this.lbControlsPause.Location = new System.Drawing.Point(20, 385);
+            this.lbControlsPause.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsPause.Name = "lbControlsPause";
-            this.lbControlsPause.Size = new System.Drawing.Size(43, 13);
+            this.lbControlsPause.Size = new System.Drawing.Size(53, 16);
             this.lbControlsPause.TabIndex = 28;
             this.lbControlsPause.Text = "PAUSE";
             // 
@@ -400,10 +425,11 @@ namespace Snake_Game
             // 
             this.tbControlsPause.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsPause.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsPause.Location = new System.Drawing.Point(63, 279);
+            this.tbControlsPause.Location = new System.Drawing.Point(84, 381);
+            this.tbControlsPause.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsPause.MaxLength = 1;
             this.tbControlsPause.Name = "tbControlsPause";
-            this.tbControlsPause.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsPause.Size = new System.Drawing.Size(83, 22);
             this.tbControlsPause.TabIndex = 27;
             this.tbControlsPause.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsPause.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -411,9 +437,10 @@ namespace Snake_Game
             // lbControlsNewGame
             // 
             this.lbControlsNewGame.AutoSize = true;
-            this.lbControlsNewGame.Location = new System.Drawing.Point(191, 282);
+            this.lbControlsNewGame.Location = new System.Drawing.Point(255, 385);
+            this.lbControlsNewGame.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsNewGame.Name = "lbControlsNewGame";
-            this.lbControlsNewGame.Size = new System.Drawing.Size(67, 13);
+            this.lbControlsNewGame.Size = new System.Drawing.Size(81, 16);
             this.lbControlsNewGame.TabIndex = 34;
             this.lbControlsNewGame.Text = "NEW GAME";
             // 
@@ -421,10 +448,11 @@ namespace Snake_Game
             // 
             this.tbControlsNew.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsNew.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsNew.Location = new System.Drawing.Point(258, 279);
+            this.tbControlsNew.Location = new System.Drawing.Point(344, 381);
+            this.tbControlsNew.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsNew.MaxLength = 1;
             this.tbControlsNew.Name = "tbControlsNew";
-            this.tbControlsNew.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsNew.Size = new System.Drawing.Size(83, 22);
             this.tbControlsNew.TabIndex = 33;
             this.tbControlsNew.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsNew.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -432,9 +460,10 @@ namespace Snake_Game
             // lbControlsRight
             // 
             this.lbControlsRight.AutoSize = true;
-            this.lbControlsRight.Location = new System.Drawing.Point(191, 256);
+            this.lbControlsRight.Location = new System.Drawing.Point(287, 314);
+            this.lbControlsRight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsRight.Name = "lbControlsRight";
-            this.lbControlsRight.Size = new System.Drawing.Size(41, 13);
+            this.lbControlsRight.Size = new System.Drawing.Size(49, 16);
             this.lbControlsRight.TabIndex = 32;
             this.lbControlsRight.Text = "RIGHT";
             // 
@@ -442,10 +471,11 @@ namespace Snake_Game
             // 
             this.tbControlsRight.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsRight.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsRight.Location = new System.Drawing.Point(258, 253);
+            this.tbControlsRight.Location = new System.Drawing.Point(344, 310);
+            this.tbControlsRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsRight.MaxLength = 1;
             this.tbControlsRight.Name = "tbControlsRight";
-            this.tbControlsRight.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsRight.Size = new System.Drawing.Size(83, 22);
             this.tbControlsRight.TabIndex = 31;
             this.tbControlsRight.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsRight.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -453,9 +483,10 @@ namespace Snake_Game
             // lbControlsLeft
             // 
             this.lbControlsLeft.AutoSize = true;
-            this.lbControlsLeft.Location = new System.Drawing.Point(191, 230);
+            this.lbControlsLeft.Location = new System.Drawing.Point(36, 316);
+            this.lbControlsLeft.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControlsLeft.Name = "lbControlsLeft";
-            this.lbControlsLeft.Size = new System.Drawing.Size(33, 13);
+            this.lbControlsLeft.Size = new System.Drawing.Size(40, 16);
             this.lbControlsLeft.TabIndex = 30;
             this.lbControlsLeft.Text = "LEFT";
             // 
@@ -464,10 +495,11 @@ namespace Snake_Game
             this.tbControlsLeft.AcceptsTab = true;
             this.tbControlsLeft.BackColor = System.Drawing.Color.LimeGreen;
             this.tbControlsLeft.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.tbControlsLeft.Location = new System.Drawing.Point(258, 227);
+            this.tbControlsLeft.Location = new System.Drawing.Point(84, 312);
+            this.tbControlsLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbControlsLeft.MaxLength = 1;
             this.tbControlsLeft.Name = "tbControlsLeft";
-            this.tbControlsLeft.Size = new System.Drawing.Size(63, 20);
+            this.tbControlsLeft.Size = new System.Drawing.Size(83, 22);
             this.tbControlsLeft.TabIndex = 29;
             this.tbControlsLeft.Click += new System.EventHandler(this.ControlsTextsClicked);
             this.tbControlsLeft.TextChanged += new System.EventHandler(this.ControlsTextsChanged);
@@ -476,18 +508,19 @@ namespace Snake_Game
             // 
             this.lbControls.AutoSize = true;
             this.lbControls.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbControls.Location = new System.Drawing.Point(14, 199);
+            this.lbControls.Location = new System.Drawing.Point(169, 255);
+            this.lbControls.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbControls.Name = "lbControls";
-            this.lbControls.Size = new System.Drawing.Size(104, 20);
+            this.lbControls.Size = new System.Drawing.Size(132, 25);
             this.lbControls.TabIndex = 35;
             this.lbControls.Text = "CONTROLS";
             // 
             // Options
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PaleGreen;
-            this.ClientSize = new System.Drawing.Size(338, 343);
+            this.ClientSize = new System.Drawing.Size(451, 452);
             this.Controls.Add(this.lbControls);
             this.Controls.Add(this.lbControlsNewGame);
             this.Controls.Add(this.tbControlsNew);
@@ -523,6 +556,7 @@ namespace Snake_Game
             this.Controls.Add(this.cbDifficulty);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Options";

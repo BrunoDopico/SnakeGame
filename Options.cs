@@ -97,7 +97,7 @@ namespace Snake_Game
             if(inputTexts.Distinct().Count() != inputTexts.Length)
             {
                 output = false;
-                MessageBox.Show("There are two controls with the same key", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There are controls with the same key", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return output;
         }
