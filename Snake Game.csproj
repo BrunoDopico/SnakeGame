@@ -72,6 +72,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MainProgram.cs" />
+    <Compile Include="MapLoader.cs" />
     <Compile Include="Options.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomMaps\example_map1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

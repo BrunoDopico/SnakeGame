@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Game
 {
-    class Config
+    public class Config
     {
         //GAME CONFIGURATIONS
         public static Difficulty DIFFICULTY;

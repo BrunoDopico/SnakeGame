@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Game.Enums
 {
-    enum MapType
+    public enum MapType
     {
         Standard,
         Borderless,

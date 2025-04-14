@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Snake_Game
 {
-    class GameController
+    public class GameController
     {
         private Graph graph;
         private Random random;

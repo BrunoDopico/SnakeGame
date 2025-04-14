@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Game.Enums
 {
-    enum CellType
+    public enum CellType
     {
         Void,
         Snake,

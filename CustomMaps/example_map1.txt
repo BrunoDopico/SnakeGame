@@ -1,0 +1,20 @@
+# METADATA
+Name: TEST
+Theme: Stone
+Width: 10
+Height: 8
+Difficulty: 0
+InitialSnakeLength: 5
+SpecialFruitAvailable: True
+SpecialFruitChance: 0.05
+SpecialFruitValue: 3
+
+# MAP
+##########
+#        #
+#   F    #
+#   ^    #
+#        #
+#        #
+#        #
+##########

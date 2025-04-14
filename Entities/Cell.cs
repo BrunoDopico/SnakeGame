@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Game.Entities
 {
-    class Cell
+    public class Cell
     {
         public Cell(CellType type, int value)
         {
