@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Entities\Cell.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Entities\MapInfo.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="Enums\CellType.cs" />
     <Compile Include="Enums\Difficulty.cs" />

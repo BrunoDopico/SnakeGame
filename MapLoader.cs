@@ -12,7 +12,11 @@ namespace Snake_Game
 {
     public static class MapLoader
     {
-
+        /// <summary>
+        /// Loads a map from a file.
+        /// </summary>
+        /// <param name="path">The path where the map is located.</param>
+        /// <returns>A touple containing the retrieved map and the snake's initial position.</returns>
         public static (Cell[,], Point) LoadMapFromFile(string path)
         {
             string[] lines = File.ReadAllLines(path);
@@ -118,5 +122,57 @@ namespace Snake_Game
             return (grid, snakeHead);
         }
 
+        /// <summary>
+        /// Retrieves a list of available maps from the specified folder.
+        /// </summary>
+        /// <param name="folderPath">The folder to retrieve maps from.</param>
+        /// <returns>A list of all the found maps in the selected folder.</returns>
+        public static List<MapInfo> GetAvailableMaps(string folderPath)
+        {
+            var maps = new List<MapInfo>();
+            var files = Directory.GetFiles(folderPath, "*.txt");
+
+            foreach (var file in files)
+            {
+                string[] lines = File.ReadAllLines(file);
+
+                string name = "Unnamed Map";
+                string theme = "Default";
+                int width = 0, height = 0;
+                Difficulty difficulty = Difficulty.Easy;
+
+                foreach (string line in lines)
+                {
+                    if (line.StartsWith("# MAP")) break;
+
+                    var parts = line.Split(':');
+                    if (parts.Length != 2) continue;
+
+                    string key = parts[0].Trim();
+                    string value = parts[1].Trim();
+
+                    switch (key)
+                    {
+                        case "Name": name = value; break;
+                        case "Theme": theme = value; break;
+                        case "Width": width = int.Parse(value); break;
+                        case "Height": height = int.Parse(value); break;
+                        case "Difficulty": difficulty = (Difficulty) int.Parse(value); break;
+                    }
+                }
+
+                maps.Add(new MapInfo
+                {
+                    FilePath = file,
+                    Name = name,
+                    Theme = theme,
+                    Width = width,
+                    Height = height,
+                    Difficulty = difficulty
+                });
+            }
+
+            return maps;
+        }
     }
 }
