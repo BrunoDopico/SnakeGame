@@ -97,7 +97,7 @@ namespace Snake_Game
             DIFFICULTY = Difficulty.Easy;
             TIMER = 250;
 
-            MAP_X = 20;
+            MAP_X = 17;
             MAP_Y = 15;
             MAP_TYPE = MapType.Standard;
             SPECIAL_FRUIT_AVAILABLE = true;

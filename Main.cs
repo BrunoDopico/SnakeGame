@@ -22,6 +22,8 @@ namespace Snake_Game
         private void bt_newGame_Click(object sender, EventArgs e)
         {
             GameScreen game = new GameScreen();
+            game.FormClosed += (s, args) => this.Show(); // Show Main form when GameScreen is closed  
+            this.Hide();
             game.Show();
         }
 

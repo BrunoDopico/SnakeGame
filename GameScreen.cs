@@ -32,7 +32,7 @@ namespace Snake_Game
         private void FillGrid()
         {
             int x_margin = 32;
-            int y_margin = 32;
+            int y_margin = 96;
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
@@ -176,7 +176,8 @@ namespace Snake_Game
             grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             FillGrid();
             int width = Math.Max(defaultFormWidth, 64 + grid.GetLength(0) * 32); //Expands the screen width or leaves it as the default in case the result would be smaller
-            int height = 64 + grid.GetLength(1) * 32;
+
+            int height = 128 + grid.GetLength(1) * 32;
             Size = new Size(width, height);
             this.CenterToScreen();
             controller.StartGame();
@@ -187,12 +188,18 @@ namespace Snake_Game
 
         private void GameLoop(object sender, EventArgs e)  //run this logic each timer tick
         {
-            controller.GameLoop();
-            if (controller.Lose)
-            {
-                gameLoop.Stop();
-                inGame = false;
-            }
+            Task.Run(() =>
+         {
+             controller.GameLoop();
+             if (controller.Lose)
+             {
+                 Invoke(new Action(() =>
+                 {
+                     gameLoop.Stop();
+                     inGame = false;
+                 }));
+             }
+         });
         }
 
         private void Pause()
@@ -205,7 +212,15 @@ namespace Snake_Game
 
         public void ChangeInfo(string msg)
         {
-            lbInfo.Text = msg;
+            if (lbInfo.InvokeRequired)
+            {
+                lbInfo.Invoke(new Action(() => ChangeInfo(msg)));
+            }
+            else
+            {
+                lbInfo.Text = msg;
+                lbInfo.BringToFront();
+            }
         }
 
         private void GameScreen_KeyPress(object sender, KeyPressEventArgs e)
@@ -253,8 +268,5 @@ namespace Snake_Game
                 "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (inGame) gameLoop.Start();
         }
-
     }
-
-
 }
