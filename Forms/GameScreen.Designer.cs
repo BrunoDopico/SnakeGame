@@ -1,5 +1,5 @@
 ﻿
-namespace Snake_Game
+namespace Snake_Game.Forms
 {
     partial class GameScreen
     {

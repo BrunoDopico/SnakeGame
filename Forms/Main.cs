@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Snake_Game
+namespace Snake_Game.Forms
 {
     public partial class Main : Form
     {
