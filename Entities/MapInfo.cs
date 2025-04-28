@@ -15,5 +15,10 @@ namespace Snake_Game.Entities
         public Difficulty Difficulty { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public int InitialSnakeLength { get; set; } = 4;
+        public int SpecialFruitValue { get; set; } = 3;
+        public bool SpecialFruitAvailable { get; set; } = true;
+        public double SpecialFruitChance { get; set; } = 0.05;
+        public List<string> MapLines { get; set; } = new List<string>();
     }
 }

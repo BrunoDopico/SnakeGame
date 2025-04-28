@@ -206,7 +206,8 @@
     <None Include="Resources\title.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CustomMaps\example_map1.txt" />
+    <Content Include="CustomMaps\Example1.txt" />
+    <Content Include="CustomMaps\Example2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

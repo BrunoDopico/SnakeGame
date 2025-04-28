@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snake_Game
 {
@@ -15,68 +12,25 @@ namespace Snake_Game
         /// <summary>
         /// Loads a map from a file.
         /// </summary>
-        /// <param name="path">The path where the map is located.</param>
+        /// <param name="data">The map data.</param>
         /// <returns>A touple containing the retrieved map and the snake's initial position.</returns>
-        public static (Cell[,], Point) LoadMapFromFile(string path)
+        public static (Cell[,], Point) LoadMapIntoGame(MapInfo data)
         {
-            string[] lines = File.ReadAllLines(path);
-
-            Dictionary<string, string> metadata = new Dictionary<string, string>();
-            List<string> mapLines = new List<string>();
-
-            bool readingMap = false;
-            foreach (string rawLine in lines)
-            {
-                string line = rawLine.Trim();
-
-                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
-                    continue;
-
-                if (line.StartsWith("# MAP"))
-                {
-                    readingMap = true;
-                    continue;
-                }
-
-                if (!readingMap)
-                {
-                    // Metadata line (e.g. "Width: 10")
-                    string[] parts = line.Split(':');
-                    if (parts.Length == 2)
-                    {
-                        metadata[parts[0].Trim()] = parts[1].Trim();
-                    }
-                }
-                else
-                {
-                    mapLines.Add(line);
-                }
-            }
-
-            // Parse metadata
-            int width = int.Parse(metadata["Width"]);
-            int height = int.Parse(metadata["Height"]);
-            int difficulty = int.Parse(metadata["Difficulty"]);
-            int initialSnakeLength = int.Parse(metadata["InitialSnakeLength"]);
-            bool specialFruitAvailable = Boolean.Parse(metadata["SpecialFruitAvailable"]);
-            double specialFruitChance = double.Parse(metadata["SpecialFruitChance"]);
-            int specialFruitValue = int.Parse(metadata["SpecialFruitValue"]);
-
             // Store to global vars or config system
-            Config.MAP_X = width;
-            Config.MAP_Y = height;
-            Config.DIFFICULTY = (Difficulty) difficulty;
-            Config.INITIAL_SNAKE_SIZE = initialSnakeLength;
-            Config.SPECIAL_FRUIT_PCT = specialFruitChance;
-            Config.SPECIAL_FRUIT_VALUE = specialFruitValue;
+            Config.MAP_X = data.Width;
+            Config.MAP_Y = data.Height;
+            Config.DIFFICULTY = data.Difficulty;
+            Config.INITIAL_SNAKE_SIZE = data.InitialSnakeLength;
+            Config.SPECIAL_FRUIT_PCT = data.SpecialFruitChance;
+            Config.SPECIAL_FRUIT_VALUE = data.SpecialFruitValue;
 
-            Cell[,] grid = new Cell[width, height];
+            Cell[,] grid = new Cell[data.Width, data.Height];
             Point snakeHead = new Point(-1,-1);
 
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < data.Height; y++)
             {
-                string line = mapLines[y];
-                for (int x = 0; x < width; x++)
+                string line = data.MapLines[y];
+                for (int x = 0; x < data.Width; x++)
                 {
                     char c = line[x];
                     Cell cell;
@@ -136,30 +90,63 @@ namespace Snake_Game
             {
                 string[] lines = File.ReadAllLines(file);
 
-                string name = "Unnamed Map";
-                string theme = "Default";
-                int width = 0, height = 0;
-                Difficulty difficulty = Difficulty.Easy;
+                
 
-                foreach (string line in lines)
+                Dictionary<string, string> metadata = new Dictionary<string, string>();
+                List<string> mapLines = new List<string>();
+
+                bool readingMap = false;
+                foreach (string rawLine in lines)
                 {
-                    if (line.StartsWith("# MAP")) break;
+                    string line = rawLine.Trim();
 
-                    var parts = line.Split(':');
-                    if (parts.Length != 2) continue;
+                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
+                        continue;
 
-                    string key = parts[0].Trim();
-                    string value = parts[1].Trim();
-
-                    switch (key)
+                    if (line.StartsWith("# MAP"))
                     {
-                        case "Name": name = value; break;
-                        case "Theme": theme = value; break;
-                        case "Width": width = int.Parse(value); break;
-                        case "Height": height = int.Parse(value); break;
-                        case "Difficulty": difficulty = (Difficulty) int.Parse(value); break;
+                        readingMap = true;
+                        continue;
+                    }
+
+                    if (!readingMap)
+                    {
+                        // Metadata line (e.g. "Width: 10")
+                        string[] parts = line.Split(':');
+                        if (parts.Length == 2)
+                        {
+                            metadata[parts[0].Trim()] = parts[1].Trim();
+                        }
+                    }
+                    else
+                    {
+                        mapLines.Add(line);
                     }
                 }
+
+                string name = "Unnamed Map";
+                string theme = "Default";
+                int initialSnakeLength = 4, specialFruitValue = 3;
+                bool specialFruitAvailable = true;
+                double specialFruitChance = 0.05;
+
+                // Parse metadata
+                if (metadata.ContainsKey("Name"))
+                    name = metadata["Name"];
+                if (metadata.ContainsKey("Theme")) 
+                    theme = metadata["Theme"];
+
+                int width = int.Parse(metadata["Width"]);
+                int height = int.Parse(metadata["Height"]);
+                int difficulty = int.Parse(metadata["Difficulty"]);
+                if(metadata.ContainsKey("InitialSnakeLength"))
+                    initialSnakeLength = int.Parse(metadata["InitialSnakeLength"]);
+                if (metadata.ContainsKey("SpecialFruitAvailable"))
+                    specialFruitAvailable = Boolean.Parse(metadata["SpecialFruitAvailable"]);
+                if(metadata.ContainsKey("SpecialFruitChance"))
+                    specialFruitChance = double.Parse(metadata["SpecialFruitChance"]);
+                if(metadata.ContainsKey("SpecialFruitValue"))
+                    specialFruitValue = int.Parse(metadata["SpecialFruitValue"]);
 
                 maps.Add(new MapInfo
                 {
@@ -168,7 +155,12 @@ namespace Snake_Game
                     Theme = theme,
                     Width = width,
                     Height = height,
-                    Difficulty = difficulty
+                    Difficulty = (Difficulty)difficulty,
+                    InitialSnakeLength = initialSnakeLength,
+                    SpecialFruitValue = specialFruitValue,
+                    SpecialFruitAvailable = specialFruitAvailable,
+                    SpecialFruitChance = specialFruitChance,
+                    MapLines = mapLines,
                 });
             }
 

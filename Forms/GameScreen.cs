@@ -180,7 +180,23 @@ namespace Snake_Game.Forms
             int height = 128 + grid.GetLength(1) * 32;
             Size = new Size(width, height);
             this.CenterToScreen();
-            controller.StartGame();
+            controller.StartRandomGame();
+            gameLoop.Interval = Config.TIMER;   // milliseconds
+            gameLoop.Start();
+            inGame = true;
+        }
+
+        private void StartCustomGame(MapInfo customMap)
+        {
+            ClearGrid();
+            controller.StartCustomGame(customMap);
+            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
+            FillGrid();
+            int width = Math.Max(defaultFormWidth, 64 + grid.GetLength(0) * 32); //Expands the screen width or leaves it as the default in case the result would be smaller
+            int height = 128 + grid.GetLength(1) * 32;
+            Size = new Size(width, height);
+            this.CenterToScreen();
+            PaintMap();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
             inGame = true;
@@ -262,11 +278,28 @@ namespace Snake_Game.Forms
                 "\n · Move Left: " + Config.IN_LEFT.ToString() +
                 "\n · Move Right: " + Config.IN_RIGHT.ToString() +
                 "\n · Pause: " + Config.IN_PAUSE.ToString() +
-                "\n · New Game: " + Config.IN_NEW.ToString() +
+                "\n · New Random Game: " + Config.IN_NEW.ToString() +
                 "\n (Can be changed in options)\n" +
                 "\n- CREDITS -\n" +
                 "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (inGame) gameLoop.Start();
+        }
+
+        private void btLoadMap_Click(object sender, EventArgs e)
+        {
+            using (var mapSelector = new MapSelector())
+            {
+                if (mapSelector.ShowDialog() == DialogResult.OK)
+                {
+                    MapInfo selectedMap = mapSelector.SelectedMap;
+
+                    StartCustomGame(selectedMap);
+                }
+                else
+                {
+                    MessageBox.Show("No map was selected.", "Map Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }

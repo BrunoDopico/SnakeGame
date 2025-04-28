@@ -50,7 +50,7 @@ namespace Snake_Game.Forms
                 "\n · Move Left: " + Config.IN_LEFT.ToString() +
                 "\n · Move Right: " + Config.IN_RIGHT.ToString() +
                 "\n · Pause: " + Config.IN_PAUSE.ToString() +
-                "\n · New Game: " + Config.IN_NEW.ToString() +
+                "\n · New Random Game: " + Config.IN_NEW.ToString() +
                 "\n (Can be changed in options)\n" +
                 "\n- CREDITS -\n" +
                 "Game made by Bruno (BrunusOP) Dopico\n", "CREDITS", MessageBoxButtons.OK, MessageBoxIcon.Information);

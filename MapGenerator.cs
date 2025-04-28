@@ -42,22 +42,19 @@ namespace Snake_Game
                     break;
             }
 
+            Config.setTimer(Config.DIFFICULTY);
             switch (Config.DIFFICULTY)
             {
                 case Difficulty.Easy:
-                    Config.TIMER = 250;
                     map = PopulateMap(map, 0, 4);
                     break;
                 case Difficulty.Medium:
-                    Config.TIMER = 250;
                     map = PopulateMap(map,(int)(Config.MAP_X * Config.MAP_Y * 0.01), 2);
                     break;
                 case Difficulty.Hard:
-                    Config.TIMER = 180;
                     map = PopulateMap(map, (int)(Config.MAP_X * Config.MAP_Y * 0.03), 2);
                     break;
                 case Difficulty.Hardcore:
-                    Config.TIMER = 120;
                     map = PopulateMap(map, (int)(Config.MAP_X * Config.MAP_Y * 0.05), 1);
                     break;
             }

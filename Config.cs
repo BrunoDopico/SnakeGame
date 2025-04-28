@@ -18,6 +18,7 @@ namespace Snake_Game
         public static int MAP_X; //Min 6, Max 50
         public static int MAP_Y; //Min 6, Max 30
         public static MapType MAP_TYPE;
+        public static string MAP_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "CustomMaps"); // this is a global in the code, but should not be modified by the players and therefore it is not saved.
 
         //FRUIT CONFIGURATIONS
         public static bool SPECIAL_FRUIT_AVAILABLE;
@@ -34,6 +35,25 @@ namespace Snake_Game
         public static ConsoleKey IN_UP;
         public static ConsoleKey IN_DOWN;
         public static ConsoleKey IN_NEW;
+
+        public static void setTimer(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    Config.TIMER = 250;
+                    break;
+                case Difficulty.Medium:
+                    Config.TIMER = 225;
+                    break;
+                case Difficulty.Hard:
+                    Config.TIMER = 180;
+                    break;
+                case Difficulty.Hardcore:
+                    Config.TIMER = 120;
+                    break;
+            }
+        }
 
         public static void SaveConfig()
         {

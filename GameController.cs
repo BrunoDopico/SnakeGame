@@ -3,6 +3,7 @@ using Snake_Game.Enums;
 using Snake_Game.Forms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -37,7 +38,7 @@ namespace Snake_Game
         /// <summary>
         /// Method that initiates and handles the steps of the game.
         /// </summary>
-        public void StartGame()
+        public void StartRandomGame()
         {
             Map = MapGenerator.GenerateMap();
             Snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
@@ -47,6 +48,19 @@ namespace Snake_Game
             time = 0;
             score = 0;
             direction = Direction.Left;
+        }
+
+        public void StartCustomGame(MapInfo mapData)
+        {
+            Point snakeSpawn = new Point();
+            (Map, snakeSpawn) = MapLoader.LoadMapIntoGame(mapData);
+            Snake = new Snake(snakeSpawn.X, snakeSpawn.Y, Config.INITIAL_SNAKE_SIZE);
+            Config.setTimer(mapData.Difficulty);
+            fillAvailableCells();
+            Lose = false;
+            time = 0;
+            score = 0;
+            direction = (Direction) Map[snakeSpawn.X,snakeSpawn.Y].Value;
         }
 
         /// <summary>

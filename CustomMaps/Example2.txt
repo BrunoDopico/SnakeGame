@@ -1,0 +1,22 @@
+﻿# METADATA
+Name: TEST2
+Theme: Default
+Width: 15
+Height: 10
+Difficulty: 0
+InitialSnakeLength: 4
+SpecialFruitAvailable: True
+SpecialFruitChance: 0.2
+SpecialFruitValue: 2
+
+# MAP
+###############
+#             #
+#     F       #
+#             #
+#             #
+#         F   #
+#     <       #
+#             #
+#  F          #
+###############
