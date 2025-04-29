@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,13 +17,15 @@ namespace Snake_Game.Forms
     {
         PictureBox[,] grid;
         GameController controller;
+        ThemeManager themeManager;
         Timer gameLoop = new Timer();
         bool inGame = false;
         private int defaultFormWidth;
-
+        
         public GameScreen()
         {
             InitializeComponent();
+            themeManager = new ThemeManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources"));
             gameLoop.Tick += GameLoop;
             controller = new GameController(this);
             InitializeComponent();
@@ -38,7 +41,7 @@ namespace Snake_Game.Forms
                 for (int j = 0; j < grid.GetLength(1); j++)
                 {
                     grid[i, j] = new PictureBox();
-                    grid[i, j].BackgroundImage = Properties.Resources.grass;
+                    grid[i, j].BackgroundImage = themeManager.GetSprite(SpriteType.Background);
                     grid[i, j].Location = new Point(x_margin + 32 * i, y_margin + 32 * j);
                     grid[i, j].Visible = true;
                     grid[i, j].Size = new Size(32, 32);
@@ -70,16 +73,16 @@ namespace Snake_Game.Forms
                         case CellType.Void:
                             break;
                         case CellType.Obstacle:
-                            sprite = Properties.Resources.wall;
+                            sprite = themeManager.GetSprite(SpriteType.Wall);
                             PaintCell(i, j, sprite);
                             break;
                         case CellType.Fruit:
-                            if (current.Value == Config.SPECIAL_FRUIT_VALUE) sprite = Properties.Resources.fruit_special;
-                            else sprite = Properties.Resources.fruit_normal;
+                            if (current.Value == Config.SPECIAL_FRUIT_VALUE) sprite = themeManager.GetSprite(SpriteType.FruitSpecial);
+                            else sprite = themeManager.GetSprite(SpriteType.FruitNormal);
                             PaintCell(i, j, sprite);
                             break;
                         case CellType.Snake:
-                            sprite = Properties.Resources.snake_head_left;
+                            sprite = themeManager.GetSprite(SpriteType.SnakeHeadLeft);
                             PaintCell(i, j, sprite);
                             break;
                     }
@@ -87,82 +90,9 @@ namespace Snake_Game.Forms
             }
         }
 
-        public void UpdateCell(int x, int y, string value)
+        public void UpdateCell(int x, int y, SpriteType value)
         {
-            Image sprite = null;
-            switch (value)
-            {
-                case "f_n": //fruit normal
-                    sprite = Properties.Resources.fruit_normal;
-                    break;
-                case "f_s": //fruit special
-                    sprite = Properties.Resources.fruit_special;
-                    break;
-                case "s_h_u": //snake head up
-                    sprite = Properties.Resources.snake_head_up;
-                    break;
-                case "s_h_d": //snake head down
-                    sprite = Properties.Resources.snake_head_down;
-                    break;
-                case "s_h_l": //snake head left
-                    sprite = Properties.Resources.snake_head_left;
-                    break;
-                case "s_h_r": //snake head right
-                    sprite = Properties.Resources.snake_head_right;
-                    break;
-                case "s_t_u": //snake tail up
-                    sprite = Properties.Resources.snake_tail_up;
-                    break;
-                case "s_t_d": //snake tail down
-                    sprite = Properties.Resources.snake_tail_down;
-                    break;
-                case "s_t_l": //snake tail left
-                    sprite = Properties.Resources.snake_tail_left;
-                    break;
-                case "s_t_r": //snake tail right
-                    sprite = Properties.Resources.snake_tail_right;
-                    break;
-                case "s_b_u": //snake body up
-                    sprite = Properties.Resources.snake_body_up;
-                    break;
-                case "s_b_d": //snake body down
-                    sprite = Properties.Resources.snake_body_down;
-                    break;
-                case "s_b_l": //snake body left
-                    sprite = Properties.Resources.snake_body_left;
-                    break;
-                case "s_b_r": //snake body right
-                    sprite = Properties.Resources.snake_body_right;
-                    break;
-                case "s_b_u_l": //snake body up left
-                    sprite = Properties.Resources.snake_body_up_left;
-                    break;
-                case "s_b_u_r": //snake body up right
-                    sprite = Properties.Resources.snake_body_up_right;
-                    break;
-                case "s_b_d_l": //snake body down left
-                    sprite = Properties.Resources.snake_body_down_left;
-                    break;
-                case "s_b_d_r": //snake body down right
-                    sprite = Properties.Resources.snake_body_down_right;
-                    break;
-                case "s_b_l_u": //snake body left up
-                    sprite = Properties.Resources.snake_body_left_up;
-                    break;
-                case "s_b_l_d": //snake body left down
-                    sprite = Properties.Resources.snake_body_left_down;
-                    break;
-                case "s_b_r_u": //snake body right up
-                    sprite = Properties.Resources.snake_body_right_up;
-                    break;
-                case "s_b_r_d": //snake body right down
-                    sprite = Properties.Resources.snake_body_right_down;
-                    break;
-                default:
-                    sprite = Properties.Resources.grass;
-                    break;
-            }
-            PaintCell(x, y, sprite);
+            PaintCell(x, y, themeManager.GetSprite(value));
         }
 
         private void PaintCell(int x, int y, Image sprite)
@@ -172,6 +102,7 @@ namespace Snake_Game.Forms
 
         private void StartGame()
         {
+            themeManager.LoadTheme("Default");
             ClearGrid();
             grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
             FillGrid();
@@ -188,6 +119,7 @@ namespace Snake_Game.Forms
 
         private void StartCustomGame(MapInfo customMap)
         {
+            themeManager.LoadTheme(customMap.Theme);
             ClearGrid();
             controller.StartCustomGame(customMap);
             grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
