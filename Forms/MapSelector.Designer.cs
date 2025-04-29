@@ -42,6 +42,7 @@
             // 
             // lbMaps
             // 
+            this.lbMaps.BackColor = System.Drawing.Color.Tan;
             this.lbMaps.FormattingEnabled = true;
             this.lbMaps.ItemHeight = 16;
             this.lbMaps.Location = new System.Drawing.Point(13, 35);
@@ -53,81 +54,83 @@
             // 
             // tbPreview
             // 
+            this.tbPreview.BackColor = System.Drawing.Color.Tan;
             this.tbPreview.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPreview.Location = new System.Drawing.Point(13, 213);
             this.tbPreview.Margin = new System.Windows.Forms.Padding(4);
             this.tbPreview.Multiline = true;
             this.tbPreview.Name = "tbPreview";
-            this.tbPreview.Size = new System.Drawing.Size(241, 172);
+            this.tbPreview.Size = new System.Drawing.Size(491, 331);
             this.tbPreview.TabIndex = 1;
+            this.tbPreview.WordWrap = false;
             // 
             // lbMapList
             // 
             this.lbMapList.AutoSize = true;
-            this.lbMapList.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbMapList.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbMapList.Location = new System.Drawing.Point(14, 9);
             this.lbMapList.Name = "lbMapList";
-            this.lbMapList.Size = new System.Drawing.Size(108, 22);
+            this.lbMapList.Size = new System.Drawing.Size(93, 20);
             this.lbMapList.TabIndex = 2;
             this.lbMapList.Text = "MAP LIST";
             // 
             // lbPreview
             // 
             this.lbPreview.AutoSize = true;
-            this.lbPreview.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPreview.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbPreview.Location = new System.Drawing.Point(14, 187);
             this.lbPreview.Name = "lbPreview";
-            this.lbPreview.Size = new System.Drawing.Size(112, 22);
+            this.lbPreview.Size = new System.Drawing.Size(90, 20);
             this.lbPreview.TabIndex = 3;
             this.lbPreview.Text = "PREVIEW";
             // 
             // lbDifficulty
             // 
             this.lbDifficulty.AutoSize = true;
-            this.lbDifficulty.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDifficulty.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbDifficulty.Location = new System.Drawing.Point(261, 123);
             this.lbDifficulty.Name = "lbDifficulty";
-            this.lbDifficulty.Size = new System.Drawing.Size(101, 22);
+            this.lbDifficulty.Size = new System.Drawing.Size(100, 20);
             this.lbDifficulty.TabIndex = 4;
             this.lbDifficulty.Text = "Difficulty: ";
             // 
             // lbWidth
             // 
             this.lbWidth.AutoSize = true;
-            this.lbWidth.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbWidth.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbWidth.Location = new System.Drawing.Point(261, 79);
             this.lbWidth.Name = "lbWidth";
-            this.lbWidth.Size = new System.Drawing.Size(74, 22);
+            this.lbWidth.Size = new System.Drawing.Size(70, 20);
             this.lbWidth.TabIndex = 5;
             this.lbWidth.Text = "Width: ";
             // 
             // lbHeight
             // 
             this.lbHeight.AutoSize = true;
-            this.lbHeight.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbHeight.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbHeight.Location = new System.Drawing.Point(261, 101);
             this.lbHeight.Name = "lbHeight";
-            this.lbHeight.Size = new System.Drawing.Size(78, 22);
+            this.lbHeight.Size = new System.Drawing.Size(76, 20);
             this.lbHeight.TabIndex = 6;
             this.lbHeight.Text = "Height: ";
             // 
             // lbName
             // 
             this.lbName.AutoSize = true;
-            this.lbName.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbName.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbName.Location = new System.Drawing.Point(261, 35);
             this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(69, 22);
+            this.lbName.Size = new System.Drawing.Size(69, 20);
             this.lbName.TabIndex = 7;
             this.lbName.Text = "Name: ";
             // 
             // lbTheme
             // 
             this.lbTheme.AutoSize = true;
-            this.lbTheme.Font = new System.Drawing.Font("Elephant", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTheme.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTheme.Location = new System.Drawing.Point(261, 57);
             this.lbTheme.Name = "lbTheme";
-            this.lbTheme.Size = new System.Drawing.Size(78, 22);
+            this.lbTheme.Size = new System.Drawing.Size(79, 20);
             this.lbTheme.TabIndex = 8;
             this.lbTheme.Text = "Theme: ";
             // 
@@ -137,7 +140,7 @@
             this.bt_LoadMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bt_LoadMap.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_LoadMap.ForeColor = System.Drawing.Color.Black;
-            this.bt_LoadMap.Location = new System.Drawing.Point(265, 155);
+            this.bt_LoadMap.Location = new System.Drawing.Point(262, 147);
             this.bt_LoadMap.Margin = new System.Windows.Forms.Padding(4);
             this.bt_LoadMap.Name = "bt_LoadMap";
             this.bt_LoadMap.Size = new System.Drawing.Size(115, 28);
@@ -151,7 +154,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.ClientSize = new System.Drawing.Size(472, 493);
+            this.ClientSize = new System.Drawing.Size(517, 557);
             this.Controls.Add(this.bt_LoadMap);
             this.Controls.Add(this.lbTheme);
             this.Controls.Add(this.lbName);

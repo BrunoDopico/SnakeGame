@@ -1,0 +1,25 @@
+﻿# METADATA
+Name: Looped
+Theme: Default
+Width: 17
+Height: 13
+Difficulty: 1
+InitialSnakeLength: 4
+SpecialFruitAvailable: True
+SpecialFruitChance: 0.05
+SpecialFruitValue: 3
+
+# MAP
+### ######### ###
+#               #
+F                
+##            ###
+#               #
+#    #     #    #
+# F  #  ^  #  F #
+#    #     #    #
+#               #
+###            ##
+                F
+#               #
+### ######### ###

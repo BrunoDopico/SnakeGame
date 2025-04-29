@@ -1,0 +1,20 @@
+# METADATA
+Name: Tight
+Theme: Default
+Width: 9
+Height: 8
+Difficulty: 2
+InitialSnakeLength: 2
+SpecialFruitAvailable: False
+SpecialFruitChance: 0
+SpecialFruitValue: 0
+
+# MAP
+#########
+#       #
+#       #
+#   ^   #
+# F     #
+#       #
+#       #
+#########

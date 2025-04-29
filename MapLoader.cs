@@ -32,6 +32,12 @@ namespace Snake_Game
                 string line = data.MapLines[y];
                 for (int x = 0; x < data.Width; x++)
                 {
+                    if (x >= line.Length)
+                    {
+                        grid[x, y] = new Cell(CellType.Void, 0); // Fill with void if line is shorter than the width (empty)
+                        continue;
+                    }
+
                     char c = line[x];
                     Cell cell;
 
@@ -69,8 +75,7 @@ namespace Snake_Game
                             cell = new Cell(CellType.Void, 0);
                             break;
                     }
-
-                    grid[x, y] = cell;
+                    grid[x, y] = cell;  
                 }
             }
             return (grid, snakeHead);

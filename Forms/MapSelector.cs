@@ -37,12 +37,14 @@ namespace Snake_Game.Forms
 
             SelectedMap = availableMaps.FirstOrDefault(map => Path.GetFileNameWithoutExtension(map.FilePath) == selectedMapName);
             tbPreview.Clear();
-            SelectedMap.MapLines.ForEach(line => tbPreview.AppendText(line + Environment.NewLine));
+            SelectedMap.MapLines.ForEach(line =>
+               tbPreview.AppendText(string.Join(" ", line.ToCharArray()) + Environment.NewLine));
 
             using (Graphics g = tbPreview.CreateGraphics())
             {
-                SizeF textSize = g.MeasureString(string.Join(Environment.NewLine, SelectedMap.MapLines), tbPreview.Font);
-                tbPreview.Size = new Size((int)Math.Ceiling(textSize.Width) + 15, (int)Math.Ceiling(textSize.Height) + 40);
+                string spacedText = string.Join(Environment.NewLine, SelectedMap.MapLines.Select(line => string.Join(" ", line.ToCharArray())));
+                SizeF textSize = g.MeasureString(spacedText, tbPreview.Font);
+                tbPreview.Size = new Size((int)Math.Ceiling(textSize.Width) + SelectedMap.Width*3, (int)Math.Ceiling(textSize.Height) + 40);
             }
 
             lbName.Text = $"Name: {SelectedMap.Name}";
@@ -54,6 +56,11 @@ namespace Snake_Game.Forms
 
         private void bt_LoadMap_Click(object sender, EventArgs e)
         {
+            if (lbMaps.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a map first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string selectedMapName = lbMaps.SelectedItem.ToString();
             SelectedMap = availableMaps.FirstOrDefault(map => Path.GetFileNameWithoutExtension(map.FilePath) == selectedMapName);
 

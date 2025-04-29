@@ -1,0 +1,23 @@
+﻿# METADATA
+Name: Intense
+Theme: Default
+Width: 12
+Height: 11
+Difficulty: 2
+InitialSnakeLength: 4
+SpecialFruitAvailable: True
+SpecialFruitChance: 0.05
+SpecialFruitValue: 3
+
+# MAP
+############
+F          <
+#   ####   #
+#          #
+#   ####   #
+#          #
+#   ####   #
+#          #
+#   ####   #
+#          #
+############

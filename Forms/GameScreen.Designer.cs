@@ -43,11 +43,11 @@ namespace Snake_Game.Forms
             // 
             this.lbInfo.AutoSize = true;
             this.lbInfo.BackColor = System.Drawing.Color.Transparent;
-            this.lbInfo.Font = new System.Drawing.Font("Elephant", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbInfo.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbInfo.Image = global::Snake_Game.Properties.Resources.stats_border;
             this.lbInfo.Location = new System.Drawing.Point(27, 54);
             this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(66, 24);
+            this.lbInfo.Size = new System.Drawing.Size(58, 22);
             this.lbInfo.TabIndex = 13;
             this.lbInfo.Text = "INFO";
             // 
@@ -102,7 +102,7 @@ namespace Snake_Game.Forms
             this.bt_randomMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bt_randomMap.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bt_randomMap.ForeColor = System.Drawing.Color.Black;
-            this.bt_randomMap.Location = new System.Drawing.Point(23, 22);
+            this.bt_randomMap.Location = new System.Drawing.Point(135, 22);
             this.bt_randomMap.Margin = new System.Windows.Forms.Padding(4);
             this.bt_randomMap.Name = "bt_randomMap";
             this.bt_randomMap.Size = new System.Drawing.Size(115, 28);
@@ -130,7 +130,7 @@ namespace Snake_Game.Forms
             this.btLoadMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btLoadMap.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btLoadMap.ForeColor = System.Drawing.Color.Black;
-            this.btLoadMap.Location = new System.Drawing.Point(146, 22);
+            this.btLoadMap.Location = new System.Drawing.Point(23, 22);
             this.btLoadMap.Margin = new System.Windows.Forms.Padding(4);
             this.btLoadMap.Name = "btLoadMap";
             this.btLoadMap.Size = new System.Drawing.Size(104, 28);
