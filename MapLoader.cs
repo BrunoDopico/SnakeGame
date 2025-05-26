@@ -3,6 +3,7 @@ using Snake_Game.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 
 namespace Snake_Game
@@ -153,7 +154,7 @@ namespace Snake_Game
                 if (metadata.ContainsKey("SpecialFruitAvailable"))
                     specialFruitAvailable = Boolean.Parse(metadata["SpecialFruitAvailable"]);
                 if(metadata.ContainsKey("SpecialFruitChance"))
-                    specialFruitChance = double.Parse(metadata["SpecialFruitChance"]);
+                    specialFruitChance = double.Parse(metadata["SpecialFruitChance"],CultureInfo.InvariantCulture);
                 if(metadata.ContainsKey("SpecialFruitValue"))
                     specialFruitValue = int.Parse(metadata["SpecialFruitValue"]);
 

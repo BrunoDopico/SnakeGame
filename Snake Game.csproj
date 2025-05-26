@@ -128,67 +128,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyLeftDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyLeftUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyRightDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyRightUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyUpLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyUpRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeHeadDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeHeadLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeHeadRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeHeadUp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeTailDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeTailLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeTailRight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeTailUp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Default\Wall.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyDown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyDownLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Default\SnakeBodyDownRight.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Default\Background.png" />
@@ -209,6 +149,7 @@
     <None Include="Resources\title.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CustomMaps\Reference.txt" />
     <Content Include="CustomMaps\Spiky.txt" />
     <Content Include="CustomMaps\Tight.txt" />
     <Content Include="CustomMaps\Example1.txt" />
@@ -218,6 +159,26 @@
     <None Include="Resources\Desert\Background.png" />
     <None Include="Resources\Desert\FruitNormal.png" />
     <None Include="Resources\Desert\FruitSpecial.png" />
+    <Content Include="Resources\Default\SnakeBodyDown.png" />
+    <Content Include="Resources\Default\SnakeBodyDownLeft.png" />
+    <Content Include="Resources\Default\SnakeBodyDownRight.png" />
+    <Content Include="Resources\Default\SnakeBodyLeft.png" />
+    <Content Include="Resources\Default\SnakeBodyLeftDown.png" />
+    <Content Include="Resources\Default\SnakeBodyLeftUp.png" />
+    <Content Include="Resources\Default\SnakeBodyRight.png" />
+    <Content Include="Resources\Default\SnakeBodyRightDown.png" />
+    <Content Include="Resources\Default\SnakeBodyRightUp.png" />
+    <Content Include="Resources\Default\SnakeBodyUp.png" />
+    <Content Include="Resources\Default\SnakeBodyUpLeft.png" />
+    <Content Include="Resources\Default\SnakeBodyUpRight.png" />
+    <Content Include="Resources\Default\SnakeHeadDown.png" />
+    <Content Include="Resources\Default\SnakeHeadLeft.png" />
+    <Content Include="Resources\Default\SnakeHeadRight.png" />
+    <Content Include="Resources\Default\SnakeHeadUp.png" />
+    <Content Include="Resources\Default\SnakeTailDown.png" />
+    <Content Include="Resources\Default\SnakeTailRight.png" />
+    <Content Include="Resources\Default\SnakeTailLeft.png" />
+    <Content Include="Resources\Default\SnakeTailUp.png" />
     <Content Include="Resources\Desert\Wall.png" />
     <Content Include="Resources\Sounds\Music\Default.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
