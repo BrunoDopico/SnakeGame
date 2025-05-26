@@ -20,7 +20,7 @@ namespace Snake_Game.Entities
 
         /**
          * Value of the cell:
-         * For snake: Indicates the snake's next part direction where 0: left, 1: right, 2: up, 3: down
+         * For snake: Indicates the snake's next part Direction (parsing the Direction enum) where 0: left, 1: right, 2: up, 3: down
          * For fruit: Indicates the fruit's added length to the snake
          * For obstacle: 0: Wall, 1: Terrain
         **/

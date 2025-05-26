@@ -16,7 +16,7 @@ namespace Snake_Game
         /// <returns>A touple containing the retrieved map and the snake's initial position.</returns>
         public static (Cell[,], Point) LoadMapIntoGame(MapInfo data)
         {
-            // Store to global vars or config system
+            // Store map data to global vars
             Config.MAP_X = data.Width;
             Config.MAP_Y = data.Height;
             Config.DIFFICULTY = data.Difficulty;
@@ -49,6 +49,10 @@ namespace Snake_Game
 
                         case 'F':
                             cell = new Cell(CellType.Fruit, 1);
+                            break;
+
+                        case 'S':
+                            cell = new Cell(CellType.Fruit, data.SpecialFruitValue);
                             break;
 
                         case '^':

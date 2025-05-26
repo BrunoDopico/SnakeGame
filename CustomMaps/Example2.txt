@@ -15,7 +15,7 @@ SpecialFruitValue: 2
 #     F       #
 #             #
 #             #
-#         F   #
+#         S   #
 #     <       #
 #             #
 #  F          #

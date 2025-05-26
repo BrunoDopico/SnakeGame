@@ -100,7 +100,7 @@ namespace Snake_Game.Forms
             grid[x, y].Image = sprite;
         }
 
-        private void StartGame()
+        private void StartRandomGame()
         {
             themeManager.LoadTheme("Default");
             ClearGrid();
@@ -175,7 +175,7 @@ namespace Snake_Game.Forms
         {
             ConsoleKey key = (ConsoleKey)Char.ToUpper(e.KeyChar);
             if (key.Equals(Config.IN_PAUSE)) Pause();
-            else if (key.Equals(Config.IN_NEW)) StartGame();
+            else if (key.Equals(Config.IN_NEW)) StartRandomGame();
             else controller.getInput(key);
         }
 
@@ -189,7 +189,7 @@ namespace Snake_Game.Forms
 
         private void bt_newGame_Click(object sender, EventArgs e)
         {
-            StartGame();
+            StartRandomGame();
         }
 
         private void bt_exit_Click(object sender, EventArgs e)

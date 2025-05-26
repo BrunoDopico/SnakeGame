@@ -16,7 +16,7 @@ namespace Snake_Game
     {
         private Graph graph;
         private Random random;
-        private Direction direction;
+        private Direction currentDirection;
         private List<(int, int)> availableCells = new List<(int, int)>();
         
         private int fruits_eaten = 0;
@@ -31,7 +31,7 @@ namespace Snake_Game
         public GameController(GameScreen view)
         {
             this.view = view;
-            direction = Direction.Left;
+            currentDirection = Direction.Left;
             random = new Random();
         }
 
@@ -47,9 +47,13 @@ namespace Snake_Game
             Lose = false;
             time = 0;
             score = 0;
-            direction = Direction.Left;
+            currentDirection = Direction.Left;
         }
 
+        /// <summary>
+        /// Method that initiates a custom game with a given map data.
+        /// </summary>
+        /// <param name="mapData">The map information to create the custom game.</param>
         public void StartCustomGame(MapInfo mapData)
         {
             Point snakeSpawn = new Point();
@@ -60,7 +64,7 @@ namespace Snake_Game
             Lose = false;
             time = 0;
             score = 0;
-            direction = (Direction) Map[snakeSpawn.X,snakeSpawn.Y].Value;
+            currentDirection = (Direction) Map[snakeSpawn.X,snakeSpawn.Y].Value;
         }
 
         /// <summary>
@@ -81,8 +85,8 @@ namespace Snake_Game
             int oldHeadX = Snake.Head_x;
             int oldHeadY = Snake.Head_y;
             Direction oldHeadDir = (Direction) Map[Snake.Head_x, Snake.Head_y].Value;
-            Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
-            Snake.MoveHead(direction);
+            Map[Snake.Head_x, Snake.Head_y].Value = (int) currentDirection;
+            Snake.MoveHead(currentDirection);
             CheckHeadBorder();
             Cell eaten_cell = Map[Snake.Head_x, Snake.Head_y];
 
@@ -105,17 +109,17 @@ namespace Snake_Game
                 }
                 score += eaten_cell.Value;
                 Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
-                Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
+                Map[Snake.Head_x, Snake.Head_y].Value = (int) currentDirection;
                 fruits_eaten++;
                 PutFruit();
             }
             else
             {
                 Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
-                Map[Snake.Head_x, Snake.Head_y].Value = (int) direction;
+                Map[Snake.Head_x, Snake.Head_y].Value = (int) currentDirection;
             }
             removeTail();
-            UpdateHead( Snake.Head_x, Snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
+            UpdateHead(Snake.Head_x, Snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
             UpdateTail(Snake.Tail_x, Snake.Tail_y);
         }
 
@@ -124,10 +128,10 @@ namespace Snake_Game
         /// </summary>
         public void getInput(ConsoleKey key)
         {
-            if (key == Config.IN_LEFT) direction = Direction.Left;
-            else if (key == Config.IN_RIGHT) direction = Direction.Right;
-            else if (key == Config.IN_UP) direction = Direction.Up;
-            else if (key == Config.IN_DOWN) direction = Direction.Down;    
+            if (key == Config.IN_LEFT) currentDirection = Direction.Left;
+            else if (key == Config.IN_RIGHT) currentDirection = Direction.Right;
+            else if (key == Config.IN_UP) currentDirection = Direction.Up;
+            else if (key == Config.IN_DOWN) currentDirection = Direction.Down;    
         }
 
         /// <summary>
@@ -138,6 +142,7 @@ namespace Snake_Game
             if (Snake.Growing > 0) Snake.Growing--;
             else
             {
+                // If there is "negative growing" the snake is shrinking (this can happen when the special fruit's value is negative)
                 while (Snake.Growing < 0)
                 {
                     int x1 = Snake.Tail_x;
@@ -188,7 +193,7 @@ namespace Snake_Game
         /// </summary>
         private void CheckHeadBorder()
         {
-            switch (direction)
+            switch (currentDirection)
             {
                 case Direction.Left:
                     if (Snake.Head_x < 0) Snake.Head_x = Map.GetLength(0) - 1;
@@ -235,9 +240,17 @@ namespace Snake_Game
             }
         }
 
+        /// <summary>
+        /// Method that updates the head and body of the snake based on its direction and the previous position.
+        /// </summary>
+        /// <param name="newX">The new X coordinate for the head.</param>
+        /// <param name="newY">The new Y coordinate for the head.</param>
+        /// <param name="oldX">The old X coordinate where the head used to be.</param>
+        /// <param name="oldY">The old Y coordinate where the head used to be.</param>
+        /// <param name="oldDirection">The previous direction the snake was moving.</param>
         private void UpdateHead(int newX, int newY, int oldX, int oldY, Direction oldDirection)
         {
-            switch (direction)
+            switch (currentDirection)
             {
                 case Direction.Left:
                     view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeft);
@@ -256,49 +269,57 @@ namespace Snake_Game
                     view.UpdateCell(newX, newY, SpriteType.SnakeHeadDown);
                     break;
             }
-            if(direction != oldDirection)
+            if(currentDirection != oldDirection)
             {
                 switch (oldDirection)
                 {
                     case Direction.Left:
-                        if(direction == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeftUp);
+                        if(currentDirection == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeftUp);
                         else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeftDown);
                         break;
                     case Direction.Right:
-                        if (direction == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRightUp);
+                        if (currentDirection == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRightUp);
                         else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRightDown);
                         break;
                     case Direction.Up:
-                        if (direction == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUpLeft);
+                        if (currentDirection == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUpLeft);
                         else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUpRight);
                         break;
                     case Direction.Down:
-                        if (direction == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDownLeft);
+                        if (currentDirection == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDownLeft);
                         else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDownRight);
                         break;
                 }
             }
         }
 
+        /// <summary>
+        /// Method that updates the tail of the snake based on its direction.
+        /// </summary>
+        /// <param name="x">The new coordinate X of the tail</param>
+        /// <param name="y">The new coordinate Y of the tail</param>
         private void UpdateTail(int x, int y)
         {
             switch (Map[x, y].Value)
             {
-                case 0:
+                case (int)Direction.Left:
                     view.UpdateCell(x, y, SpriteType.SnakeTailLeft);
                     break;
-                case 1:
+                case (int)Direction.Right:
                     view.UpdateCell(x, y, SpriteType.SnakeTailRight);
                     break;
-                case 2:
+                case (int)Direction.Up:
                     view.UpdateCell(x, y, SpriteType.SnakeTailUp);
                     break;
-                case 3:
+                case (int)Direction.Down:
                     view.UpdateCell(x, y, SpriteType.SnakeTailDown);
                     break;
             }
         }
 
+        /// <summary>
+        /// Method that fills the availableCells list with all the cells that are empty (CellType.Void).
+        /// </summary>
         private void fillAvailableCells()
         {
             availableCells.Clear();
