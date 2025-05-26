@@ -51,7 +51,7 @@ namespace Snake_Game.Forms
             lbTheme.Text = $"Theme: {SelectedMap.Theme}";
             lbWidth.Text = $"Width: {SelectedMap.Width}";
             lbHeight.Text = $"Height: {SelectedMap.Height}";
-            lbDifficulty.Text = $"Difficulty: {SelectedMap.Difficulty.ToString()}";
+            lbDifficulty.Text = $"Difficulty: {SelectedMap.Difficulty}";
         }
 
         private void bt_LoadMap_Click(object sender, EventArgs e)

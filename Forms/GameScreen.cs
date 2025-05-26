@@ -114,6 +114,7 @@ namespace Snake_Game.Forms
             controller.StartRandomGame();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
+            SoundManager.PlayBackgroundMusic();
             inGame = true;
         }
 
@@ -131,6 +132,7 @@ namespace Snake_Game.Forms
             PaintMap();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
+            SoundManager.PlayBackgroundMusic();
             inGame = true;
         }
 
@@ -145,6 +147,7 @@ namespace Snake_Game.Forms
                  {
                      gameLoop.Stop();
                      inGame = false;
+                     SoundManager.StopBackgroundMusic();
                  }));
              }
          });

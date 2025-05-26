@@ -16,6 +16,8 @@ namespace Snake_Game.Forms
         public Main()
         {
             Config.LoadConfig();
+            SoundManager.Init();
+            SoundManager.StopBackgroundMusic();
             InitializeComponent();
         }
 

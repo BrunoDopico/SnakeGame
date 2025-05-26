@@ -1,0 +1,25 @@
+﻿# METADATA
+Name: Thorns
+Theme: Desert
+Width: 17
+Height: 13
+Difficulty: 2
+InitialSnakeLength: 4
+SpecialFruitAvailable: True
+SpecialFruitChance: 0.05
+SpecialFruitValue: 3
+
+# MAP
+#################
+#               #
+#   #     #     #
+# #          #  #
+#  S  #         #
+#       ^#    # #
+#   #      #    #
+#  F  #     F   #
+# #      #      #
+#   #       #   #
+#  #   #      # #
+#          #    #
+#################

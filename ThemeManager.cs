@@ -15,6 +15,7 @@ namespace Snake_Game
         private Dictionary<SpriteType, Image> _sprites;
 
         public string CurrentTheme { get; private set; }
+        public string CurrentMusicPath { get; private set; }
 
         public ThemeManager(string themesFolderPath)
         {
@@ -46,9 +47,13 @@ namespace Snake_Game
                 catch
                 {
                     Console.WriteLine($"Missing sprite '{fileName}' in theme '{themeName}'.");
-                    // Optionally load a fallback from Default here.
+                    // Load a fallback from Default theme if available
+                    string fallbackPath = Path.Combine(_themesFolderPath, "Default", $"{type.ToString().ToLower()}.png");
+                    _sprites[type] = File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : null;
                 }
             }
+
+            SoundManager.SetBackgroundMusic(themeName);
         }
 
         public Image GetSprite(SpriteType type)
@@ -58,7 +63,7 @@ namespace Snake_Game
                 return image;
             }
 
-            // Optional: fallback to default sprite if missing
+            // Fallback to default sprite if missing
             string fallbackPath = Path.Combine(_themesFolderPath, "Default", $"{type.ToString().ToLower()}.png");
             return File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : null;
         }

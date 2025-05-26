@@ -90,6 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Snake.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="ThemeManager.cs" />
     <EmbeddedResource Include="Forms\GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
@@ -208,11 +209,59 @@
     <None Include="Resources\title.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CustomMaps\Spiky.txt" />
     <Content Include="CustomMaps\Tight.txt" />
     <Content Include="CustomMaps\Example1.txt" />
     <Content Include="CustomMaps\Intense.txt" />
     <Content Include="CustomMaps\Looped.txt" />
     <Content Include="CustomMaps\Example2.txt" />
+    <None Include="Resources\Desert\Background.png" />
+    <None Include="Resources\Desert\FruitNormal.png" />
+    <None Include="Resources\Desert\FruitSpecial.png" />
+    <Content Include="Resources\Desert\Wall.png" />
+    <Content Include="Resources\Sounds\Music\Default.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Music\Jungle.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Music\Desert.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Desert\SnakeTailUp.png" />
+    <None Include="Resources\Desert\SnakeTailRight.png" />
+    <None Include="Resources\Desert\SnakeTailLeft.png" />
+    <None Include="Resources\Desert\SnakeTailDown.png" />
+    <None Include="Resources\Desert\SnakeHeadUp.png" />
+    <None Include="Resources\Desert\SnakeHeadRight.png" />
+    <None Include="Resources\Desert\SnakeHeadLeft.png" />
+    <None Include="Resources\Desert\SnakeHeadDown.png" />
+    <None Include="Resources\Desert\SnakeBodyUpRight.png" />
+    <None Include="Resources\Desert\SnakeBodyUpLeft.png" />
+    <None Include="Resources\Desert\SnakeBodyUp.png" />
+    <None Include="Resources\Desert\SnakeBodyRightUp.png" />
+    <None Include="Resources\Desert\SnakeBodyRightDown.png" />
+    <None Include="Resources\Desert\SnakeBodyRight.png" />
+    <None Include="Resources\Desert\SnakeBodyLeftUp.png" />
+    <None Include="Resources\Desert\SnakeBodyLeftDown.png" />
+    <None Include="Resources\Desert\SnakeBodyLeft.png" />
+    <None Include="Resources\Desert\SnakeBodyDownRight.png" />
+    <None Include="Resources\Desert\SnakeBodyDownLeft.png" />
+    <None Include="Resources\Desert\SnakeBodyDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Sounds\Effects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
