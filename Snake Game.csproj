@@ -180,6 +180,9 @@
     <Content Include="Resources\Default\SnakeTailLeft.png" />
     <Content Include="Resources\Default\SnakeTailUp.png" />
     <Content Include="Resources\Desert\Wall.png" />
+    <Content Include="Resources\Sounds\Effects\eat.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sounds\Music\Default.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -221,8 +224,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Sounds\Effects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

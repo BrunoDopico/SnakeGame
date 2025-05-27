@@ -96,7 +96,7 @@ namespace Snake_Game
             else if(eaten_cell.Type == CellType.Snake) Lose = true;
             else if (eaten_cell.Type == CellType.Fruit) 
             {
-                
+                SoundManager.PlayEat();
                 if (Snake.Size + eaten_cell.Value < 3)
                 {
                     Snake.Growing = Snake.Size + eaten_cell.Value;

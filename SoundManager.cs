@@ -25,9 +25,9 @@ namespace Snake_Game
             bgmPlayer.settings.volume = 30; // Adjust as needed
 
             // Sound effects
-            eatPlayer = new SoundPlayer("Resources\\Sounds\\eat.wav");
-            startPlayer = new SoundPlayer("Resources\\Sounds\\start.wav");
-            deathPlayer = new SoundPlayer("Resources\\Sounds\\death.wav");
+            eatPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
+            startPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
+            deathPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
         }
 
         public static void SetBackgroundMusic(string theme)
@@ -77,6 +77,8 @@ namespace Snake_Game
 
         public static void StopBackgroundMusic()
         {
+            if (bgmPlayer == null)
+                return;
             bgmPlayer.controls.stop();
         }
 
@@ -87,11 +89,15 @@ namespace Snake_Game
 
         public static void PlayStart()
         {
+            if (!startPlayer.IsLoadCompleted)
+                return;
             startPlayer.Play();
         }
 
         public static void PlayDeath()
         {
+            if (!deathPlayer.IsLoadCompleted)
+                return;
             deathPlayer.Play();
         }
     }
