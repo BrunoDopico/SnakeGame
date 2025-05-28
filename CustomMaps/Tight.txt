@@ -1,4 +1,4 @@
-# METADATA
+@ METADATA
 Name: Tight
 Theme: Default
 Width: 9
@@ -9,7 +9,7 @@ SpecialFruitAvailable: False
 SpecialFruitChance: 0
 SpecialFruitValue: 0
 
-# MAP
+@ MAP
 #########
 #       #
 #       #

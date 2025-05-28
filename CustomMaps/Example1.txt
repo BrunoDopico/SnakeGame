@@ -1,4 +1,4 @@
-# METADATA
+@ METADATA
 Name: TEST
 Theme: Desert
 Width: 10
@@ -9,7 +9,7 @@ SpecialFruitAvailable: True
 SpecialFruitChance: 0.05
 SpecialFruitValue: 3
 
-# MAP
+@ MAP
 ##########
 #        #
 #        #

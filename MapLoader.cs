@@ -28,59 +28,33 @@ namespace Snake_Game
             Cell[,] grid = new Cell[data.Width, data.Height];
             Point snakeHead = new Point(-1,-1);
 
+            var cellParsers = new Dictionary<char, Func<int, int, Cell>>
+            {
+                { '#', (x, y) => new Cell(CellType.Obstacle, 0, SpriteType.Wall) },
+                { 'F', (x, y) => new Cell(CellType.Fruit, 1, SpriteType.FruitNormal) },
+                { 'S', (x, y) => new Cell(CellType.Fruit, data.SpecialFruitValue, SpriteType.FruitSpecial) },
+                { '^', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Up, SpriteType.SnakeHeadUp); } },
+                { 'v', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Down, SpriteType.SnakeHeadDown); } },
+                { '<', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Left, SpriteType.SnakeHeadLeft); } },
+                { '>', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Right, SpriteType.SnakeHeadRight); } },
+                // Add more mappings as needed
+            };
+
             for (int y = 0; y < data.Height; y++)
             {
-                string line = data.MapLines[y];
+                string line = y < data.MapLines.Count ? data.MapLines[y] : string.Empty;
                 for (int x = 0; x < data.Width; x++)
                 {
-                    if (x >= line.Length)
-                    {
-                        grid[x, y] = new Cell(CellType.Void, 0); // Fill with void if line is shorter than the width (empty)
-                        continue;
-                    }
-
-                    char c = line[x];
                     Cell cell;
-
-                    switch (c)
+                    if (x < line.Length && cellParsers.TryGetValue(line[x], out var parser))
                     {
-                        case '#':
-                            cell = new Cell(CellType.Obstacle, 0, SpriteType.Wall);
-                            break;
-
-                        case 'F':
-                            cell = new Cell(CellType.Fruit, 1, SpriteType.FruitNormal);
-                            break;
-
-                        case 'S':
-                            cell = new Cell(CellType.Fruit, data.SpecialFruitValue, SpriteType.FruitSpecial);
-                            break;
-
-                        case '^':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Up, SpriteType.SnakeHeadUp);
-                            snakeHead = new Point(x, y);
-                            break;
-
-                        case 'v':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Down, SpriteType.SnakeHeadDown);
-                            snakeHead = new Point(x, y);
-                            break;
-
-                        case '<':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Left, SpriteType.SnakeHeadLeft);
-                            snakeHead = new Point(x, y);
-                            break;
-
-                        case '>':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Right, SpriteType.SnakeHeadRight);
-                            snakeHead = new Point(x, y);
-                            break;
-
-                        default:
-                            cell = new Cell(CellType.Void, 0);
-                            break;
+                        cell = parser(x, y);
                     }
-                    grid[x, y] = cell;  
+                    else
+                    {
+                        cell = new Cell(CellType.Void, 0);
+                    }
+                    grid[x, y] = cell;
                 }
             }
             return (grid, snakeHead);
@@ -98,83 +72,113 @@ namespace Snake_Game
 
             foreach (var file in files)
             {
-                string[] lines = File.ReadAllLines(file);
+                var lines = File.ReadAllLines(file);
+                var sections = ParseSections(lines);
 
-                
-
-                Dictionary<string, string> metadata = new Dictionary<string, string>();
-                List<string> mapLines = new List<string>();
-
-                bool readingMap = false;
-                foreach (string rawLine in lines)
-                {
-                    string line = rawLine.Trim();
-
-                    if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
-                        continue;
-
-                    if (line.StartsWith("# MAP"))
-                    {
-                        readingMap = true;
-                        continue;
-                    }
-
-                    if (!readingMap)
-                    {
-                        // Metadata line (e.g. "Width: 10")
-                        string[] parts = line.Split(':');
-                        if (parts.Length == 2)
-                        {
-                            metadata[parts[0].Trim()] = parts[1].Trim();
-                        }
-                    }
-                    else
-                    {
-                        mapLines.Add(line);
-                    }
-                }
-
-                string name = "Unnamed Map";
-                string theme = "Default";
-                int initialSnakeLength = 4, specialFruitValue = 3;
-                bool specialFruitAvailable = true;
-                double specialFruitChance = 0.05;
-
-                // Parse metadata
-                if (metadata.ContainsKey("Name"))
-                    name = metadata["Name"];
-                if (metadata.ContainsKey("Theme")) 
-                    theme = metadata["Theme"];
-
+                // Parse metadata and map lines using dedicated methods
+                var metadata = sections.ContainsKey("METADATA") ? ParseMetadata(sections["METADATA"]) : new Dictionary<string, string>();
                 int width = int.Parse(metadata["Width"]);
                 int height = int.Parse(metadata["Height"]);
-                int difficulty = int.Parse(metadata["Difficulty"]);
-                if(metadata.ContainsKey("InitialSnakeLength"))
-                    initialSnakeLength = int.Parse(metadata["InitialSnakeLength"]);
-                if (metadata.ContainsKey("SpecialFruitAvailable"))
-                    specialFruitAvailable = Boolean.Parse(metadata["SpecialFruitAvailable"]);
-                if(metadata.ContainsKey("SpecialFruitChance"))
-                    specialFruitChance = double.Parse(metadata["SpecialFruitChance"],CultureInfo.InvariantCulture);
-                if(metadata.ContainsKey("SpecialFruitValue"))
-                    specialFruitValue = int.Parse(metadata["SpecialFruitValue"]);
+                var mapLines = sections.ContainsKey("MAP") ? ParseMapLines(sections["MAP"], width, height) : new List<string>();
 
-                maps.Add(new MapInfo
-                {
-                    FilePath = file,
-                    Name = name,
-                    Theme = theme,
-                    Width = width,
-                    Height = height,
-                    Difficulty = (Difficulty)difficulty,
-                    InitialSnakeLength = initialSnakeLength,
-                    SpecialFruitValue = specialFruitValue,
-                    SpecialFruitAvailable = specialFruitAvailable,
-                    SpecialFruitChance = specialFruitChance,
-                    MapLines = mapLines,
-                });
+                maps.Add(ParseMapInfo(file, metadata, mapLines));
             }
 
             return maps;
+        }
+
+        // Splits the file into sections by header (e.g., #METADATA, #MAP, #SCORES)
+        private static Dictionary<string, List<string>> ParseSections(string[] lines)
+        {
+            var sections = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+            string currentSection = "METADATA"; // Default section if not specified
+            sections[currentSection] = new List<string>();
+
+            foreach (var rawLine in lines)
+            {
+                var line = rawLine;
+                if (currentSection != "MAP")
+                    line = rawLine.Trim();
+                if (currentSection != "MAP" && (string.IsNullOrWhiteSpace(line) || line.StartsWith("//")))
+                    continue;
+
+                if (line.StartsWith("@"))
+                {
+                    var sectionName = line.TrimStart('@').Trim().ToUpperInvariant();
+                    currentSection = sectionName;
+                    if (!sections.ContainsKey(currentSection))
+                        sections[currentSection] = new List<string>();
+                    continue;
+                }
+
+                sections[currentSection].Add(line);
+            }
+            return sections;
+        }
+
+        private static Dictionary<string, string> ParseMetadata(List<string> lines)
+        {
+            var metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var line in lines)
+            {
+                var parts = line.Split(':');
+                if (parts.Length == 2)
+                    metadata[parts[0].Trim()] = parts[1].Trim();
+            }
+            return metadata;
+        }
+
+        private static List<string> ParseMapLines(List<string> lines, int expectedWidth, int expectedHeight)
+        {
+            var result = new List<string>(expectedHeight);
+
+            for (int i = 0; i < expectedHeight; i++)
+            {
+                if (i < lines.Count)
+                {
+                    var line = lines[i];
+                    // Trim or pad the line as needed
+                    if (line.Length > expectedWidth)
+                        result.Add(line.Substring(0, expectedWidth));
+                    else
+                        result.Add(line); // If shorter, LoadMapIntoGame will handle missing cells
+                }
+                else
+                {
+                    // Fill missing lines with empty strings
+                    result.Add(string.Empty);
+                }
+            }
+
+            return result;
+        }
+
+        private static MapInfo ParseMapInfo(string file, Dictionary<string, string> metadata, List<string> mapLines)
+        {
+            string name = metadata.ContainsKey("Name") ? metadata["Name"] : "Unnamed Map";
+            string theme = metadata.ContainsKey("Theme") ? metadata["Theme"] : "Default";
+            int width = int.Parse(metadata["Width"]);
+            int height = int.Parse(metadata["Height"]);
+            int difficulty = int.Parse(metadata["Difficulty"]);
+            int initialSnakeLength = metadata.ContainsKey("InitialSnakeLength") ? int.Parse(metadata["InitialSnakeLength"]) : 4;
+            int specialFruitValue = metadata.ContainsKey("SpecialFruitValue") ? int.Parse(metadata["SpecialFruitValue"]) : 3;
+            bool specialFruitAvailable = metadata.ContainsKey("SpecialFruitAvailable") ? bool.Parse(metadata["SpecialFruitAvailable"]) : true;
+            double specialFruitChance = metadata.ContainsKey("SpecialFruitChance") ? double.Parse(metadata["SpecialFruitChance"], System.Globalization.CultureInfo.InvariantCulture) : 0.05;
+
+            return new MapInfo
+            {
+                FilePath = file,
+                Name = name,
+                Theme = theme,
+                Width = width,
+                Height = height,
+                Difficulty = (Difficulty)difficulty,
+                InitialSnakeLength = initialSnakeLength,
+                SpecialFruitValue = specialFruitValue,
+                SpecialFruitAvailable = specialFruitAvailable,
+                SpecialFruitChance = specialFruitChance,
+                MapLines = mapLines,
+            };
         }
     }
 }

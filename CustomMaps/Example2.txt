@@ -1,4 +1,4 @@
-﻿# METADATA
+﻿@ METADATA
 Name: TEST2
 Theme: Default
 Width: 15
@@ -9,7 +9,7 @@ SpecialFruitAvailable: True
 SpecialFruitChance: 0.2
 SpecialFruitValue: 2
 
-# MAP
+@ MAP
 ###############
 #             #
 #     F       #
