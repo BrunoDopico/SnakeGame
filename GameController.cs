@@ -22,13 +22,13 @@ namespace Snake_Game
         private int fruits_eaten = 0;
         private int score = 0;
         private int time = 0;
-        private GameScreen view;
+        private IGameView view;
 
         internal Snake Snake { get; set; }
         internal Cell[,] Map { get; set; }
         public bool Lose { get; set; }
 
-        public GameController(GameScreen view)
+        public GameController(IGameView view)
         {
             this.view = view;
             currentDirection = Direction.Left;
@@ -97,11 +97,12 @@ namespace Snake_Game
         /// <summary>
         /// Method that handles the game loop, finishes when the game is lost.
         /// </summary>
-        public void GameLoop()
+        public void Step()
         {
             time++;
             Update();
-            view.ChangeInfo("Score: " + score + " Time: " + (time/(1000/Config.TIMER)+1));
+            view.ChangeScore(score);
+            view.ChangeTime(time / (1000 / Config.TIMER) + 1);
         }
 
         /// <summary>

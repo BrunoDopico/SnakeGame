@@ -29,7 +29,7 @@ namespace Snake_Game.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbInfo = new System.Windows.Forms.Label();
+            this.lbScore = new System.Windows.Forms.Label();
             this.bt_Credits = new System.Windows.Forms.Button();
             this.bt_exit = new System.Windows.Forms.Button();
             this.bt_Options = new System.Windows.Forms.Button();
@@ -37,20 +37,21 @@ namespace Snake_Game.Forms
             this.pbMenu = new System.Windows.Forms.PictureBox();
             this.btLoadMap = new System.Windows.Forms.Button();
             this.panelGame = new Snake_Game.CustomComponents.DoubleBufferedPanel();
+            this.lbTime = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).BeginInit();
             this.SuspendLayout();
             // 
-            // lbInfo
+            // lbScore
             // 
-            this.lbInfo.AutoSize = true;
-            this.lbInfo.BackColor = System.Drawing.Color.Transparent;
-            this.lbInfo.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbInfo.Image = global::Snake_Game.Properties.Resources.stats_border;
-            this.lbInfo.Location = new System.Drawing.Point(27, 54);
-            this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(58, 22);
-            this.lbInfo.TabIndex = 13;
-            this.lbInfo.Text = "INFO";
+            this.lbScore.AutoSize = true;
+            this.lbScore.BackColor = System.Drawing.Color.Transparent;
+            this.lbScore.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbScore.Image = global::Snake_Game.Properties.Resources.stats_border;
+            this.lbScore.Location = new System.Drawing.Point(27, 54);
+            this.lbScore.Name = "lbScore";
+            this.lbScore.Size = new System.Drawing.Size(64, 22);
+            this.lbScore.TabIndex = 13;
+            this.lbScore.Text = "Score:";
             // 
             // bt_Credits
             // 
@@ -153,15 +154,28 @@ namespace Snake_Game.Forms
             this.panelGame.TabIndex = 16;
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
             // 
+            // lbTime
+            // 
+            this.lbTime.AutoSize = true;
+            this.lbTime.BackColor = System.Drawing.Color.Transparent;
+            this.lbTime.Font = new System.Drawing.Font("Rockwell", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTime.Image = global::Snake_Game.Properties.Resources.stats_border;
+            this.lbTime.Location = new System.Drawing.Point(149, 54);
+            this.lbTime.Name = "lbTime";
+            this.lbTime.Size = new System.Drawing.Size(62, 22);
+            this.lbTime.TabIndex = 17;
+            this.lbTime.Text = "Time:";
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.ClientSize = new System.Drawing.Size(800, 416);
+            this.Controls.Add(this.lbTime);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.btLoadMap);
-            this.Controls.Add(this.lbInfo);
+            this.Controls.Add(this.lbScore);
             this.Controls.Add(this.bt_exit);
             this.Controls.Add(this.bt_Options);
             this.Controls.Add(this.bt_Credits);
@@ -184,7 +198,7 @@ namespace Snake_Game.Forms
         }
 
         #endregion
-        private System.Windows.Forms.Label lbInfo;
+        private System.Windows.Forms.Label lbScore;
         private System.Windows.Forms.Button bt_Credits;
         private System.Windows.Forms.Button bt_exit;
         private System.Windows.Forms.Button bt_Options;
@@ -192,5 +206,6 @@ namespace Snake_Game.Forms
         private System.Windows.Forms.PictureBox pbMenu;
         private System.Windows.Forms.Button btLoadMap;
         private CustomComponents.DoubleBufferedPanel panelGame;
+        private System.Windows.Forms.Label lbTime;
     }
 }

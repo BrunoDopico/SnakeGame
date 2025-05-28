@@ -13,24 +13,33 @@ using System.Windows.Forms;
 
 namespace Snake_Game.Forms
 {
-    public partial class GameScreen : Form
+    public partial class GameScreen : Form, IGameView
     {
-        GameController controller;
+        // Timer parameters
+        private Timer countdownTimer;
+        private int countdownValue;
+        private Action pendingGameStart;
+        private bool showCountdown = false;
+
+        // Game controller
+        GameController _controller;
         Timer gameLoop = new Timer();
         bool inGame = false;
-        private int defaultFormWidth;
 
+        // UI elements
+        private int defaultFormWidth;
         private int cellSize = 32;
+
         public GameScreen()
         {
             InitializeComponent();
 
             typeof(Panel).InvokeMember("DoubleBuffered",
-    System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
-    null, panelGame, new object[] { true });
+            System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+            null, panelGame, new object[] { true });
 
             gameLoop.Tick += GameLoop;
-            controller = new GameController(this);
+            _controller = new GameController(this);
             defaultFormWidth = this.Width;
         }
 
@@ -44,49 +53,80 @@ namespace Snake_Game.Forms
             Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
             panelGame.Invalidate(cellRect);
         }
-
-        private void StartRandomGame()
+        private void StartCountdownThenGameLoop()
         {
-            ThemeManager.LoadTheme("Default");
-            
-            panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
-            int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
-            int height = panelGame.Bottom + 128;
-            this.Size = new Size(width, height);
-            this.CenterToScreen();
+            countdownValue = 3;
 
-            controller.StartRandomGame();
-            PaintMap();
-            gameLoop.Interval = Config.TIMER;   // milliseconds
-            gameLoop.Start();
-            SoundManager.PlayBackgroundMusic();
-            inGame = true;
+            showCountdown = true;
+            panelGame.Invalidate();
+
+            if (countdownTimer == null)
+            {
+                countdownTimer = new Timer();
+                countdownTimer.Interval = 1000;
+                countdownTimer.Tick += CountdownTimer_Tick;
+            }
+            pendingGameStart = StartGameLoop;
+            countdownTimer.Start();
         }
 
-        private void StartCustomGame(MapInfo customMap)
+        private void CountdownTimer_Tick(object sender, EventArgs e)
+        {
+            countdownValue--;
+            if (countdownValue > 0)
+            {
+                panelGame.Invalidate();
+            }
+            else
+            {
+                countdownTimer.Stop();
+                showCountdown = false;
+                panelGame.Invalidate();
+                pendingGameStart?.Invoke();
+                pendingGameStart = null;
+            }
+        }
+
+        private void SetupRandomGame()
+        {
+            ThemeManager.LoadTheme("Default");
+            panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
+            int width = Math.Max(defaultFormWidth, panelGame.Right + 32);
+            int height = panelGame.Bottom +32;
+            this.Size = new Size(width, height);
+            this.CenterToScreen();
+
+            _controller.StartRandomGame();
+            PaintMap();
+            
+        }
+
+        private void SetupCustomGame(MapInfo customMap)
         {
             ThemeManager.LoadTheme(customMap.Theme);
-
-            controller.StartCustomGame(customMap);
+            _controller.StartCustomGame(customMap);
             panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
             int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
             int height = panelGame.Bottom + 128;
             this.Size = new Size(width, height);
             this.CenterToScreen();
             PaintMap();
+        }
 
+        private void StartGameLoop()
+        {
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
-            SoundManager.PlayBackgroundMusic();
             inGame = true;
+            SoundManager.PlayBackgroundMusic();
         }
 
         private void GameLoop(object sender, EventArgs e)  //run this logic each timer tick
         {
             Task.Run(() =>
          {
-             controller.GameLoop();
-             if (controller.Lose)
+             _controller.Step();
+             if (_controller.Lose)
              {
                  Invoke(new Action(() =>
                  {
@@ -106,26 +146,17 @@ namespace Snake_Game.Forms
             gameLoop.Start();
         }
 
-
-        public void ChangeInfo(string msg)
-        {
-            if (lbInfo.InvokeRequired)
-            {
-                lbInfo.Invoke(new Action(() => ChangeInfo(msg)));
-            }
-            else
-            {
-                lbInfo.Text = msg;
-                lbInfo.BringToFront();
-            }
-        }
-
         private void GameScreen_KeyPress(object sender, KeyPressEventArgs e)
         {
             ConsoleKey key = (ConsoleKey)Char.ToUpper(e.KeyChar);
             if (key.Equals(Config.IN_PAUSE)) Pause();
-            else if (key.Equals(Config.IN_NEW)) StartRandomGame();
-            else controller.getInput(key);
+            else if (key.Equals(Config.IN_NEW))
+            {
+                SoundManager.PlayEffect("click");
+                SetupRandomGame();
+                StartCountdownThenGameLoop();
+            }
+            else _controller.getInput(key);
         }
 
         private void bt_Options_Click(object sender, EventArgs e)
@@ -140,7 +171,8 @@ namespace Snake_Game.Forms
         private void bt_newGame_Click(object sender, EventArgs e)
         {
             SoundManager.PlayEffect("click");
-            StartRandomGame();
+            SetupRandomGame();
+            StartCountdownThenGameLoop();
         }
 
         private void bt_exit_Click(object sender, EventArgs e)
@@ -179,7 +211,8 @@ namespace Snake_Game.Forms
                 {
                     MapInfo selectedMap = mapSelector.SelectedMap;
 
-                    StartCustomGame(selectedMap);
+                    SetupCustomGame(selectedMap);
+                    StartCountdownThenGameLoop();
                 }
                 else
                 {
@@ -195,7 +228,7 @@ namespace Snake_Game.Forms
 
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
-            if (controller?.Map == null) return;
+            if (_controller?.Map == null) return;
             var g = e.Graphics;
             var clip = e.ClipRectangle;
 
@@ -217,12 +250,51 @@ namespace Snake_Game.Forms
                         g.DrawImage(background, cellRect);
 
                     // Draw cell sprite
-                    Cell current = controller.Map[x, y];
+                    Cell current = _controller.Map[x, y];
                     Image sprite = ThemeManager.GetSprite(current.Sprite);
 
                     if (sprite != null)
                         g.DrawImage(sprite, cellRect);
                 }
+            }
+
+            if (showCountdown && countdownValue > 0)
+            {
+                string text = countdownValue.ToString();
+                using (Font font = new Font("Showcard Gothic", 48, FontStyle.Bold))
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(180, Color.White))) // semi-transparent white
+                {
+                    SizeF textSize = g.MeasureString(text, font);
+                    float x = (panelGame.Width - textSize.Width) / 2;
+                    float y = (panelGame.Height - textSize.Height) / 2;
+                    g.DrawString(text, font, brush, x, y);
+                }
+            }
+        }
+
+        public void ChangeTime(int seconds)
+        {
+            if (lbTime.InvokeRequired)
+            {
+                lbTime.Invoke(new Action(() => ChangeTime(seconds)));
+            }
+            else
+            {
+                lbTime.Text = "Time: " + seconds.ToString();
+                lbTime.BringToFront();
+            }
+        }
+
+        public void ChangeScore(int score)
+        {
+            if (lbScore.InvokeRequired)
+            {
+                lbScore.Invoke(new Action(() => ChangeScore(score)));
+            }
+            else
+            {
+                lbScore.Text = "Score: " + score;
+                lbScore.BringToFront();
             }
         }
     }
