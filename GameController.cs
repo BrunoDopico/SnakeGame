@@ -41,13 +41,40 @@ namespace Snake_Game
         public void StartRandomGame()
         {
             Map = MapGenerator.GenerateMap();
+            FillMapSprites();
             Snake = new Snake(Config.MAP_X / 2, Config.MAP_Y / 2, Config.INITIAL_SNAKE_SIZE);
             fillAvailableCells();
-            view.PaintMap();
             Lose = false;
             time = 0;
             score = 0;
             currentDirection = Direction.Left;
+        }
+
+        private void FillMapSprites()
+        {
+            for (int x = 0; x < Config.MAP_X; x++)
+            {
+                for (int y = 0; y < Config.MAP_Y; y++)
+                {
+                    switch (Map[x, y].Type)
+                    {
+                        case CellType.Void:
+                            Map[x, y].Sprite = SpriteType.None;
+                            break;
+                        case CellType.Obstacle:
+                            Map[x, y].Sprite = SpriteType.Wall;
+                            break;
+                        case CellType.Fruit:
+                            Map[x, y].Sprite = (Map[x, y].Value == Config.SPECIAL_FRUIT_VALUE)
+                                ? SpriteType.FruitSpecial
+                                : SpriteType.FruitNormal;
+                            break;
+                        case CellType.Snake:
+                            Map[x, y].Sprite = SpriteType.SnakeHeadLeft; // Or whatever is appropriate for spawn
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -151,7 +178,7 @@ namespace Snake_Game
                     CheckTailBorder(Map[x1, y1].Value);
                     availableCells.Add((x1, y1));
                     Map[x1, y1] = new Cell(CellType.Void, 0);
-                    view.UpdateCell(x1, y1, SpriteType.Background);
+                    view.UpdateCell(x1, y1);
                     Snake.Growing++;
                 }
 
@@ -161,7 +188,7 @@ namespace Snake_Game
                 CheckTailBorder(Map[x, y].Value);
                 availableCells.Add((x, y));
                 Map[x, y] = new Cell(CellType.Void, 0);
-                view.UpdateCell(x, y, SpriteType.Background);
+                view.UpdateCell(x, y);
             }
         }
 
@@ -231,12 +258,14 @@ namespace Snake_Game
             if (value < Config.SPECIAL_FRUIT_PCT)
             {
                 Map[x, y].Value = Config.SPECIAL_FRUIT_VALUE;
-                view.UpdateCell(x, y, SpriteType.FruitSpecial);
+                Map[x, y].Sprite = SpriteType.FruitSpecial;
+                view.UpdateCell(x, y);
             }
             else
             {
                 Map[x, y].Value = 1;
-                view.UpdateCell(x, y, SpriteType.FruitNormal);
+                Map[x, y].Sprite = SpriteType.FruitNormal;
+                view.UpdateCell(x, y);
             }
         }
 
@@ -253,43 +282,46 @@ namespace Snake_Game
             switch (currentDirection)
             {
                 case Direction.Left:
-                    view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeft);
-                    view.UpdateCell(newX, newY, SpriteType.SnakeHeadLeft);
+                    Map[newX, newY].Sprite = SpriteType.SnakeHeadLeft;
+                    Map[oldX, oldY].Sprite = SpriteType.SnakeBodyLeft;
                     break;
                 case Direction.Right:
-                    view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRight);
-                    view.UpdateCell(newX, newY, SpriteType.SnakeHeadRight);
+                    Map[newX, newY].Sprite = SpriteType.SnakeHeadRight;
+                    Map[oldX, oldY].Sprite = SpriteType.SnakeBodyRight;
                     break;
                 case Direction.Up:
-                    view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUp);
-                    view.UpdateCell(newX, newY, SpriteType.SnakeHeadUp);
+                    Map[newX, newY].Sprite = SpriteType.SnakeHeadUp;
+                    Map[oldX, oldY].Sprite = SpriteType.SnakeBodyUp;
                     break;
                 case Direction.Down:
-                    view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDown);
-                    view.UpdateCell(newX, newY, SpriteType.SnakeHeadDown);
+                    Map[newX, newY].Sprite = SpriteType.SnakeHeadDown;
+                    Map[oldX, oldY].Sprite = SpriteType.SnakeBodyDown;
                     break;
             }
-            if(currentDirection != oldDirection)
+            view.UpdateCell(oldX, oldY);
+            view.UpdateCell(newX, newY);
+            if (currentDirection != oldDirection)
             {
                 switch (oldDirection)
                 {
                     case Direction.Left:
-                        if(currentDirection == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeftUp);
-                        else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyLeftDown);
+                        if(currentDirection == Direction.Up) Map[oldX, oldY].Sprite = SpriteType.SnakeBodyLeftUp;
+                        else Map[oldX, oldY].Sprite = SpriteType.SnakeBodyLeftDown;
                         break;
                     case Direction.Right:
-                        if (currentDirection == Direction.Up) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRightUp);
-                        else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyRightDown);
+                        if (currentDirection == Direction.Up) Map[oldX, oldY].Sprite = SpriteType.SnakeBodyRightUp;
+                        else Map[oldX, oldY].Sprite = SpriteType.SnakeBodyRightDown;
                         break;
                     case Direction.Up:
-                        if (currentDirection == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUpLeft);
-                        else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyUpRight);
+                        if (currentDirection == Direction.Left) Map[oldX, oldY].Sprite = SpriteType.SnakeBodyUpLeft;
+                        else Map[oldX, oldY].Sprite = SpriteType.SnakeBodyUpRight;
                         break;
                     case Direction.Down:
-                        if (currentDirection == Direction.Left) view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDownLeft);
-                        else view.UpdateCell(oldX, oldY, SpriteType.SnakeBodyDownRight);
+                        if (currentDirection == Direction.Left) Map[oldX, oldY].Sprite = SpriteType.SnakeBodyDownLeft;
+                        else Map[oldX, oldY].Sprite = SpriteType.SnakeBodyDownRight;
                         break;
                 }
+                view.UpdateCell(oldX, oldY);
             }
         }
 
@@ -303,18 +335,19 @@ namespace Snake_Game
             switch (Map[x, y].Value)
             {
                 case (int)Direction.Left:
-                    view.UpdateCell(x, y, SpriteType.SnakeTailLeft);
+                    Map[x, y].Sprite = SpriteType.SnakeTailLeft;
                     break;
                 case (int)Direction.Right:
-                    view.UpdateCell(x, y, SpriteType.SnakeTailRight);
+                    Map[x, y].Sprite = SpriteType.SnakeTailRight;
                     break;
                 case (int)Direction.Up:
-                    view.UpdateCell(x, y, SpriteType.SnakeTailUp);
+                    Map[x, y].Sprite = SpriteType.SnakeTailUp;
                     break;
                 case (int)Direction.Down:
-                    view.UpdateCell(x, y, SpriteType.SnakeTailDown);
+                    Map[x, y].Sprite = SpriteType.SnakeTailDown;
                     break;
             }
+            view.UpdateCell(x, y);
         }
 
         /// <summary>

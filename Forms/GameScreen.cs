@@ -15,103 +15,50 @@ namespace Snake_Game.Forms
 {
     public partial class GameScreen : Form
     {
-        PictureBox[,] grid;
         GameController controller;
         ThemeManager themeManager;
         Timer gameLoop = new Timer();
         bool inGame = false;
         private int defaultFormWidth;
-        
+
+        private int cellSize = 32;
         public GameScreen()
         {
             InitializeComponent();
+
+            typeof(Panel).InvokeMember("DoubleBuffered",
+    System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+    null, panelGame, new object[] { true });
+
             themeManager = new ThemeManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources"));
             gameLoop.Tick += GameLoop;
             controller = new GameController(this);
-            InitializeComponent();
             defaultFormWidth = this.Width;
-        }
-
-        private void FillGrid()
-        {
-            int x_margin = 32;
-            int y_margin = 96;
-            for (int i = 0; i < grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < grid.GetLength(1); j++)
-                {
-                    grid[i, j] = new PictureBox();
-                    grid[i, j].BackgroundImage = themeManager.GetSprite(SpriteType.Background);
-                    grid[i, j].Location = new Point(x_margin + 32 * i, y_margin + 32 * j);
-                    grid[i, j].Visible = true;
-                    grid[i, j].Size = new Size(32, 32);
-                    this.Controls.Add(grid[i, j]);
-                }
-            }
-        }
-
-        private void ClearGrid()
-        {
-            if (grid != null)
-            {
-                foreach (PictureBox pb in grid) this.Controls.Remove(pb);
-                Array.Clear(grid, 0, grid.Length - 1);
-            }
         }
 
         public void PaintMap()
         {
-            Image sprite;
-            Cell[,] map = controller.Map;
-            for (int i = 0; i < Config.MAP_X; i++)
-            {
-                for (int j = 0; j < Config.MAP_Y; j++)
-                {
-                    Cell current = map[i, j];
-                    switch (current.Type)
-                    {
-                        case CellType.Void:
-                            break;
-                        case CellType.Obstacle:
-                            sprite = themeManager.GetSprite(SpriteType.Wall);
-                            PaintCell(i, j, sprite);
-                            break;
-                        case CellType.Fruit:
-                            if (current.Value == Config.SPECIAL_FRUIT_VALUE) sprite = themeManager.GetSprite(SpriteType.FruitSpecial);
-                            else sprite = themeManager.GetSprite(SpriteType.FruitNormal);
-                            PaintCell(i, j, sprite);
-                            break;
-                        case CellType.Snake:
-                            sprite = themeManager.GetSprite(SpriteType.SnakeHeadLeft);
-                            PaintCell(i, j, sprite);
-                            break;
-                    }
-                }
-            }
+            panelGame.Invalidate();
         }
 
-        public void UpdateCell(int x, int y, SpriteType value)
+        public void UpdateCell(int x, int y)
         {
-            PaintCell(x, y, themeManager.GetSprite(value));
-        }
-
-        private void PaintCell(int x, int y, Image sprite)
-        {
-            grid[x, y].Image = sprite;
+            Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
+            panelGame.Invalidate(cellRect);
         }
 
         private void StartRandomGame()
         {
             themeManager.LoadTheme("Default");
-            ClearGrid();
-            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
-            FillGrid();
-            int width = Math.Max(defaultFormWidth, 64 + grid.GetLength(0) * 32); //Expands the screen width or leaves it as the default in case the result would be smaller
-
-            int height = 128 + grid.GetLength(1) * 32;
-            Size = new Size(width, height);
+            
+            panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
+            int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
+            int height = panelGame.Bottom + 128;
+            this.Size = new Size(width, height);
             this.CenterToScreen();
+
             controller.StartRandomGame();
+            PaintMap();
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
             SoundManager.PlayBackgroundMusic();
@@ -121,15 +68,14 @@ namespace Snake_Game.Forms
         private void StartCustomGame(MapInfo customMap)
         {
             themeManager.LoadTheme(customMap.Theme);
-            ClearGrid();
-            controller.StartCustomGame(customMap);
-            grid = new PictureBox[Config.MAP_X, Config.MAP_Y];
-            FillGrid();
-            int width = Math.Max(defaultFormWidth, 64 + grid.GetLength(0) * 32); //Expands the screen width or leaves it as the default in case the result would be smaller
-            int height = 128 + grid.GetLength(1) * 32;
-            Size = new Size(width, height);
+
+            panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
+            int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
+            int height = panelGame.Bottom + 128;
+            this.Size = new Size(width, height);
             this.CenterToScreen();
             PaintMap();
+
             gameLoop.Interval = Config.TIMER;   // milliseconds
             gameLoop.Start();
             SoundManager.PlayBackgroundMusic();
@@ -243,9 +189,38 @@ namespace Snake_Game.Forms
             }
         }
 
-        private void buttons_MouseHover(object sender, EventArgs e)
+        private void buttons_MouseEnter(object sender, EventArgs e)
         {
             SoundManager.PlayEffect("hover");
+        }
+
+        private void panelGame_Paint(object sender, PaintEventArgs e)
+        {
+            if (controller?.Map == null) return;
+            var g = e.Graphics;
+            var clip = e.ClipRectangle;
+
+            for (int x = 0; x < Config.MAP_X; x++)
+            {
+                for (int y = 0; y < Config.MAP_Y; y++)
+                {
+                    Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
+                    if (!clip.IntersectsWith(cellRect)) continue;
+
+                    Image background = themeManager.GetSprite(SpriteType.Background);
+                    if (background != null)
+                        g.DrawImage(background, cellRect);
+
+                    Cell current = controller.Map[x, y];
+                    Image sprite = themeManager.GetSprite(current.Sprite);
+
+                    if (sprite != null)
+                        g.DrawImage(sprite, cellRect);
+                    else
+                        continue;
+                        //g.FillRectangle(Brushes.Black, cellRect);
+                }
+            }
         }
     }
 }

@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomComponents\DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Entities\Cell.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Entities\MapInfo.cs" />

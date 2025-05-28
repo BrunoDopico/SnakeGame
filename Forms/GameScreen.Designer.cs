@@ -36,6 +36,7 @@ namespace Snake_Game.Forms
             this.bt_randomMap = new System.Windows.Forms.Button();
             this.pbMenu = new System.Windows.Forms.PictureBox();
             this.btLoadMap = new System.Windows.Forms.Button();
+            this.panelGame = new Snake_Game.CustomComponents.DoubleBufferedPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pbMenu)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@ namespace Snake_Game.Forms
             this.bt_Credits.Text = "ABOUT";
             this.bt_Credits.UseVisualStyleBackColor = false;
             this.bt_Credits.Click += new System.EventHandler(this.bt_Credits_Click);
-            this.bt_Credits.MouseHover += new System.EventHandler(this.buttons_MouseHover);
+            this.bt_Credits.MouseEnter += new System.EventHandler(this.buttons_MouseEnter);
             // 
             // bt_exit
             // 
@@ -81,7 +82,7 @@ namespace Snake_Game.Forms
             this.bt_exit.Text = "EXIT";
             this.bt_exit.UseVisualStyleBackColor = false;
             this.bt_exit.Click += new System.EventHandler(this.bt_exit_Click);
-            this.bt_exit.MouseHover += new System.EventHandler(this.buttons_MouseHover);
+            this.bt_exit.MouseEnter += new System.EventHandler(this.buttons_MouseEnter);
             // 
             // bt_Options
             // 
@@ -97,7 +98,7 @@ namespace Snake_Game.Forms
             this.bt_Options.Text = "OPTIONS";
             this.bt_Options.UseVisualStyleBackColor = false;
             this.bt_Options.Click += new System.EventHandler(this.bt_Options_Click);
-            this.bt_Options.MouseHover += new System.EventHandler(this.buttons_MouseHover);
+            this.bt_Options.MouseEnter += new System.EventHandler(this.buttons_MouseEnter);
             // 
             // bt_randomMap
             // 
@@ -113,7 +114,7 @@ namespace Snake_Game.Forms
             this.bt_randomMap.Text = "RANDOM MAP";
             this.bt_randomMap.UseVisualStyleBackColor = false;
             this.bt_randomMap.Click += new System.EventHandler(this.bt_newGame_Click);
-            this.bt_randomMap.MouseHover += new System.EventHandler(this.buttons_MouseHover);
+            this.bt_randomMap.MouseEnter += new System.EventHandler(this.buttons_MouseEnter);
             // 
             // pbMenu
             // 
@@ -142,7 +143,15 @@ namespace Snake_Game.Forms
             this.btLoadMap.Text = "LOAD MAP";
             this.btLoadMap.UseVisualStyleBackColor = false;
             this.btLoadMap.Click += new System.EventHandler(this.btLoadMap_Click);
-            this.btLoadMap.MouseHover += new System.EventHandler(this.buttons_MouseHover);
+            this.btLoadMap.MouseEnter += new System.EventHandler(this.buttons_MouseEnter);
+            // 
+            // panelGame
+            // 
+            this.panelGame.Location = new System.Drawing.Point(13, 107);
+            this.panelGame.Name = "panelGame";
+            this.panelGame.Size = new System.Drawing.Size(200, 100);
+            this.panelGame.TabIndex = 16;
+            this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
             // 
             // GameScreen
             // 
@@ -150,6 +159,7 @@ namespace Snake_Game.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.ClientSize = new System.Drawing.Size(800, 416);
+            this.Controls.Add(this.panelGame);
             this.Controls.Add(this.btLoadMap);
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.bt_exit);
@@ -181,5 +191,6 @@ namespace Snake_Game.Forms
         private System.Windows.Forms.Button bt_randomMap;
         private System.Windows.Forms.PictureBox pbMenu;
         private System.Windows.Forms.Button btLoadMap;
+        private CustomComponents.DoubleBufferedPanel panelGame;
     }
 }

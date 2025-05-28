@@ -45,34 +45,34 @@ namespace Snake_Game
                     switch (c)
                     {
                         case '#':
-                            cell = new Cell(CellType.Obstacle, 0);
+                            cell = new Cell(CellType.Obstacle, 0, SpriteType.Wall);
                             break;
 
                         case 'F':
-                            cell = new Cell(CellType.Fruit, 1);
+                            cell = new Cell(CellType.Fruit, 1, SpriteType.FruitNormal);
                             break;
 
                         case 'S':
-                            cell = new Cell(CellType.Fruit, data.SpecialFruitValue);
+                            cell = new Cell(CellType.Fruit, data.SpecialFruitValue, SpriteType.FruitSpecial);
                             break;
 
                         case '^':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Up);
+                            cell = new Cell(CellType.Snake, value: (int)Direction.Up, SpriteType.SnakeHeadUp);
                             snakeHead = new Point(x, y);
                             break;
 
                         case 'v':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Down);
+                            cell = new Cell(CellType.Snake, value: (int)Direction.Down, SpriteType.SnakeHeadDown);
                             snakeHead = new Point(x, y);
                             break;
 
                         case '<':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Left);
+                            cell = new Cell(CellType.Snake, value: (int)Direction.Left, SpriteType.SnakeHeadLeft);
                             snakeHead = new Point(x, y);
                             break;
 
                         case '>':
-                            cell = new Cell(CellType.Snake, value: (int)Direction.Right);
+                            cell = new Cell(CellType.Snake, value: (int)Direction.Right, SpriteType.SnakeHeadRight);
                             snakeHead = new Point(x, y);
                             break;
 

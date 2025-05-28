@@ -13,6 +13,14 @@ namespace Snake_Game.Entities
         {
             Type = type;
             Value = value;
+            Sprite = SpriteType.None; // No sprite
+        }
+
+        public Cell(CellType type, int value, SpriteType sprite)
+        {
+            Type = type;
+            Value = value;
+            Sprite = sprite;
         }
 
         //Type of the cell, possible values: 'V':Void, 'S':Snake, 'F':Fruit, 'O':Obstacle
@@ -26,6 +34,7 @@ namespace Snake_Game.Entities
         **/
         public int Value { get; set; }
 
+        public SpriteType Sprite { get; set; }
     }
 }
 

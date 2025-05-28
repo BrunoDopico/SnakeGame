@@ -8,6 +8,7 @@ namespace Snake_Game.Enums
 {
     public enum SpriteType
     {
+        None,
         Background,
         FruitNormal,
         FruitSpecial,

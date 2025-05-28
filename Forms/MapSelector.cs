@@ -1,4 +1,5 @@
 ﻿using Snake_Game.Entities;
+using Snake_Game.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,7 @@ namespace Snake_Game.Forms
             lbWidth.Text = $"Width: {SelectedMap.Width}";
             lbHeight.Text = $"Height: {SelectedMap.Height}";
             lbDifficulty.Text = $"Difficulty: {SelectedMap.Difficulty}";
+            UpdateDifficultyLabel(SelectedMap.Difficulty);
         }
 
         private void bt_LoadMap_Click(object sender, EventArgs e)
@@ -114,6 +116,28 @@ namespace Snake_Game.Forms
                 }
             }
             panelPreview.Size = new Size(SelectedMap.Width * cellSize, SelectedMap.Height * cellSize);
+        }
+        // Add this method to MapSelector
+        private void UpdateDifficultyLabel(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    lbDifficulty.ForeColor = Color.Green;
+                    break;
+                case Difficulty.Medium:
+                    lbDifficulty.ForeColor = Color.Orange;
+                    break;
+                case Difficulty.Hard:
+                    lbDifficulty.ForeColor = Color.Red;
+                    break;
+                case Difficulty.Hardcore:
+                    lbDifficulty.ForeColor = Color.Purple;
+                    break;
+                default:
+                    lbDifficulty.ForeColor = SystemColors.ControlText;
+                    break;
+            }
         }
     }
 }
