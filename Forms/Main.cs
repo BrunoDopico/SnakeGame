@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Snake_Game.Forms
         {
             Config.LoadConfig();
             SoundManager.Init();
+            ThemeManager.Init(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"..","..", "Resources"));
             SoundManager.StopBackgroundMusic();
             InitializeComponent();
         }

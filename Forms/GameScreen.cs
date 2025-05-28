@@ -16,7 +16,6 @@ namespace Snake_Game.Forms
     public partial class GameScreen : Form
     {
         GameController controller;
-        ThemeManager themeManager;
         Timer gameLoop = new Timer();
         bool inGame = false;
         private int defaultFormWidth;
@@ -30,7 +29,6 @@ namespace Snake_Game.Forms
     System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
     null, panelGame, new object[] { true });
 
-            themeManager = new ThemeManager(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Resources"));
             gameLoop.Tick += GameLoop;
             controller = new GameController(this);
             defaultFormWidth = this.Width;
@@ -49,7 +47,7 @@ namespace Snake_Game.Forms
 
         private void StartRandomGame()
         {
-            themeManager.LoadTheme("Default");
+            ThemeManager.LoadTheme("Default");
             
             panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
             int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
@@ -67,8 +65,9 @@ namespace Snake_Game.Forms
 
         private void StartCustomGame(MapInfo customMap)
         {
-            themeManager.LoadTheme(customMap.Theme);
+            ThemeManager.LoadTheme(customMap.Theme);
 
+            controller.StartCustomGame(customMap);
             panelGame.Size = new Size(Config.MAP_X * cellSize, Config.MAP_Y * cellSize);
             int width = Math.Max(defaultFormWidth, panelGame.Right + 64);
             int height = panelGame.Bottom + 128;
@@ -213,13 +212,13 @@ namespace Snake_Game.Forms
                     Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
 
                     // Draw background
-                    Image background = themeManager.GetSprite(SpriteType.Background);
+                    Image background = ThemeManager.GetSprite(SpriteType.Background);
                     if (background != null)
                         g.DrawImage(background, cellRect);
 
                     // Draw cell sprite
                     Cell current = controller.Map[x, y];
-                    Image sprite = themeManager.GetSprite(current.Sprite);
+                    Image sprite = ThemeManager.GetSprite(current.Sprite);
 
                     if (sprite != null)
                         g.DrawImage(sprite, cellRect);

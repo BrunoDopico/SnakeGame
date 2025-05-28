@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace Snake_Game
 {
-    public class ThemeManager
+    public static class ThemeManager
     {
-        private readonly string _themesFolderPath;
-        private Dictionary<SpriteType, Image> _sprites;
+        private static string _themesFolderPath;
+        private static Dictionary<SpriteType, Image> _sprites = new Dictionary<SpriteType, Image>();
 
-        public string CurrentTheme { get; private set; }
-        public string CurrentMusicPath { get; private set; }
+        public static string CurrentTheme { get; private set; }
 
-        public ThemeManager(string themesFolderPath)
+        public static void Init(string themesFolderPath)
         {
+            if (!Directory.Exists(themesFolderPath))
+                throw new DirectoryNotFoundException($"Theme folder path '{themesFolderPath}' does not exist.");
+
             _themesFolderPath = themesFolderPath;
-            _sprites = new Dictionary<SpriteType, Image>();
         }
 
-        public void LoadTheme(string themeName)
+        public static void LoadTheme(string themeName)
         {
             string themePath = Path.Combine(_themesFolderPath, themeName);
             if (!Directory.Exists(themePath))
@@ -37,6 +38,8 @@ namespace Snake_Game
 
             foreach (SpriteType type in Enum.GetValues(typeof(SpriteType)))
             {
+                if(type == SpriteType.None)
+                    continue;
                 string fileName = $"{type.ToString()}.png";
                 string filePath = Path.Combine(themePath, fileName);
 
@@ -49,15 +52,17 @@ namespace Snake_Game
                     Console.WriteLine($"Missing sprite '{fileName}' in theme '{themeName}'.");
                     // Load a fallback from Default theme if available
                     string fallbackPath = Path.Combine(_themesFolderPath, "Default", $"{type.ToString().ToLower()}.png");
-                    _sprites[type] = File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : null;
+                    _sprites[type] = File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : CreateErrorImage();
                 }
             }
 
             SoundManager.SetBackgroundMusic(themeName);
         }
 
-        public Image GetSprite(SpriteType type)
+        public static Image GetSprite(SpriteType type)
         {
+            if (type == SpriteType.None)
+                return null;
             if (_sprites.TryGetValue(type, out var image))
             {
                 return image;
@@ -65,7 +70,51 @@ namespace Snake_Game
 
             // Fallback to default sprite if missing
             string fallbackPath = Path.Combine(_themesFolderPath, "Default", $"{type.ToString().ToLower()}.png");
-            return File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : null;
+            return File.Exists(fallbackPath) ? Image.FromFile(fallbackPath) : CreateErrorImage();
+        }
+
+        public static Image GetImage(string themeName, string imageName)
+        {
+            string fileName = imageName.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                ? imageName
+                : imageName + ".png";
+
+            if (string.Equals(themeName, CurrentTheme, StringComparison.OrdinalIgnoreCase))
+            {
+                // Try to find in loaded sprites
+                foreach (var kvp in _sprites)
+                {
+                    if (string.Equals($"{kvp.Key}.png", fileName, StringComparison.OrdinalIgnoreCase))
+                        return kvp.Value;
+                }
+            }
+
+            // Try to load from theme folder
+            string themePath = Path.Combine(_themesFolderPath, themeName, fileName);
+            if (File.Exists(themePath))
+                return Image.FromFile(themePath);
+
+            // Fallback to Default theme
+            string fallbackPath = Path.Combine(_themesFolderPath, "Default", fileName);
+            if (File.Exists(fallbackPath))
+                return Image.FromFile(fallbackPath);
+
+            return null;
+        }
+
+        private static Image CreateErrorImage()
+        {
+            Bitmap bmp = new Bitmap(32, 32);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.Magenta);
+                using (Pen pen = new Pen(Color.Red, 3))
+                {
+                    g.DrawLine(pen, 0, 0, 31, 31);
+                    g.DrawLine(pen, 31, 0, 0, 31);
+                }
+            }
+            return bmp;
         }
     }
 }
