@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.lbMaps = new System.Windows.Forms.ListBox();
-            this.tbPreview = new System.Windows.Forms.TextBox();
             this.lbMapList = new System.Windows.Forms.Label();
             this.lbPreview = new System.Windows.Forms.Label();
             this.lbDifficulty = new System.Windows.Forms.Label();
@@ -38,6 +37,7 @@
             this.lbName = new System.Windows.Forms.Label();
             this.lbTheme = new System.Windows.Forms.Label();
             this.bt_LoadMap = new System.Windows.Forms.Button();
+            this.panelPreview = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // lbMaps
@@ -51,18 +51,6 @@
             this.lbMaps.Size = new System.Drawing.Size(241, 148);
             this.lbMaps.TabIndex = 0;
             this.lbMaps.SelectedIndexChanged += new System.EventHandler(this.lbMaps_SelectedIndexChanged);
-            // 
-            // tbPreview
-            // 
-            this.tbPreview.BackColor = System.Drawing.Color.Tan;
-            this.tbPreview.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPreview.Location = new System.Drawing.Point(13, 213);
-            this.tbPreview.Margin = new System.Windows.Forms.Padding(4);
-            this.tbPreview.Multiline = true;
-            this.tbPreview.Name = "tbPreview";
-            this.tbPreview.Size = new System.Drawing.Size(491, 331);
-            this.tbPreview.TabIndex = 1;
-            this.tbPreview.WordWrap = false;
             // 
             // lbMapList
             // 
@@ -149,12 +137,20 @@
             this.bt_LoadMap.UseVisualStyleBackColor = false;
             this.bt_LoadMap.Click += new System.EventHandler(this.bt_LoadMap_Click);
             // 
+            // panelPreview
+            // 
+            this.panelPreview.Location = new System.Drawing.Point(18, 210);
+            this.panelPreview.Name = "panelPreview";
+            this.panelPreview.Size = new System.Drawing.Size(200, 100);
+            this.panelPreview.TabIndex = 10;
+            // 
             // MapSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.ClientSize = new System.Drawing.Size(517, 557);
+            this.Controls.Add(this.panelPreview);
             this.Controls.Add(this.bt_LoadMap);
             this.Controls.Add(this.lbTheme);
             this.Controls.Add(this.lbName);
@@ -163,7 +159,6 @@
             this.Controls.Add(this.lbDifficulty);
             this.Controls.Add(this.lbPreview);
             this.Controls.Add(this.lbMapList);
-            this.Controls.Add(this.tbPreview);
             this.Controls.Add(this.lbMaps);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -180,7 +175,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox lbMaps;
-        private System.Windows.Forms.TextBox tbPreview;
         private System.Windows.Forms.Label lbMapList;
         private System.Windows.Forms.Label lbPreview;
         private System.Windows.Forms.Label lbDifficulty;
@@ -189,5 +183,6 @@
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label lbTheme;
         private System.Windows.Forms.Button bt_LoadMap;
+        private System.Windows.Forms.Panel panelPreview;
     }
 }

@@ -148,6 +148,7 @@ namespace Snake_Game.Forms
                      gameLoop.Stop();
                      inGame = false;
                      SoundManager.StopBackgroundMusic();
+                     SoundManager.PlayEffect("death");
                  }));
              }
          });
@@ -184,6 +185,7 @@ namespace Snake_Game.Forms
 
         private void bt_Options_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayEffect("click");
             gameLoop.Stop();
             Form options = new Options();
             options.ShowDialog(this);
@@ -192,16 +194,19 @@ namespace Snake_Game.Forms
 
         private void bt_newGame_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayEffect("click");
             StartRandomGame();
         }
 
         private void bt_exit_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayEffect("click");
             Application.Exit();
         }
 
         private void bt_Credits_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayEffect("click");
             gameLoop.Stop();
             MessageBox.Show("- THE GAME -\n" +
                 "\nThis is the snake game." +
@@ -222,6 +227,7 @@ namespace Snake_Game.Forms
 
         private void btLoadMap_Click(object sender, EventArgs e)
         {
+            SoundManager.PlayEffect("click");
             using (var mapSelector = new MapSelector())
             {
                 if (mapSelector.ShowDialog() == DialogResult.OK)
@@ -235,6 +241,11 @@ namespace Snake_Game.Forms
                     MessageBox.Show("No map was selected.", "Map Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void buttons_MouseHover(object sender, EventArgs e)
+        {
+            SoundManager.PlayEffect("hover");
         }
     }
 }

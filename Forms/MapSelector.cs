@@ -23,6 +23,7 @@ namespace Snake_Game.Forms
         {
             InitializeComponent();
             InitializeMapList();
+            panelPreview.Paint += panelPreview_Paint;
         }
 
         private void InitializeMapList()
@@ -36,16 +37,8 @@ namespace Snake_Game.Forms
             string selectedMapName = lbMaps.SelectedItem.ToString();
 
             SelectedMap = availableMaps.FirstOrDefault(map => Path.GetFileNameWithoutExtension(map.FilePath) == selectedMapName);
-            tbPreview.Clear();
-            SelectedMap.MapLines.ForEach(line =>
-               tbPreview.AppendText(string.Join(" ", line.ToCharArray()) + Environment.NewLine));
 
-            using (Graphics g = tbPreview.CreateGraphics())
-            {
-                string spacedText = string.Join(Environment.NewLine, SelectedMap.MapLines.Select(line => string.Join(" ", line.ToCharArray())));
-                SizeF textSize = g.MeasureString(spacedText, tbPreview.Font);
-                tbPreview.Size = new Size((int)Math.Ceiling(textSize.Width) + SelectedMap.Width*3, (int)Math.Ceiling(textSize.Height) + 40);
-            }
+            panelPreview.Invalidate();
 
             lbName.Text = $"Name: {SelectedMap.Name}";
             lbTheme.Text = $"Theme: {SelectedMap.Theme}";
@@ -66,6 +59,61 @@ namespace Snake_Game.Forms
 
             this.DialogResult = DialogResult.OK; // Indicate success
             this.Close();
+        }
+
+        private void panelPreview_Paint(object sender, PaintEventArgs e)
+        {
+            if (SelectedMap == null || SelectedMap.MapLines == null)
+                return;
+
+            int cellSize = 20; // Size of each square cell in pixels
+            var g = e.Graphics;
+
+            for (int y = 0; y < SelectedMap.MapLines.Count; y++)
+            {
+                string line = SelectedMap.MapLines[y];
+                for (int x = 0; x < line.Length; x++)
+                {
+                    char c = line[x];
+                    Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
+
+                    switch (c)
+                    {
+                        case '#': // Wall
+                            g.FillRectangle(Brushes.DimGray, cellRect);
+                            break;
+                        case '<':
+                        case '^':
+                        case '>':
+                        case 'v': // Snake head
+                            g.FillEllipse(Brushes.Green, cellRect);
+                            using (var font = new Font("Consolas", 16, FontStyle.Bold))
+                            {
+                                var text = c.ToString();
+                                SizeF textSize = g.MeasureString(text, font);
+                                float textX = cellRect.X + (cellRect.Width - textSize.Width) / 2;
+                                float textY = cellRect.Y + (cellRect.Height - textSize.Height) / 2;
+                                g.DrawString(text, font, Brushes.White, textX, textY);
+                            }
+                            break;
+                        case 'O': // Snake body
+                            g.FillRectangle(Brushes.LightGreen, cellRect);
+                            break;
+                        case 'F': // Fruit
+                            g.FillEllipse(Brushes.Red, cellRect);
+                            break;
+                        case 'S': // Special Fruit
+                            g.FillEllipse(Brushes.Gold, cellRect);
+                            break;
+                        default: // Empty
+                            break;
+                    }
+
+                    // Optional: draw grid lines
+                    g.DrawRectangle(Pens.DarkGray, cellRect);
+                }
+            }
+            panelPreview.Size = new Size(SelectedMap.Width * cellSize, SelectedMap.Height * cellSize);
         }
     }
 }

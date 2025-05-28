@@ -65,6 +65,7 @@ namespace Snake_Game.Forms
             this.bt_Credits.Text = "ABOUT";
             this.bt_Credits.UseVisualStyleBackColor = false;
             this.bt_Credits.Click += new System.EventHandler(this.bt_Credits_Click);
+            this.bt_Credits.MouseHover += new System.EventHandler(this.buttons_MouseHover);
             // 
             // bt_exit
             // 
@@ -80,6 +81,7 @@ namespace Snake_Game.Forms
             this.bt_exit.Text = "EXIT";
             this.bt_exit.UseVisualStyleBackColor = false;
             this.bt_exit.Click += new System.EventHandler(this.bt_exit_Click);
+            this.bt_exit.MouseHover += new System.EventHandler(this.buttons_MouseHover);
             // 
             // bt_Options
             // 
@@ -95,6 +97,7 @@ namespace Snake_Game.Forms
             this.bt_Options.Text = "OPTIONS";
             this.bt_Options.UseVisualStyleBackColor = false;
             this.bt_Options.Click += new System.EventHandler(this.bt_Options_Click);
+            this.bt_Options.MouseHover += new System.EventHandler(this.buttons_MouseHover);
             // 
             // bt_randomMap
             // 
@@ -110,6 +113,7 @@ namespace Snake_Game.Forms
             this.bt_randomMap.Text = "RANDOM MAP";
             this.bt_randomMap.UseVisualStyleBackColor = false;
             this.bt_randomMap.Click += new System.EventHandler(this.bt_newGame_Click);
+            this.bt_randomMap.MouseHover += new System.EventHandler(this.buttons_MouseHover);
             // 
             // pbMenu
             // 
@@ -138,6 +142,7 @@ namespace Snake_Game.Forms
             this.btLoadMap.Text = "LOAD MAP";
             this.btLoadMap.UseVisualStyleBackColor = false;
             this.btLoadMap.Click += new System.EventHandler(this.btLoadMap_Click);
+            this.btLoadMap.MouseHover += new System.EventHandler(this.buttons_MouseHover);
             // 
             // GameScreen
             // 

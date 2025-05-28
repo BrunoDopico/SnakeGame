@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.IO;
 using System.Media;
 using WMPLib;
 
@@ -12,22 +9,38 @@ namespace Snake_Game
     public static class SoundManager
     {
         private static WindowsMediaPlayer bgmPlayer;
-        private static SoundPlayer eatPlayer;
-        private static SoundPlayer startPlayer;
-        private static SoundPlayer deathPlayer;
+        private static readonly Dictionary<string, byte[]> effectData = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
+        private static string effectsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects");
+        private static string currentMusicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Music\\");
 
-        private static string currentMusicPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Music\\");
         public static void Init()
         {
             // Background music (looped)
             bgmPlayer = new WindowsMediaPlayer();
             bgmPlayer.settings.setMode("loop", true);
-            bgmPlayer.settings.volume = 30; // Adjust as needed
+            bgmPlayer.settings.volume = 30;
 
-            // Sound effects
-            eatPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
-            startPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
-            deathPlayer = new SoundPlayer(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Sounds\\Effects\\eat.wav"));
+            // Load all effects
+            effectData.Clear();
+            if (Directory.Exists(effectsFolder))
+            {
+                foreach (var file in Directory.GetFiles(effectsFolder, "*.*", SearchOption.TopDirectoryOnly))
+                {
+                    var ext = Path.GetExtension(file).ToLowerInvariant();
+                    if (ext == ".wav") // SoundPlayer supports only WAV
+                    {
+                        var name = Path.GetFileNameWithoutExtension(file);
+                        try
+                        {
+                            effectData[name] = File.ReadAllBytes(file);
+                        }
+                        catch
+                        {
+                            // TODO: log or handle error
+                        }
+                    }
+                }
+            }
         }
 
         public static void SetBackgroundMusic(string theme)
@@ -38,24 +51,22 @@ namespace Snake_Game
             string[] extensions = { ".mp3", ".wav", ".wma" };
             string musicFile = null;
 
-            // Try to find the file for the given theme
             foreach (var ext in extensions)
             {
-                string path = System.IO.Path.Combine(currentMusicPath, theme + ext);
-                if (System.IO.File.Exists(path))
+                string path = Path.Combine(currentMusicPath, theme + ext);
+                if (File.Exists(path))
                 {
                     musicFile = path;
                     break;
                 }
             }
 
-            // If not found, try the "Default" theme
             if (musicFile == null)
             {
                 foreach (var ext in extensions)
                 {
-                    string path = System.IO.Path.Combine(currentMusicPath, "Default" + ext);
-                    if (System.IO.File.Exists(path))
+                    string path = Path.Combine(currentMusicPath, "Default" + ext);
+                    if (File.Exists(path))
                     {
                         musicFile = path;
                         break;
@@ -68,6 +79,7 @@ namespace Snake_Game
                 bgmPlayer.URL = musicFile;
             }
         }
+
         public static void PlayBackgroundMusic()
         {
             if (bgmPlayer == null || string.IsNullOrEmpty(bgmPlayer.URL))
@@ -82,23 +94,15 @@ namespace Snake_Game
             bgmPlayer.controls.stop();
         }
 
-        public static void PlayEat()
+        public static void PlayEffect(string effectName)
         {
-            eatPlayer.Play();
-        }
-
-        public static void PlayStart()
-        {
-            if (!startPlayer.IsLoadCompleted)
-                return;
-            startPlayer.Play();
-        }
-
-        public static void PlayDeath()
-        {
-            if (!deathPlayer.IsLoadCompleted)
-                return;
-            deathPlayer.Play();
+            if (effectData.TryGetValue(effectName, out var data))
+            {
+                var ms = new MemoryStream(data);
+                var player = new SoundPlayer(ms);
+                player.Play();
+            }
+            // Optionally handle missing effect (e.g., log or play a default sound)
         }
     }
 }
