@@ -298,8 +298,7 @@ namespace Snake_Game
                     Map[oldX, oldY].Sprite = SpriteType.SnakeBodyDown;
                     break;
             }
-            view.UpdateCell(oldX, oldY);
-            view.UpdateCell(newX, newY);
+            
             if (currentDirection != oldDirection)
             {
                 switch (oldDirection)
@@ -321,8 +320,9 @@ namespace Snake_Game
                         else Map[oldX, oldY].Sprite = SpriteType.SnakeBodyDownRight;
                         break;
                 }
-                view.UpdateCell(oldX, oldY);
             }
+            view.UpdateCell(oldX, oldY);
+            view.UpdateCell(newX, newY);
         }
 
         /// <summary>

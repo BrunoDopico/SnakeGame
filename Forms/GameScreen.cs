@@ -200,25 +200,29 @@ namespace Snake_Game.Forms
             var g = e.Graphics;
             var clip = e.ClipRectangle;
 
-            for (int x = 0; x < Config.MAP_X; x++)
+            // Calculate the range of cell indices that intersect with the clip rectangle
+            int minX = Math.Max(0, clip.Left / cellSize);
+            int maxX = Math.Min(Config.MAP_X - 1, (clip.Right - 1) / cellSize);
+            int minY = Math.Max(0, clip.Top / cellSize);
+            int maxY = Math.Min(Config.MAP_Y - 1, (clip.Bottom - 1) / cellSize);
+
+            for (int x = minX; x <= maxX; x++)
             {
-                for (int y = 0; y < Config.MAP_Y; y++)
+                for (int y = minY; y <= maxY; y++)
                 {
                     Rectangle cellRect = new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize);
-                    if (!clip.IntersectsWith(cellRect)) continue;
 
+                    // Draw background
                     Image background = themeManager.GetSprite(SpriteType.Background);
                     if (background != null)
                         g.DrawImage(background, cellRect);
 
+                    // Draw cell sprite
                     Cell current = controller.Map[x, y];
                     Image sprite = themeManager.GetSprite(current.Sprite);
 
                     if (sprite != null)
                         g.DrawImage(sprite, cellRect);
-                    else
-                        continue;
-                        //g.FillRectangle(Brushes.Black, cellRect);
                 }
             }
         }
