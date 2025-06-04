@@ -153,6 +153,7 @@
     <None Include="Resources\title.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CustomMaps\Elusive.txt" />
     <Content Include="CustomMaps\Reference.txt" />
     <Content Include="CustomMaps\Spiky.txt" />
     <Content Include="CustomMaps\Tight.txt" />
@@ -163,6 +164,7 @@
     <None Include="Resources\Desert\Background.png" />
     <None Include="Resources\Desert\FruitNormal.png" />
     <None Include="Resources\Desert\FruitSpecial.png" />
+    <None Include="Resources\Default\FruitDisappear.png" />
     <Content Include="Resources\Default\SnakeBodyDown.png" />
     <Content Include="Resources\Default\SnakeBodyDownLeft.png" />
     <Content Include="Resources\Default\SnakeBodyDownRight.png" />
@@ -183,6 +185,7 @@
     <Content Include="Resources\Default\SnakeTailRight.png" />
     <Content Include="Resources\Default\SnakeTailLeft.png" />
     <Content Include="Resources\Default\SnakeTailUp.png" />
+    <None Include="Resources\Desert\FruitDisappear.png" />
     <Content Include="Resources\Desert\Wall.png" />
     <Content Include="Resources\Sounds\Effects\click.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

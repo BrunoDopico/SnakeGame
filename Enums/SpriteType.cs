@@ -12,6 +12,7 @@ namespace Snake_Game.Enums
         Background,
         FruitNormal,
         FruitSpecial,
+        FruitDisappear,
         Wall,
         SnakeHeadUp,
         SnakeHeadDown,

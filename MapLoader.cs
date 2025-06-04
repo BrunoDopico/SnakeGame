@@ -33,6 +33,7 @@ namespace Snake_Game
                 { '#', (x, y) => new Cell(CellType.Obstacle, 0, SpriteType.Wall) },
                 { 'F', (x, y) => new Cell(CellType.Fruit, 1, SpriteType.FruitNormal) },
                 { 'S', (x, y) => new Cell(CellType.Fruit, data.SpecialFruitValue, SpriteType.FruitSpecial) },
+                { 'D', (x, y) => new Cell(CellType.DisappearFruit, 1, SpriteType.FruitDisappear) },
                 { '^', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Up, SpriteType.SnakeHeadUp); } },
                 { 'v', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Down, SpriteType.SnakeHeadDown); } },
                 { '<', (x, y) => { snakeHead = new Point(x, y); return new Cell(CellType.Snake, (int)Direction.Left, SpriteType.SnakeHeadLeft); } },

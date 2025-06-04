@@ -69,6 +69,9 @@ namespace Snake_Game
                                 ? SpriteType.FruitSpecial
                                 : SpriteType.FruitNormal;
                             break;
+                        case CellType.DisappearFruit:
+                            Map[x, y].Sprite = SpriteType.FruitDisappear;
+                            break;
                         case CellType.Snake:
                             Map[x, y].Sprite = SpriteType.SnakeHeadLeft; // Or whatever is appropriate for spawn
                             break;
@@ -121,31 +124,13 @@ namespace Snake_Game
             availableCells.Remove((Snake.Head_x, Snake.Head_y));
 
             if (eaten_cell.Type == CellType.Obstacle) Lose = true;
-            else if(eaten_cell.Type == CellType.Snake) Lose = true;
-            else if (eaten_cell.Type == CellType.Fruit) 
-            {
-                SoundManager.PlayEffect("eat");
-                if (Snake.Size + eaten_cell.Value < 3)
-                {
-                    Snake.Growing = Snake.Size + eaten_cell.Value;
-                    Snake.Size = 3;
-                }
-                else
-                {
-                    Snake.Growing += eaten_cell.Value;
-                    Snake.Size += eaten_cell.Value;
-                }
-                score += eaten_cell.Value;
-                Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
-                Map[Snake.Head_x, Snake.Head_y].Value = (int) currentDirection;
-                fruits_eaten++;
-                PutFruit();
-            }
-            else
-            {
-                Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
-                Map[Snake.Head_x, Snake.Head_y].Value = (int) currentDirection;
-            }
+            else if (eaten_cell.Type == CellType.Snake) Lose = true;
+            else if (eaten_cell.Type == CellType.Fruit || eaten_cell.Type == CellType.DisappearFruit) EatFruit(eaten_cell);
+
+            //Move the snake after checking for collisions
+            Map[Snake.Head_x, Snake.Head_y].Type = CellType.Snake;
+            Map[Snake.Head_x, Snake.Head_y].Value = (int)currentDirection;
+
             removeTail();
             UpdateHead(Snake.Head_x, Snake.Head_y, oldHeadX, oldHeadY, oldHeadDir);
             UpdateTail(Snake.Tail_x, Snake.Tail_y);
@@ -236,6 +221,25 @@ namespace Snake_Game
                     if (Snake.Head_y >= Map.GetLength(1)) Snake.Head_y = 0;
                     break;
             }
+        }
+
+        private void EatFruit(Cell eaten_cell)
+        {
+            SoundManager.PlayEffect("eat");
+            if (Snake.Size + eaten_cell.Value < 3)
+            {
+                Snake.Growing = Snake.Size + eaten_cell.Value;
+                Snake.Size = 3;
+            }
+            else
+            {
+                Snake.Growing += eaten_cell.Value;
+                Snake.Size += eaten_cell.Value;
+            }
+            score += eaten_cell.Value;
+            fruits_eaten++;
+            if(eaten_cell.Type != CellType.DisappearFruit)
+                PutFruit();
         }
 
         /// <summary>

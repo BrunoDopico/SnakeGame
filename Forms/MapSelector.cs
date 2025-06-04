@@ -107,6 +107,9 @@ namespace Snake_Game.Forms
                         case 'S': // Special Fruit
                             g.FillEllipse(Brushes.Gold, cellRect);
                             break;
+                        case 'D': // Disappear Fruit
+                            g.FillEllipse(Brushes.LightSalmon, cellRect);
+                            break;
                         default: // Empty
                             break;
                     }

@@ -11,6 +11,7 @@ namespace Snake_Game.Enums
         Void,
         Snake,
         Fruit,
+        DisappearFruit,
         Obstacle
     }
 }
